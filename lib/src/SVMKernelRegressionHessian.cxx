@@ -31,7 +31,7 @@ namespace OTSVM
 
 CLASSNAMEINIT(SVMKernelRegressionHessian);
 
-static Factory<SVMKernelRegressionHessian> RegisteredFactory("SVMKernelRegressionHessian");
+static Factory<SVMKernelRegressionHessian> RegisteredFactory;
 
 /* Default constructor */
 SVMKernelRegressionHessian::SVMKernelRegressionHessian() :

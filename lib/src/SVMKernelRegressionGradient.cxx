@@ -32,7 +32,7 @@ namespace OTSVM
 
 
 CLASSNAMEINIT(SVMKernelRegressionGradient);
-static Factory<SVMKernelRegressionGradient> RegisteredFactory("SVMKernelRegressionGradient");
+static Factory<SVMKernelRegressionGradient> RegisteredFactory;
 
 
 /* Default constructor */
