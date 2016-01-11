@@ -33,7 +33,7 @@ namespace OTSVM
 
 CLASSNAMEINIT(ExponentialRBF);
 
-static Factory<ExponentialRBF> RegisteredFactory("ExponentialRBF");
+static Factory<ExponentialRBF> RegisteredFactory;
 
 /* Constructor with parameters */
 ExponentialRBF::ExponentialRBF(const NumericalScalar sigma)

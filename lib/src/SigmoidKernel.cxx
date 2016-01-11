@@ -37,7 +37,7 @@ namespace OTSVM
 
 CLASSNAMEINIT(SigmoidKernel);
 
-static Factory<SigmoidKernel> RegisteredFactory("SigmoidKernel");
+static Factory<SigmoidKernel> RegisteredFactory;
 
 /* Constructor with parameters */
 SigmoidKernel::SigmoidKernel( const NumericalScalar linear , const NumericalScalar constant ):
