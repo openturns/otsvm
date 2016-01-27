@@ -72,8 +72,8 @@ Python textual interface to OTSVM uncertainty library
 %setup -q
 
 %build
-%cmake -DCMAKE_INSTALL_PREFIX=/usr \
-       -DINSTALL_DESTDIR:PATH=%{buildroot} \
+%cmake -DINSTALL_DESTDIR:PATH=%{buildroot} \
+       -DCMAKE_SKIP_INSTALL_RPATH:BOOL=ON \
        -DBUILD_DOC=OFF .
 make %{?_smp_mflags}
 

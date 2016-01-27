@@ -28,11 +28,9 @@ override_dh_auto_configure: $(PYALL:python%=cmake-configure-%) \
 
 cmake-configure-%:
 	dh_auto_configure -Bbuild-python$* -- \
-            -DUSE_SPHINX=OFF \
+            -DBUILD_DOC=OFF \
             -DCMAKE_CXX_COMPILER:FILEPATH=/usr/bin/g++ \
-            -DCMAKE_C_COMPILER:FILEPATH=/usr/bin/gcc \
             -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
-            -DCMAKE_C_FLAGS_RELWITHDEBINFO:STRING='$(cflags)' \
             -DCMAKE_CXX_FLAGS_RELWITHDEBINFO:STRING='$(cxxflags)' \
             -DCMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO:STRING='$(ldflags)' \
             -DCMAKE_INSTALL_PREFIX:PATH=/usr \
@@ -53,10 +51,8 @@ override_dh_auto_install: $(PYALL:python%=cmake-install-%)
 cmake-install-%:
 	dh_auto_install -Bbuild-python$*
 ifeq (,$(findstring nocheck,$(DEB_BUILD_OPTIONS)))
-	# CTestTestfile.cmake sets LD_LIBRARY_PATH to find libraries in debian/tmp.
-	# But it overrides current value, which breaks when run by fakeroot.
-	[ -z "$$LD_LIBRARY_PATH" ] || sed -i -e "s#;LD_LIBRARY_PATH=[^;]*#&:$$LD_LIBRARY_PATH#" build-python$*/python/test/CTestTestfile.cmake
-	CTEST_OUTPUT_ON_FAILURE=1 \
+	LD_LIBRARY_PATH=$${LD_LIBRARY_PATH:+$${LD_LIBRARY_PATH}:}$(CURDIR)/debian/otsvm/usr/lib \
+	  CTEST_OUTPUT_ON_FAILURE=1 \
 	  $(MAKE) $(test_makeflags) -C build-python$* test ARGS="$(test_makeflags) -R pyinstallcheck"
 	find $(CURDIR)/debian/otsvm -name "*.pyc" -o -name "__pycache__" | xargs rm -rf
 endif
