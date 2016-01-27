@@ -15,7 +15,7 @@ FFLAGS="${FFLAGS:-%optflags}" ; export FFLAGS ; \
 -DBUILD_SHARED_LIBS:BOOL=ON
 
 Name:           otsvm
-Version:        0.1h
+Version:        0.1i
 Release:        0%{?dist}
 Summary:        OpenTURNS module
 Group:          System Environment/Libraries
