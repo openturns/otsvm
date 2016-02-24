@@ -1,9 +1,8 @@
 //                                               -*- C++ -*-
 /**
- *  @file  SVMKernelImplementation.cxx
- *  @brief
+ *  @brief Implementation of SVMKernel
  *
- *  (C) Copyright 2005-2012 EDF-EADS-Phimeca
+ *  Copyright 2005-2016 EDF-EADS-Phimeca
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -19,12 +18,9 @@
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
  *
- *  @author schueller
- *  @date   2008-07-03 14:14:36 +0200 (Thu, 03 Jul 2008)
- *  Id      SVMKernelImplementation.cxx 870 2008-07-03 12:14:36Z schueller
  */
-#include "SVMKernelImplementation.hxx"
-#include "Exception.hxx"
+#include "otsvm/SVMKernelImplementation.hxx"
+#include <Exception.hxx>
 
 using namespace OT;
 

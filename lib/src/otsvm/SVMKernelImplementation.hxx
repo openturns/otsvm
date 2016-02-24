@@ -1,9 +1,8 @@
 //                                               -*- C++ -*-
 /**
- *  @file  SVMKernelImplementation.hxx
  *  @brief This is a abstract class for the kernels used by support vector regression
  *
- *  (C) Copyright 2005-2012 EDF-EADS-Phimeca
+ *  Copyright 2005-2012 EDF-EADS-Phimeca
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -19,9 +18,6 @@
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
  *
- *  @author dutka
- *  @date   2008-05-21 17:44:02 +0200 (Wed, 21 May 2008)
- *  Id      Object.hxx 818 2008-05-21 15:44:02Z dutka
  */
 #ifndef OPENTURNS_SVMKERNELIMPLEMENTATION_HXX
 #define OPENTURNS_SVMKERNELIMPLEMENTATION_HXX
@@ -31,7 +27,7 @@
 #include "NumericalPointWithDescription.hxx"
 #include "SymmetricMatrix.hxx"
 #include "Description.hxx"
-#include "OTSVMprivate.hxx"
+#include "otsvm/OTSVMprivate.hxx"
 
 namespace OTSVM
 {

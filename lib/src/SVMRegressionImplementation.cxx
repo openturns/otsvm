@@ -1,9 +1,8 @@
 //                                               -*- C++ -*-
 /**
- *  @file  SVMRegressionImplementation.cxx
- *  @brief Implementation of the rational kernel
+ *  @brief Implementation of the regression
  *
- *  Copyright 2005-2015 EDF-EADS-Phimeca
+ *  Copyright 2005-2016 EDF-EADS-Phimeca
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -22,7 +21,7 @@
  */
 
 
-#include "SVMRegressionImplementation.hxx"
+#include "otsvm/SVMRegressionImplementation.hxx"
 
 using namespace OT;
 
@@ -83,25 +82,25 @@ MetaModelResult SVMRegressionImplementation::getResult() const
 }
 
 /* Method save() stores the object through the StorageManager */
-// void SVMRegressionImplementation::save(Advocate & adv) const
-// {
-//   PersistentObject::save(adv);
-//   adv.saveAttribute( "tradeoffFactor_", tradeoffFactor_ );
-//   adv.saveAttribute( "kernelParameter_", kernelParameter_ );
-//   adv.saveAttribute( "kernel_", kernel_ );
-//   adv.saveAttribute( "result_", result_ );
-// }
+void SVMRegressionImplementation::save(Advocate & adv) const
+{
+  PersistentObject::save(adv);
+  adv.saveAttribute( "tradeoffFactor_", tradeoffFactor_ );
+  adv.saveAttribute( "kernelParameter_", kernelParameter_ );
+  adv.saveAttribute( "kernel_", kernel_ );
+  adv.saveAttribute( "result_", result_ );
+}
 
 
 /* Method load() reloads the object from the StorageManager */
-// void SVMRegressionImplementation::load(Advocate & adv)
-// {
-//   PersistentObject::load(adv);
-//   adv.loadAttribute( "tradeoffFactor_", tradeoffFactor_ );
-//   adv.loadAttribute( "kernelParameter_", kernelParameter_ );
-//   adv.loadAttribute( "kernel_", kernel_ );
-//   adv.loadAttribute( "result_", result_ );
-// }
+void SVMRegressionImplementation::load(Advocate & adv)
+{
+  PersistentObject::load(adv);
+  adv.loadAttribute( "tradeoffFactor_", tradeoffFactor_ );
+  adv.loadAttribute( "kernelParameter_", kernelParameter_ );
+  adv.loadAttribute( "kernel_", kernel_ );
+  adv.loadAttribute( "result_", result_ );
+}
 
 
 }

@@ -1,5 +1,5 @@
 /**
- *  @file  LibSVMClassification.cxx
+ *  @brief
  *  This is the class which makes the link between LibSVM and OpenTURNS for Classification.
  *
  *  Copyright 2005-2015 EDF-EADS-Phimeca
@@ -20,15 +20,15 @@
  *
  */
 
-#include "LibSVMClassification.hxx"
-#include "PersistentObjectFactory.hxx"
-#include "NormalRBF.hxx"
-#include "PolynomialKernel.hxx"
-#include "SVMKernelRegressionEvaluation.hxx"
-#include "SigmoidKernel.hxx"
-#include "LinearKernel.hxx"
-#include "ComposedNumericalMathFunction.hxx"
-#include "KMeansClustering.hxx"
+#include "otsvm/LibSVMClassification.hxx"
+#include "otsvm/NormalRBF.hxx"
+#include "otsvm/PolynomialKernel.hxx"
+#include "otsvm/SVMKernelRegressionEvaluation.hxx"
+#include "otsvm/SigmoidKernel.hxx"
+#include "otsvm/LinearKernel.hxx"
+#include "otsvm/KMeansClustering.hxx"
+#include <PersistentObjectFactory.hxx>
+#include <ComposedNumericalMathFunction.hxx>
 
 
 using namespace OT;

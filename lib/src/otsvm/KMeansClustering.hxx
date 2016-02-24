@@ -1,9 +1,8 @@
 //                                               -*- C++ -*-
 /**
- *  @file  SVMResourceMap.hxx
- *  @brief Implementation of the rational kernel
+ *  @brief K-means clustering
  *
- *  (C) Copyright 2005-2012 EDF-EADS-Phimeca
+ *  Copyright 2005-2016 EDF-EADS-Phimeca
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -23,40 +22,48 @@
  *  ACM Transactions on  Intelligent Systems and Technology, 2:27:1--27:27, 2011. Software
  *  available at http://www.csie.ntu.edu.tw/~cjlin/libsvm
  *
- *  @author: $LastChangedBy: dutka $
- *  @date:   $LastChangedDate: 2008-05-21 11:21:38 +0200 (Wed, 21 May 2008) $
- *  Id:      $Id: SVMResourceMap.hxx 815 2008-05-21 09:21:38Z dutka $
  */
-#ifndef OTSVM_RESOURCEMAP
-#define OTSVM_RESOURCEMAP
 
-#include "Object.hxx"
-#include "OTSVMprivate.hxx"
+#ifndef OTSVM_KMEANSCLUSTERING_HXX
+#define OTSVM_KMEANSCLUSTERING_HXX
+
+#include "PersistentObject.hxx"
+#include "NumericalPoint.hxx"
+#include "NumericalSample.hxx"
+#include "otsvm/OTSVMprivate.hxx"
 
 namespace OTSVM
 {
 
-class OTSVM_API SVMResourceMap
+class OTSVM_API KMeansClustering : public OT::PersistentObject
 {
   CLASSNAME;
 
 public:
 
-  static void Initialize();
+  KMeansClustering();
+
+  virtual KMeansClustering * clone() const;
+
+  KMeansClustering(const OT::NumericalSample & dataIn, OT::UnsignedInteger k);
+
+  virtual void run();
+
+  OT::Indices getCluster();
+
+  OT::NumericalSample getMeans();
 
 protected:
 
-private:
+  OT::UnsignedInteger k_;
 
+  OT::NumericalSample inputSample_;
+
+  OT::Indices cluster_;
+
+  OT::NumericalSample means_;
 };
-
-
-struct OTSVM_API SVMResourceMap_init
-{
-  SVMResourceMap_init();
-};
-static SVMResourceMap_init __SVMResourceMap_initializer;
 
 }
-#endif
 
+#endif

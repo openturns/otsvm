@@ -1,9 +1,8 @@
 //                                               -*- C++ -*-
 /**
- * @file  SVMKernelRegressionEvaluation.cxx
- * @brief Implementation of evaluation using support vector machines
+ *  @brief Implementation of evaluation using support vector machines
  *
- *  (C) Copyright 2005-2012 EDF-EADS-Phimeca
+ *  Copyright 2005-2016 EDF-EADS-Phimeca
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -19,13 +18,10 @@
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
  *
- *  @author schueller
- *  @date   2008-05-05 08:50:15 +0200 (lun, 05 mai 2008)
- *  Id      SVMKernelRegressionEvaluation.cxx 805 2008-05-05 06:50:15Z schueller
  */
 
-#include "SVMKernelRegressionEvaluation.hxx"
-#include "PersistentObjectFactory.hxx"
+#include "otsvm/SVMKernelRegressionEvaluation.hxx"
+#include <PersistentObjectFactory.hxx>
 
 using namespace OT;
 

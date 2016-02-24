@@ -1,10 +1,7 @@
 // SWIG file SVMKernel.i
-// @author schueller
-// @date   2012-01-02 11:44:01 +0100 (Mon, 02 Jan 2012)
-// Id      SVMKernel.i 2287 2012-01-02 10:44:01Z schueller
 
 %{
-#include "SVMKernel.hxx"
+#include "otsvm/SVMKernel.hxx"
 
 namespace OT { 
 
@@ -49,7 +46,7 @@ namespace OT {
   $1 = SWIG_IsOK(SWIG_ConvertPtr($input, NULL, $1_descriptor, 0)) || SWIG_IsOK(SWIG_ConvertPtr($input, (void **) &temp, SWIGTYPE_p_OTSVM__SVMKernelImplementation, 0));
 }
 
-%include SVMKernel.hxx
+%include otsvm/SVMKernel.hxx
 namespace OTSVM{  
 
 %extend SVMKernel {

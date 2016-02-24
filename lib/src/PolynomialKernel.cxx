@@ -1,6 +1,5 @@
 //                                               -*- C++ -*-
 /**
- *  @file  PolynomialKernel.cxx
  *  @brief Implementation of the polynomial kernel
  *
  *  Copyright 2005-2015 EDF-EADS-Phimeca
@@ -20,9 +19,9 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
  *
  */
-#include "PolynomialKernel.hxx"
-#include "OSS.hxx"
-#include "PersistentObjectFactory.hxx"
+#include "otsvm/PolynomialKernel.hxx"
+#include <OSS.hxx>
+#include <PersistentObjectFactory.hxx>
 #include <cmath>
 
 using namespace OT;

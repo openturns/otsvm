@@ -1,6 +1,5 @@
 //                                               -*- C++ -*-
 /**
- * @file  SVMKernelRegressionHessian.cxx
  * @brief Implementation of SVM regression hessian
  *
  *  Copyright 2005-2015 EDF-EADS-Phimeca
@@ -21,8 +20,8 @@
  *
  */
 
-#include "SVMKernelRegressionHessian.hxx"
-#include "PersistentObjectFactory.hxx"
+#include "otsvm/SVMKernelRegressionHessian.hxx"
+#include <PersistentObjectFactory.hxx>
 
 using namespace OT;
 

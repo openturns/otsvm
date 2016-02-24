@@ -1,5 +1,5 @@
-#include "KMeansClustering.hxx"
-#include "Uniform.hxx"
+#include "otsvm/KMeansClustering.hxx"
+#include <Uniform.hxx>
 
 
 using namespace OT;

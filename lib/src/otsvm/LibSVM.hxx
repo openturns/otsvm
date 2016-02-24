@@ -1,6 +1,5 @@
 //                                               -*- C++ -*-
 /**
- *  @file  LibSVM.hxx
  *  @brief LibSVM wrapper
  *
  *  Copyright 2005-2015 EDF-EADS-Phimeca
@@ -19,22 +18,16 @@
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
  *
- *  Chih-Chung Chang and Chih-Jen Lin, LIBSVM : a library for support vector machines.
- *  ACM Transactions on  Intelligent Systems and Technology, 2:27:1--27:27, 2011. Software
- *  available at http://www.csie.ntu.edu.tw/~cjlin/libsvm
- *
  */
 
 #ifndef OTSVM_LIBSVM
 #define OTSVM_LIBSVM
 
 
-
-#include "PersistentObject.hxx"
-#include "svm.h"
-#include "NumericalPoint.hxx"
-#include "NumericalMathFunction.hxx"
-#include "OTSVMprivate.hxx"
+#include "otsvm/OTSVMprivate.hxx"
+#include <PersistentObject.hxx>
+#include "otsvm/svm.h"
+#include <NumericalMathFunction.hxx>
 
 namespace OTSVM
 {

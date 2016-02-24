@@ -1,9 +1,8 @@
 //                                               -*- C++ -*-
 /**
- *  @file  t_NormalRBF.cxx
  *  @brief The test file for NormalRBF class.
  *
- *  (C) Copyright 2005-2012 EDF-EADS-Phimeca
+ *  Copyright 2005-2012 EDF-EADS-Phimeca
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -19,15 +18,12 @@
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
  *
- *  @author dutka
- *  @date   2009-01-08 13:33:24 +0100 (jeu, 08 jan 2009)
- *  Id      t_NormalRBF_std.cxx 1061 2009-01-08 12:33:24Z dutka
  */
 
 #include "OT.hxx"
 #include "OTtestcode.hxx"
 #include "OStream.hxx"
-#include "NormalRBF.hxx"
+#include "otsvm/NormalRBF.hxx"
 
 using namespace OT;
 using namespace OT::Test;

@@ -1,7 +1,6 @@
 //                                               -*- C++ -*-
 /**
- *  @file  LibSVMRegression.cxx
- *  @brief Implementation of the rational kernel
+ *  @brief Regression
  *
  *  Copyright 2005-2015 EDF-EADS-Phimeca
  *
@@ -21,14 +20,14 @@
  *
  */
 
-#include "LibSVMRegression.hxx"
-#include "PersistentObjectFactory.hxx"
-#include "NormalRBF.hxx"
-#include "PolynomialKernel.hxx"
-#include "SVMKernelRegressionEvaluation.hxx"
-#include "SigmoidKernel.hxx"
-#include "LinearKernel.hxx"
-#include "ComposedNumericalMathFunction.hxx"
+#include "otsvm/LibSVMRegression.hxx"
+#include "otsvm/NormalRBF.hxx"
+#include "otsvm/PolynomialKernel.hxx"
+#include "otsvm/SVMKernelRegressionEvaluation.hxx"
+#include "otsvm/SigmoidKernel.hxx"
+#include "otsvm/LinearKernel.hxx"
+#include <ComposedNumericalMathFunction.hxx>
+#include <PersistentObjectFactory.hxx>
 
 
 using namespace OT;

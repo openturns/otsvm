@@ -1,9 +1,8 @@
 //                                               -*- C++ -*-
 /**
- * @file  SVMKernelRegressionGradient.cxx
- * @brief Implementation of SVM regression gradient
+ *  @brief Implementation of SVM regression gradient
  *
- *  Copyright 2005-2015 EDF-EADS-Phimeca
+ *  Copyright 2005-2016 EDF-EADS-Phimeca
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -21,8 +20,8 @@
  *
  */
 
-#include "SVMKernelRegressionGradient.hxx"
-#include "PersistentObjectFactory.hxx"
+#include "otsvm/SVMKernelRegressionGradient.hxx"
+#include <PersistentObjectFactory.hxx>
 
 using namespace OT;
 

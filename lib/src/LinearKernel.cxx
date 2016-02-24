@@ -1,7 +1,6 @@
 //                                               -*- C++ -*-
 /**
- *  @file  LinearKernel.cxx
- *  @brief Implementation of the rational kernel
+ *  @brief Implementation of the linear kernel
  *
  *  Copyright 2005-2015 EDF-EADS-Phimeca
  *
@@ -21,9 +20,9 @@
  *
  */
 
-#include "LinearKernel.hxx"
-#include "OSS.hxx"
-#include "PersistentObjectFactory.hxx"
+#include "otsvm/LinearKernel.hxx"
+#include <OSS.hxx>
+#include <PersistentObjectFactory.hxx>
 #include <cmath>
 
 using namespace OT;
