@@ -29,7 +29,6 @@
 #include "OTprivate.hxx"
 #include "NumericalPoint.hxx"
 #include "SVMKernel.hxx"
-#include "svm.h"
 #include "MetaModelResult.hxx"
 
 
@@ -37,40 +36,39 @@ namespace OTSVM
 {
 
 
-class OTSVM_API SVMRegressionImplementation: public OT::PersistentObject
+class OTSVM_API SVMRegressionImplementation
+: public OT::PersistentObject
 {
 
   CLASSNAME;
 
 public:
 
-  /* Default constructor*/
+  /** Default constructor*/
   SVMRegressionImplementation();
 
-  /* Virtual constructor */
+  /** Virtual constructor */
   virtual SVMRegressionImplementation * clone() const;
 
-
-
-  /* Method run */
+  /** Method run */
   virtual void run();
 
-  /* Results accessor*/
+  /** Results accessor*/
   virtual OT::MetaModelResult getResult() const;
 
-  /* Tradeoff factor accessor */
+  /** Tradeoff factor accessor */
   virtual void setTradeoffFactor(const OT::NumericalPoint & factor);
   virtual OT::NumericalPoint getTradeoffFactor();
 
-  /* Kernel parameter accessor */
+  /** Kernel parameter accessor */
   virtual OT::NumericalPoint getKernelParameter();
   virtual void setKernelParameter(const OT::NumericalPoint & kernel);
 
   /** Method save() stores the object through the StorageManager */
-//     virtual void save(Advocate & adv) const;
+  virtual void save(OT::Advocate & adv) const;
 
   /** Method load() reloads the object from the StorageManager */
-//     virtual void load(Advocate & adv);
+  virtual void load(OT::Advocate & adv);
 
 protected:
 

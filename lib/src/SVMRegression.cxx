@@ -1,9 +1,8 @@
 //                                               -*- C++ -*-
 /**
- *  @file  SVMRegression.cxx
- *  @brief Implementation of the rational kernel
+ *  @brief Regression
  *
- *  (C) Copyright 2005-2012 EDF-EADS-Phimeca
+ *  Copyright 2005-2012 EDF-EADS-Phimeca
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -21,7 +20,7 @@
  *
  */
 
-#include "SVMRegression.hxx"
+#include "otsvm/SVMRegression.hxx"
 
 
 using namespace OT;

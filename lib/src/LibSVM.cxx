@@ -3,7 +3,7 @@
  *  @file  LibSVM.cxx
  *  @brief LibSVM wrapper
  *
- *  Copyright 2005-2015 EDF-EADS-Phimeca
+ *  Copyright 2005-2016 EDF-EADS-Phimeca
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -20,9 +20,9 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
  *
  */
-#include "LibSVM.hxx"
-#include "Log.hxx"
-#include "OT.hxx"
+#include "otsvm/LibSVM.hxx"
+#include <Log.hxx>
+#include <OT.hxx>
 
 
 using namespace OT;

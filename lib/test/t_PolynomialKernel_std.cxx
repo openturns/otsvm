@@ -1,9 +1,8 @@
 //                                               -*- C++ -*-
 /**
- *  @file  t_PolynomialKernel.cxx
  *  @brief The test file for PolynomialKernel class.
  *
- *  (C) Copyright 2005-2012 EDF-EADS-Phimeca
+ *  Copyright 2005-2012 EDF-EADS-Phimeca
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -19,15 +18,12 @@
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
  *
- *  @author dutka
- *  @date   2009-01-08 13:33:24 +0100 (jeu, 08 jan 2009)
- *  Id      t_PolynomialKernel_std.cxx 1061 2009-01-08 12:33:24Z dutka
  */
 
 #include "OT.hxx"
 #include "OTtestcode.hxx"
 #include "OStream.hxx"
-#include "PolynomialKernel.hxx"
+#include "otsvm/PolynomialKernel.hxx"
 #include "NumericalPoint.hxx"
 
 using namespace OT;

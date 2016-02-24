@@ -4,6 +4,6 @@ add_subdirectory ( src )
 add_subdirectory ( test )
 
 install ( FILES ${HEADERFILES}
-          DESTINATION ${OTSVM_INCLUDE_PATH}
+          DESTINATION ${OTSVM_INCLUDE_PATH}/${PACKAGE_NAME}
         )
 

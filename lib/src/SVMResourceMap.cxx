@@ -1,9 +1,8 @@
 //                                               -*- C++ -*-
 /**
- *  @file  SVMResourceMap.cxx
- *  @brief Implementation of the rational kernel
+ *  @brief Custom ResourceMap keys
  *
- *  (C) Copyright 2005-2012 EDF-EADS-Phimeca
+ *  Copyright 2005-2016 EDF-EADS-Phimeca
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -19,20 +18,17 @@
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
  *
- *  @author: $LastChangedBy: dutka $
- *  @date:   $LastChangedDate: 2008-05-21 11:21:38 +0200 (Wed, 21 May 2008) $
- *  Id:      $Id: SVMResourceMap.cxx 815 2008-05-21 09:21:38Z dutka $
  */
 
-#include "SVMResourceMap.hxx"
-#include "ResourceMap.hxx"
+#include "otsvm/SVMResourceMap.hxx"
+#include <ResourceMap.hxx>
 #include <unistd.h>
 #include <string.h>
-#include "OTthread.hxx"
-#include "OTconfig.hxx"
-#include "OSS.hxx"
-#include "Exception.hxx"
-#include "Log.hxx"
+#include <OTthread.hxx>
+#include <OTconfig.hxx>
+#include <OSS.hxx>
+#include <Exception.hxx>
+#include <Log.hxx>
 
 using namespace OT;
 

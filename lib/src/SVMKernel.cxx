@@ -1,9 +1,8 @@
 //                                               -*- C++ -*-
 /**
- *  @file  SVMKernel.cxx
  *  @brief This is the interface class for kernels used by support vector regression
  *
- *  (C) Copyright 2005-2012 EDF-EADS-Phimeca
+ *  Copyright 2005-2016 EDF-EADS-Phimeca
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -19,14 +18,11 @@
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
  *
- *  @author dutka
- *  @date   2008-05-21 11:21:38 +0200 (Wed, 21 May 2008)
- *  Id      Object.cxx 815 2008-05-21 09:21:38Z dutka
  */
-#include "SVMKernel.hxx"
-#include "OSS.hxx"
-#include "PersistentObjectFactory.hxx"
-#include "NumericalPoint.hxx"
+#include "otsvm/SVMKernel.hxx"
+#include <OSS.hxx>
+#include <PersistentObjectFactory.hxx>
+#include <NumericalPoint.hxx>
 
 using namespace OT;
 

@@ -1,9 +1,8 @@
 //                                               -*- C++ -*-
 /**
- *  @file  SigmoidKernel.hxx
  *  @brief Implementation of the rational kernel
  *
- *  Copyright 2005-2015 EDF-EADS-Phimeca
+ *  Copyright 2005-2016 EDF-EADS-Phimeca
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public

@@ -1,21 +1,34 @@
-#include <iostream>
+//                                               -*- C++ -*-
+/**
+ *  @brief The test file for LibSVMRegression class.
+ *
+ *  Copyright 2005-2016 EDF-EADS-Phimeca
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License as published by the Free Software Foundation; either
+ *  version 2.1 of the License.
+ *
+ *  This library is distributed in the hope that it will be useful
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
+ *
+ */
 #include <OT.hxx>
-#include <math.h>
-#include <LibSVMRegression.hxx>
-#include <SVMRegressionImplementation.hxx>
-#include <SVMRegression.hxx>
+#include <otsvm/LibSVMRegression.hxx>
+#include <otsvm/SVMRegressionImplementation.hxx>
+#include <otsvm/SVMRegression.hxx>
 #include <NumericalPoint.hxx>
 #include "OSS.hxx"
 #include "OStream.hxx"
-#include <SVMResourceMap.hxx>
-#include "NumericalPoint.hxx"
-#include "Description.hxx"
+#include <otsvm/SVMResourceMap.hxx>
 #include "NumericalMathFunction.hxx"
-#include "Collection.hxx"
 #include "ComposedDistribution.hxx"
-#include "Distribution.hxx"
-#include "EnumerateFunction.hxx"
-#include "Indices.hxx"
 
 using namespace OT;
 using namespace OTSVM;
