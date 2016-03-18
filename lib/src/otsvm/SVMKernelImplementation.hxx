@@ -22,11 +22,8 @@
 #ifndef OPENTURNS_SVMKERNELIMPLEMENTATION_HXX
 #define OPENTURNS_SVMKERNELIMPLEMENTATION_HXX
 
-#include "PersistentObject.hxx"
-#include "NumericalPoint.hxx"
-#include "NumericalPointWithDescription.hxx"
-#include "SymmetricMatrix.hxx"
-#include "Description.hxx"
+#include <openturns/NumericalPointWithDescription.hxx>
+#include <openturns/SymmetricMatrix.hxx>
 #include "otsvm/OTSVMprivate.hxx"
 
 namespace OTSVM

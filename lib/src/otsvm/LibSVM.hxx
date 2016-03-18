@@ -25,9 +25,8 @@
 
 
 #include "otsvm/OTSVMprivate.hxx"
-#include <PersistentObject.hxx>
 #include "otsvm/svm.h"
-#include <NumericalMathFunction.hxx>
+#include <openturns/NumericalMathFunction.hxx>
 
 namespace OTSVM
 {

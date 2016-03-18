@@ -25,7 +25,7 @@
 #include <otsvm/SVMRegression.hxx>
 #include <NumericalPoint.hxx>
 #include "OSS.hxx"
-#include "OStream.hxx"
+#include <openturns/OStream.hxx>
 #include <otsvm/SVMResourceMap.hxx>
 #include "NumericalMathFunction.hxx"
 #include "ComposedDistribution.hxx"

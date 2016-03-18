@@ -21,7 +21,7 @@
  */
 
 #include "otsvm/SVMKernelRegressionHessian.hxx"
-#include <PersistentObjectFactory.hxx>
+#include <openturns/PersistentObjectFactory.hxx>
 
 using namespace OT;
 

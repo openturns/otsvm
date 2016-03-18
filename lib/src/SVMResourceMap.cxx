@@ -21,14 +21,14 @@
  */
 
 #include "otsvm/SVMResourceMap.hxx"
-#include <ResourceMap.hxx>
+#include <openturns/ResourceMap.hxx>
 #include <unistd.h>
 #include <string.h>
-#include <OTthread.hxx>
-#include <OTconfig.hxx>
-#include <OSS.hxx>
-#include <Exception.hxx>
-#include <Log.hxx>
+#include <openturns/OTthread.hxx>
+#include <openturns/OTconfig.hxx>
+#include <openturns/OSS.hxx>
+#include <openturns/Exception.hxx>
+#include <openturns/Log.hxx>
 
 using namespace OT;
 

@@ -20,9 +20,9 @@
  *
  */
 
-#include "OT.hxx"
-#include "OTtestcode.hxx"
-#include "OStream.hxx"
+#include <openturns/OT.hxx>
+#include <openturns/OTtestcode.hxx>
+#include <openturns/OStream.hxx>
 #include "otsvm/NormalRBF.hxx"
 
 using namespace OT;

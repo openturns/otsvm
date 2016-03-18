@@ -27,9 +27,8 @@
 #ifndef OTSVM_KMEANSCLUSTERING_HXX
 #define OTSVM_KMEANSCLUSTERING_HXX
 
-#include "PersistentObject.hxx"
-#include "NumericalPoint.hxx"
-#include "NumericalSample.hxx"
+
+#include <openturns/NumericalSample.hxx>
 #include "otsvm/OTSVMprivate.hxx"
 
 namespace OTSVM

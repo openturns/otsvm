@@ -20,7 +20,7 @@
  *
  */
 #include "otsvm/SVMKernelImplementation.hxx"
-#include <Exception.hxx>
+#include <openturns/Exception.hxx>
 
 using namespace OT;
 

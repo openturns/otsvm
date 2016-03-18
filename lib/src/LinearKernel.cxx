@@ -21,8 +21,8 @@
  */
 
 #include "otsvm/LinearKernel.hxx"
-#include <OSS.hxx>
-#include <PersistentObjectFactory.hxx>
+#include <openturns/OSS.hxx>
+#include <openturns/PersistentObjectFactory.hxx>
 #include <cmath>
 
 using namespace OT;

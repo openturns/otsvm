@@ -25,7 +25,7 @@
 #define OTSVM_SVMREGRESSION_HXX
 
 
-#include "TypedInterfaceObject.hxx"
+#include <openturns/TypedInterfaceObject.hxx>
 #include "SVMRegressionImplementation.hxx"
 #include "LibSVMRegression.hxx"
 

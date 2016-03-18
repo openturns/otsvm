@@ -25,11 +25,10 @@
 #define OTSVM_SVMREGRESSIONIMPLEMENTATION
 
 
-#include "PersistentObject.hxx"
-#include "OTprivate.hxx"
-#include "NumericalPoint.hxx"
+#include <openturns/PersistentObject.hxx>
+// #include "OTprivate.hxx"
 #include "SVMKernel.hxx"
-#include "MetaModelResult.hxx"
+#include <openturns/MetaModelResult.hxx>
 
 
 namespace OTSVM

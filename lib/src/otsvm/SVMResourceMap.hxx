@@ -26,7 +26,7 @@
 #ifndef OTSVM_RESOURCEMAP
 #define OTSVM_RESOURCEMAP
 
-#include "Object.hxx"
+#include <openturns/Object.hxx>
 #include "otsvm/OTSVMprivate.hxx"
 
 namespace OTSVM

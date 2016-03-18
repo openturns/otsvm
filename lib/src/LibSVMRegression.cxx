@@ -26,8 +26,8 @@
 #include "otsvm/SVMKernelRegressionEvaluation.hxx"
 #include "otsvm/SigmoidKernel.hxx"
 #include "otsvm/LinearKernel.hxx"
-#include <ComposedNumericalMathFunction.hxx>
-#include <PersistentObjectFactory.hxx>
+#include <openturns/ComposedNumericalMathFunction.hxx>
+#include <openturns/PersistentObjectFactory.hxx>
 
 
 using namespace OT;

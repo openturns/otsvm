@@ -21,7 +21,7 @@
  */
 
 #include "otsvm/SVMKernelRegressionEvaluation.hxx"
-#include <PersistentObjectFactory.hxx>
+#include <openturns/PersistentObjectFactory.hxx>
 
 using namespace OT;
 

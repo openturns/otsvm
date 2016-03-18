@@ -27,8 +27,8 @@
 #include "otsvm/SigmoidKernel.hxx"
 #include "otsvm/LinearKernel.hxx"
 #include "otsvm/KMeansClustering.hxx"
-#include <PersistentObjectFactory.hxx>
-#include <ComposedNumericalMathFunction.hxx>
+#include <openturns/PersistentObjectFactory.hxx>
+#include <openturns/ComposedNumericalMathFunction.hxx>
 
 
 using namespace OT;
