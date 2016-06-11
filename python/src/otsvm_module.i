@@ -1,23 +1,15 @@
-// SWIG file LibSVM.i
+// SWIG file otsvm_module.i
 
-%module otsvm
-%feature("autodoc","1"); 
-
-%pythoncode %{
-# Override the default SWIG function
-def _swig_repr(self):
-  return self.str()   
-%}
-
+%module (docstring="otsvm module") otsvm
 
 %{
 #include <OT.hxx>
 #include <PythonWrappingFunctions.hxx>
 %}
- 
+
 // Prerequisites needed
 %include typemaps.i
-%include exception.i 
+%include exception.i
 %ignore *::load(OT::Advocate & adv);
 %ignore *::save(OT::Advocate & adv) const;
 

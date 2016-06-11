@@ -61,6 +61,7 @@ VERBOSE=ON
 
 JOBS=$(shell getconf _NPROCESSORS_ONLN)
 JOBS_PYTHON=$(JOBS)
+JOBS_TEST=$(JOBS)
 export PATH := $(MINGW_PREFIX)/bin:$(PATH)
 
 DEBUG_OT=n
@@ -85,6 +86,7 @@ mod-config: mod-check-compiler
 	-mkdir -p $(MOD_BUILD)
 	cp $(MINGW_PREFIX)/share/mingw/toolchain-$(TARGET).cmake $(MOD_BUILD)
 	echo "set ( CMAKE_FIND_ROOT_PATH $(MINGW_PREFIX)/$(TARGET) )" >> $(MOD_BUILD)/toolchain-$(TARGET).cmake
+	cp $(MINGW_PREFIX)/$(TARGET)/bin/python$(PYBASEVER_NODOT).dll $(MOD_BUILD)
 	cd $(MOD_BUILD) && rm -f CMakeCache.txt && $(CMAKE) \
 	  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
 	  -DCMAKE_CXX_FLAGS_RELWITHDEBINFO="-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions --param=ssp-buffer-size=4" \
@@ -115,12 +117,13 @@ endif
 	touch mod-install
 
 mod-test: mod-install
-	cd $(MOD_BUILD) && make tests -j$(JOBS)
+	cd $(MOD_BUILD) && make tests -j$(JOBS_TEST)
 ifeq ($(CHECK_OT),y)
 	cp $(OT_PREFIX)/bin/*.dll $(MOD_BUILD)/lib/test
 	cp $(MOD_PREFIX)/bin/*.dll $(MOD_BUILD)/lib/test
 	cp $(OT_PREFIX)/bin/*.dll $(MOD_BUILD)/python/test
 	cp $(MOD_PREFIX)/bin/*.dll $(MOD_BUILD)/python/test
+	cp $(MINGW_PREFIX)/$(TARGET)/bin/python$(PYBASEVER_NODOT).dll $(MOD_BUILD)/python/test
 	cd $(MOD_BUILD) && ctest -j$(JOBS)
 	touch mod-test
 endif
