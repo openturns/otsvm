@@ -36,7 +36,7 @@ set ( OTSVM_SWIG_INCLUDE_PATH ${OTSVM_INCLUDE_PATH}/${PACKAGE_NAME}/swig )
 set ( OTSVM_DATA_PATH share )
 set ( OTSVM_EXAMPLE_PATH ${OTSVM_DATA_PATH}/${PACKAGE_NAME}/examples )
 set ( OTSVM_CONFIG_CMAKE_PATH lib${LIB_SUFFIX}/cmake/otsvm )
-set (OTSVM_DOC_PATH share/doc/${PACKAGE_NAME})
+set (OTSVM_DOC_PATH share/${PACKAGE_NAME}/doc)
 
 if ( BUILD_PYTHON )
   # workaround for cmake bug #0013449
