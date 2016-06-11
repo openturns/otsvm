@@ -1,13 +1,46 @@
 language: cpp
+sudo: required
 
 install:
   - curl http://ubuntu.openturns.org/openturns.org-repo.key | sudo apt-key add -
   - echo deb http://ubuntu.openturns.org precise main | sudo tee /etc/apt/sources.list.d/openturns.list
   - sudo apt-get update
-  - sudo apt-get -y install libopenturns-dev python-openturns cmake gfortran swig texlive-latex-recommended texlive-fonts-recommended texlive-latex-extra python-sphinx python-matplotlib dvipng
+  - sudo apt-get -y install libopenturns-dev python-openturns cmake gfortran swig texlive-latex-recommended texlive-fonts-recommended texlive-latex-extra python-sphinx python-matplotlib dvipng libkpathsea-dev libpotrace-dev python-lxml xmlto asciidoc
+# dvisvgm
+  - git clone https://github.com/mgieseki/dvisvgm.git
+  - pushd dvisvgm
+  - ./autogen.sh
+  - ./configure --prefix=$HOME/.local
+  - make -j2
+  - make install
+  - export PATH=$PATH:$HOME/.local/bin
+  - popd
+# sphinx >=1.2 is looking better
+  - git clone https://github.com/sphinx-doc/sphinx.git
+  - pushd sphinx
+  - python setup.py install --user
+  - popd
 
 script:
   - cmake -DCMAKE_INSTALL_PREFIX=~/.local
+    -DSPHINX_EXECUTABLE=~/.local/bin/sphinx-build
     .
   - make install -j2 && make tests -j2 && ctest -j2 --output-on-failure --timeout 100 
 
+after_success:
+  - test "$TRAVIS_PULL_REQUEST" = "false" -a "$TRAVIS_BRANCH" = "master" || exit 0
+  - git clone https://${GH_TOKEN}@github.com/openturns/openturns.github.io.git
+  - REPO_NAME=`echo "${TRAVIS_REPO_SLUG}" | cut -d "/" -f 2`
+  - mkdir -p openturns.github.io/${REPO_NAME}/${TRAVIS_BRANCH}
+  - cp -r ~/.local/share/${REPO_NAME}/doc/html/* openturns.github.io/${REPO_NAME}/${TRAVIS_BRANCH}
+  - cd openturns.github.io
+  - touch .nojekyll
+  - git config user.email "support@travis-ci.com"
+  - git config user.name "Travis CI"
+  - git add -A .
+  - git commit -a -m "Travis build ${REPO_NAME} ${TRAVIS_BUILD_NUMBER}"
+  - git push --quiet origin master > /dev/null 2>&1
+
+env:
+  global:
+    secure: "AH4etyO7KIVT5c+Fvbh9grEsjOa9LmlUFEVpQAprhiXfm7VitPG+JqxIASOURc/F1pHqAfJ1fF3fgNFKOfKCEkbdJaD3Y5w/2u0ldhG42YSOEYebFXnC53nzhg+Ugjv/JWjCE9ypIunCjSVz8eofrI/EN65W0sl0pFlUT6nRQVFWdBYw4NdsrAu0S7UrkNW+SMlK5w/72zqxfP2mYVZSDXB6uI04pR5ADsSuh8JQYQxs1jWkTfQbUpILUglltHrheB/lYN9bl3m0PVIBk57tidoNB5pv29JGHExvNt8gnwJbYhUc27mCwzylVcISJkn8DgwoAWIdAVQqH15Oo1GopdSjLOgdwtNGO9yKN+IT1WQIWeWMzY72iPY07zeQoIvkrdSVDx2dSOyhi3ol7zryBZKnTrySuAjYIfQNObu456L1NJ8p4L9hdS6RKjkwibQ4I2Rq3riaL22azmmVYx2oH9GMcraHHL8GwA2hAqYGleGCHVi1wVTI2VeA62m+GMbe16zuEb6NOEwzsmRh8gua3qsijFGEyR5XMiJ6ypC98Nf+Fy9y1p9wY1EbQTRWuks2XwUd88X/9iPEbd+ZlQgFxH7rQ5dekASY6nppy2PGSjYTEiAu3gxAWUMJrnG+BR+hDsBMJxFi217sC8YlzmzMcMwzTdlMe6EIi7dNypDPYpc="

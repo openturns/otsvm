@@ -1,7 +1,7 @@
 cmake_minimum_required ( VERSION 2.8 )
 
 option ( BUILD_PYTHON                 "Build the python module for the library"                               ON )
-option ( BUILD_DOC                    "Build the documentation"                                               ON )
+option (USE_SPHINX                    "Use sphinx for documentation"                                          ON)
 option ( LINK_PYTHON_LIBRARY          "Link python modules against python library"                            ON )
 option ( INSTALL_TESTS                "Install compiled tests for native platform testing"                    OFF )
 option ( BUILD_SHARED_LIBS            "Build shared libraries"                                                ON )
@@ -36,7 +36,7 @@ set ( OTSVM_SWIG_INCLUDE_PATH ${OTSVM_INCLUDE_PATH}/${PACKAGE_NAME}/swig )
 set ( OTSVM_DATA_PATH share )
 set ( OTSVM_EXAMPLE_PATH ${OTSVM_DATA_PATH}/${PACKAGE_NAME}/examples )
 set ( OTSVM_CONFIG_CMAKE_PATH lib${LIB_SUFFIX}/cmake/otsvm )
-set ( DOC_INSTALL_PATH share/doc/${PACKAGE_NAME} )
+set (OTSVM_DOC_PATH share/doc/${PACKAGE_NAME})
 
 if ( BUILD_PYTHON )
   # workaround for cmake bug #0013449
@@ -51,6 +51,14 @@ if ( BUILD_PYTHON )
   endif ()
   find_package ( PythonInterp )
   find_package ( PythonLibs )
+  include (FindPythonModule)
+
+  if (USE_SPHINX)
+    find_program (SPHINX_EXECUTABLE NAMES sphinx-build DOC "Sphinx Documentation Builder (sphinx-doc.org)")
+    if (SPHINX_EXECUTABLE)
+      find_python_module (sphinx 1.1)
+    endif ()
+  endif ()
 
   if ( PYTHONINTERP_FOUND )
     execute_process ( COMMAND ${PYTHON_EXECUTABLE} -c "from distutils import sysconfig; print(sysconfig.get_python_lib(plat_specific=True, prefix='${CMAKE_INSTALL_PREFIX}'))"
@@ -87,17 +95,13 @@ foreach (_var PYTHON_MODULE_PATH LIBRARY_PATH INCLUDE_PATH CONFIG_CMAKE_PATH)
   string (REPLACE "\\" "\\\\" ${_var} ${NATIVE_OTSVM_${_var}})
 endforeach ()
 
-if (CMAKE_INSTALL_PREFIX MATCHES "^/usr")
-  set (SYSTEM_INSTALL ON)
-else ()
-  set (SYSTEM_INSTALL OFF)
-endif ()
-
-# Selectively add or remove RPATH from executable
-if (NOT SYSTEM_INSTALL)
-  set (CMAKE_INSTALL_RPATH ${LIBRARY_PATH})
-  set (CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
-endif ()
+# RPATH settings
+set (CMAKE_INSTALL_RPATH ${LIBRARY_PATH} ${CMAKE_Fortran_IMPLICIT_LINK_DIRECTORIES})
+set (CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+if(POLICY CMP0042)
+  # Set MACOSX_RPATH to ON
+  cmake_policy(SET CMP0042 NEW)
+endif()
 
 # Some useful macros to ease CMakeLists.txt file writing
 set ( SOURCEFILES "" CACHE INTERNAL "List of source files to compile" )
@@ -139,10 +143,6 @@ if ( PYTHONINTERP_FOUND AND PYTHONLIBS_FOUND AND SWIG_FOUND AND BUILD_SHARED_LIB
   add_dependencies ( installcheck pyinstallcheck )
 endif ()
 
-if (BUILD_DOC)
-  add_subdirectory (doc)
-endif ()
-
 set ( CPACK_PACKAGE_NAME          ${PACKAGE_NAME} )
 set ( CPACK_PACKAGE_VERSION_MAJOR 0              )
 set ( CPACK_PACKAGE_VERSION_MINOR 1i              )
@@ -152,7 +152,7 @@ set ( CPACK_BINARY_STGZ           "OFF"          )
 set ( CPACK_BINARY_TBZ2           "ON"           )
 set ( CPACK_BINARY_TGZ            "ON"           )
 set ( CPACK_BINARY_TZ             "OFF"          )
-set ( CPACK_SOURCE_IGNORE_FILES "/.svn;/build;.*~;${CPACK_SOURCE_IGNORE_FILES}" )
+set ( CPACK_SOURCE_IGNORE_FILES "/.git;/build;.*~;${CPACK_SOURCE_IGNORE_FILES}" )
 set ( PACKAGE_NAME           ${CPACK_PACKAGE_NAME} )
 set ( PACKAGE_VERSION        ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR} )
 if ( CPACK_PACKAGE_VERSION_PATCH )
