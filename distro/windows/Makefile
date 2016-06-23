@@ -103,7 +103,6 @@ mod-config: mod-check-compiler
 
 mod-compile: mod-config
 	cd $(MOD_BUILD) && make -j$(JOBS)
-	-beep
 	touch mod-compile
 
 mod-install: mod-compile
@@ -113,7 +112,6 @@ ifeq ($(DEBUG_OT),n)
 	$(TARGET)-strip -g $(MOD_PREFIX)/lib/*.a
 	$(TARGET)-strip --strip-unneeded $(MOD_PREFIX)/Lib/site-packages/*/*.pyd
 endif
-	-beep -r 2
 	touch mod-install
 
 mod-test: mod-install
@@ -124,7 +122,7 @@ ifeq ($(CHECK_OT),y)
 	cp $(OT_PREFIX)/bin/*.dll $(MOD_BUILD)/python/test
 	cp $(MOD_PREFIX)/bin/*.dll $(MOD_BUILD)/python/test
 	cp $(MINGW_PREFIX)/$(TARGET)/bin/python$(PYBASEVER_NODOT).dll $(MOD_BUILD)/python/test
-	cd $(MOD_BUILD) && ctest -j$(JOBS)
+	cd $(MOD_BUILD) && ctest -j$(JOBS) --output-on-failure --timeout 1000
 	touch mod-test
 endif
 
@@ -142,7 +140,6 @@ mod-check-installer: mod-test
 mod-installer: mod-check-installer
 	makensis -DMODULE_PREFIX=$(MOD_PREFIX) -DMODULE_VERSION=$(MODULE_VERSION) -DOPENTURNS_VERSION=$(OT_VERSION) -DPYBASEVER=$(PYBASEVER) -DPYBASEVER_NODOT=$(PYBASEVER_NODOT) -DARCH=$(ARCH) installer.nsi
 	touch mod-installer
-	-beep -r 3
 
 
 clean:
