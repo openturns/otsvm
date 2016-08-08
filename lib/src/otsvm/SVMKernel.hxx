@@ -26,7 +26,7 @@
 #ifndef OPENTURNS_SVMKERNEL_HXX
 #define OPENTURNS_SVMKERNEL_HXX
 
-#include "TypedInterfaceObject.hxx"
+#include <openturns/TypedInterfaceObject.hxx>
 #include "SVMKernelImplementation.hxx"
 
 namespace OTSVM

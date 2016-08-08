@@ -25,9 +25,9 @@
 #define OTSVM_SVMKERNELREGRESSIONHESSIAN_HXX
 
 #include "SVMKernel.hxx"
-#include "NumericalMathHessianImplementation.hxx"
+#include <openturns/NumericalMathHessianImplementation.hxx>
 #include "SVMKernelRegressionEvaluation.hxx"
-#include "NumericalSample.hxx"
+#include <openturns/NumericalSample.hxx>
 
 
 namespace OTSVM

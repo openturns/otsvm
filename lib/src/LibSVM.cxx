@@ -21,8 +21,9 @@
  *
  */
 #include "otsvm/LibSVM.hxx"
-#include <Log.hxx>
-#include <OT.hxx>
+#include <openturns/Log.hxx>
+#include <openturns/SpecFunc.hxx>
+#include <openturns/LinearNumericalMathFunction.hxx>
 
 
 using namespace OT;

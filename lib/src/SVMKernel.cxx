@@ -20,9 +20,9 @@
  *
  */
 #include "otsvm/SVMKernel.hxx"
-#include <OSS.hxx>
-#include <PersistentObjectFactory.hxx>
-#include <NumericalPoint.hxx>
+#include <openturns/OSS.hxx>
+#include <openturns/PersistentObjectFactory.hxx>
+#include <openturns/NumericalPoint.hxx>
 
 using namespace OT;
 

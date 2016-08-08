@@ -24,7 +24,7 @@
 #define OTSVM_LIBSVMCLASSIFICATION_HXX
 
 #include "LibSVM.hxx"
-#include "PersistentCollection.hxx"
+#include <openturns/PersistentCollection.hxx>
 
 namespace OTSVM
 {

@@ -25,9 +25,9 @@
 #define OTSVM_SVMKERNELREGRESSIONGRADIENT_HXX
 
 #include "SVMKernel.hxx"
-#include "NumericalMathGradientImplementation.hxx"
+#include <openturns/NumericalMathGradientImplementation.hxx>
 #include "SVMKernelRegressionEvaluation.hxx"
-#include "NumericalSample.hxx"
+#include <openturns/NumericalSample.hxx>
 
 
 namespace OTSVM

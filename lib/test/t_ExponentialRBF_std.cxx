@@ -20,11 +20,10 @@
  *
  */
 
-#include "OT.hxx"
-#include "OTtestcode.hxx"
-#include "OStream.hxx"
+#include <openturns/OT.hxx>
+#include <openturns/OTtestcode.hxx>
+#include <openturns/OStream.hxx>
 #include "otsvm/ExponentialRBF.hxx"
-#include "NumericalPoint.hxx"
 
 using namespace OT;
 using namespace OT::Test;

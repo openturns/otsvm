@@ -28,7 +28,7 @@
 #define OPENTURNS_SVMKERNELREGRESSIONEVALUATION_HXX
 
 #include "SVMKernel.hxx"
-#include "NumericalMathEvaluationImplementation.hxx"
+#include <openturns/NumericalMathEvaluationImplementation.hxx>
 #include "SVMKernelRegressionGradient.hxx"
 #include "SVMKernelRegressionHessian.hxx"
 

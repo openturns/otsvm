@@ -26,12 +26,12 @@
 
 
 #include "SVMRegressionImplementation.hxx"
-#include "Distribution.hxx"
-#include "NumericalMathFunction.hxx"
+#include <openturns/Distribution.hxx>
+#include <openturns/NumericalMathFunction.hxx>
 #include "LibSVM.hxx"
 #include "SVMResourceMap.hxx"
-#include "ResourceMap.hxx"
-#include "Experiment.hxx"
+#include <openturns/ResourceMap.hxx>
+#include <openturns/Experiment.hxx>
 
 
 

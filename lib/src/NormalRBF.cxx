@@ -20,8 +20,8 @@
  *
  */
 #include "otsvm/NormalRBF.hxx"
-#include <OSS.hxx>
-#include <PersistentObjectFactory.hxx>
+#include <openturns/OSS.hxx>
+#include <openturns/PersistentObjectFactory.hxx>
 
 using namespace OT;
 
