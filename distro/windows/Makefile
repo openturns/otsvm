@@ -115,14 +115,14 @@ endif
 	touch mod-install
 
 mod-test: mod-install
-	cd $(MOD_BUILD) && make tests -j$(JOBS_TEST)
 ifeq ($(CHECK_OT),y)
+	cd $(MOD_BUILD) && make tests -j$(JOBS)
 	cp $(OT_PREFIX)/bin/*.dll $(MOD_BUILD)/lib/test
 	cp $(MOD_PREFIX)/bin/*.dll $(MOD_BUILD)/lib/test
 	cp $(OT_PREFIX)/bin/*.dll $(MOD_BUILD)/python/test
 	cp $(MOD_PREFIX)/bin/*.dll $(MOD_BUILD)/python/test
 	cp $(MINGW_PREFIX)/$(TARGET)/bin/python$(PYBASEVER_NODOT).dll $(MOD_BUILD)/python/test
-	cd $(MOD_BUILD) && ctest -j$(JOBS) --output-on-failure --timeout 1000
+	cd $(MOD_BUILD) && ctest -j$(JOBS_TEST) --output-on-failure --timeout 1000
 	touch mod-test
 endif
 
