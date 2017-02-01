@@ -23,7 +23,7 @@
 #include "otsvm/LibSVM.hxx"
 #include <openturns/Log.hxx>
 #include <openturns/SpecFunc.hxx>
-#include <openturns/LinearNumericalMathFunction.hxx>
+#include <openturns/LinearFunction.hxx>
 
 
 using namespace OT;
@@ -303,8 +303,8 @@ void LibSVM::normalize(const NumericalSample &data, NumericalMathFunction & tran
     }
   }
   NumericalPoint zero(dimension);
-  transformation = LinearNumericalMathFunction(mean, zero, linear);  
-  inverseTransformation = LinearNumericalMathFunction(zero, mean, linearInv);
+  transformation = LinearFunction(mean, zero, linear);
+  inverseTransformation = LinearFunction(zero, mean, linearInv);
 }
 
 
