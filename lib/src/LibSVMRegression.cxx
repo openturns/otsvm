@@ -26,7 +26,7 @@
 #include "otsvm/SVMKernelRegressionEvaluation.hxx"
 #include "otsvm/SigmoidKernel.hxx"
 #include "otsvm/LinearKernel.hxx"
-#include <openturns/ComposedNumericalMathFunction.hxx>
+#include <openturns/ComposedFunction.hxx>
 #include <openturns/PersistentObjectFactory.hxx>
 
 
@@ -48,8 +48,8 @@ LibSVMRegression::LibSVMRegression(): SVMRegressionImplementation()
 }
 
 /* Constructor with parameters */
-LibSVMRegression::LibSVMRegression(const NumericalSample & dataIn,
-                                   const NumericalSample & dataOut,
+LibSVMRegression::LibSVMRegression(const Sample & dataIn,
+                                   const Sample & dataOut,
                                    const LibSVM::KernelType kerneltype )
 : SVMRegressionImplementation()
 , inputSample_(dataIn)
@@ -81,22 +81,22 @@ void LibSVMRegression::run()
   UnsignedInteger tempTradeoff = 0;
   UnsignedInteger tempKernel = 0;
 
-  NumericalScalar totalerror = 0;
-  NumericalScalar minerror = 0;
+  Scalar totalerror = 0;
+  Scalar minerror = 0;
 
-  NumericalSample isoProbSample( size , inputDimension );
-  NumericalMathFunction outputTransformation;
-  NumericalMathFunction outputInverseTransformation;
+  Sample isoProbSample( size , inputDimension );
+  Function outputTransformation;
+  Function outputInverseTransformation;
 
-  Collection<NumericalMathFunction> marginals;
-  Collection<NumericalMathFunction> outputTransformationMarginals;
+  Collection<Function> marginals;
+  Collection<Function> outputTransformationMarginals;
 
-  NumericalPoint relativeError( outputDimension );
-  NumericalPoint residu( outputDimension );
-  NumericalPoint variance( outputDimension );
+  Point relativeError( outputDimension );
+  Point residu( outputDimension );
+  Point variance( outputDimension );
 
   driver_.normalize(outputSample_, outputTransformation, outputInverseTransformation);
-  NumericalSample normalizedOutputSample(outputTransformation(outputSample_));
+  Sample normalizedOutputSample(outputTransformation(outputSample_));
 
   /* For each component of the output Sample , we compute the same algorithm. 
   * First, we make a cross validation to determinate the best parameters.
@@ -132,9 +132,9 @@ void LibSVMRegression::run()
     driver_.setKernelParameter( kernelParameter_[tempKernel] );    
     driver_.performTrain();
 
-    NumericalPoint svcoef(driver_.getSupportVectorCoef());
+    Point svcoef(driver_.getSupportVectorCoef());
 
-    NumericalSample supportvector( driver_.getNumberSupportVector() , inputDimension );
+    Sample supportvector( driver_.getNumberSupportVector() , inputDimension );
     supportvector = driver_.getSupportVector( inputDimension );
 
     switch(driver_.getKernelType())
@@ -153,7 +153,7 @@ void LibSVMRegression::run()
         break;
     }
 
-    NumericalMathFunction function;
+    Function function;
     function.setEvaluation(new SVMKernelRegressionEvaluation( kernel_ , svcoef , supportvector , driver_.getConstant()));
     function.setGradient(new SVMKernelRegressionGradient( kernel_ , svcoef , supportvector , driver_.getConstant()));
     function.setHessian(new SVMKernelRegressionHessian( kernel_ , svcoef , supportvector , driver_.getConstant()));
@@ -163,38 +163,38 @@ void LibSVMRegression::run()
     driver_.destroyModel();
   }
 
-  NumericalMathFunction aggregated(marginals);
-  NumericalMathFunction composed(aggregated, driver_.getInputTransformation());
-  NumericalMathFunction metaModel(outputInverseTransformation, composed);
+  Function aggregated(marginals);
+  Function composed(aggregated, driver_.getInputTransformation());
+  Function metaModel(outputInverseTransformation, composed);
 
   // compute residual, relative error
-  NumericalPoint residuals(outputDimension);
-  NumericalPoint relativeErrors(outputDimension);  
-  NumericalSample mY(metaModel(inputSample_));
-  NumericalPoint outputVariance(outputSample_.computeVariance());
+  Point residuals(outputDimension);
+  Point relativeErrors(outputDimension);  
+  Sample mY(metaModel(inputSample_));
+  Point outputVariance(outputSample_.computeVariance());
 
   for ( UnsignedInteger outputIndex = 0; outputIndex < outputDimension; ++ outputIndex ) {
-    NumericalScalar quadraticResidual = 0.;
+    Scalar quadraticResidual = 0.;
     for ( UnsignedInteger i = 0; i < size; ++ i ) {
-      const NumericalScalar slack = outputSample_[i][outputIndex] - mY[i][outputIndex];
+      const Scalar slack = outputSample_[i][outputIndex] - mY[i][outputIndex];
       quadraticResidual += slack * slack;
     }
     residuals[outputIndex] = sqrt( quadraticResidual ) / size;
-    const NumericalScalar empiricalError = quadraticResidual / size;
+    const Scalar empiricalError = quadraticResidual / size;
     relativeErrors[outputIndex] = empiricalError / outputVariance[outputIndex];
   }
   
-  result_ = MetaModelResult(NumericalMathFunction(), metaModel, residuals, relativeErrors);
+  result_ = MetaModelResult(Function(), metaModel, residuals, relativeErrors);
 }
 
 
-OT::NumericalSample LibSVMRegression::getInputSample() const
+OT::Sample LibSVMRegression::getInputSample() const
 {
   return inputSample_;
 }
 
 
-OT::NumericalSample LibSVMRegression::getOutputSample() const
+OT::Sample LibSVMRegression::getOutputSample() const
 {
   return outputSample_;
 }

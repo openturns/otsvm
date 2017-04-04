@@ -46,7 +46,7 @@ public:
 
 
   /** Constructor with parameters */
-  RationalKernel(const OT::NumericalScalar constant = 1.0);
+  RationalKernel(const OT::Scalar constant = 1.0);
 
   /** Virtual constructor */
   virtual RationalKernel * clone() const;
@@ -55,25 +55,25 @@ public:
   virtual OT::String __repr__() const;
 
   /** Constant term accessor */
-  virtual OT::NumericalScalar getConstant() const;
-  virtual void setConstant(OT::NumericalScalar constant);
+  virtual OT::Scalar getConstant() const;
+  virtual void setConstant(OT::Scalar constant);
 
   /** Accessor to the parameter used for cross-validation */
-  virtual OT::NumericalScalar getParameter() const;
-  virtual void setParameter(OT::NumericalScalar value);
+  virtual OT::Scalar getParameter() const;
+  virtual void setParameter(OT::Scalar value);
 
   /** Parameters value and description accessor */
-  virtual OT::NumericalPointWithDescription getParameters() const;
-  virtual void setParameters(const OT::NumericalPointWithDescription & parameters);
+  virtual OT::PointWithDescription getParameters() const;
+  virtual void setParameters(const OT::PointWithDescription & parameters);
 
   /** Operator () */
-  virtual OT::NumericalScalar operator() (const OT::NumericalPoint & x1, const OT::NumericalPoint & x2) const;
+  virtual OT::Scalar operator() (const OT::Point & x1, const OT::Point & x2) const;
 
   /** Partial gradient */
-  virtual OT::NumericalPoint partialGradient(const OT::NumericalPoint & x1, const OT::NumericalPoint & x2) const;
+  virtual OT::Point partialGradient(const OT::Point & x1, const OT::Point & x2) const;
 
   /** Partial hessian */
-  virtual OT::SymmetricMatrix partialHessian(const OT::NumericalPoint & x1, const OT::NumericalPoint & x2) const;
+  virtual OT::SymmetricMatrix partialHessian(const OT::Point & x1, const OT::Point & x2) const;
 
   /** Method save() stores the object through the StorageManager */
   void save(OT::Advocate & adv) const;
@@ -82,7 +82,7 @@ public:
   void load(OT::Advocate & adv);
   
 protected:
-  OT::NumericalScalar constant_;
+  OT::Scalar constant_;
 
 private:
 

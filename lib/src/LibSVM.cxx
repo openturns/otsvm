@@ -23,7 +23,7 @@
 #include "otsvm/LibSVM.hxx"
 #include <openturns/Log.hxx>
 #include <openturns/SpecFunc.hxx>
-#include <openturns/LinearNumericalMathFunction.hxx>
+#include <openturns/LinearFunction.hxx>
 
 
 using namespace OT;
@@ -63,11 +63,11 @@ LibSVM::LibSVM()
   
   
   parameter_.degree = ResourceMap::GetAsUnsignedInteger( "LibSVM-DegreePolynomialKernel" );
-  parameter_.coef0 = ResourceMap::GetAsNumericalScalar( "LibSVM-ConstantPolynomialKernel" );
+  parameter_.coef0 = ResourceMap::GetAsScalar( "LibSVM-ConstantPolynomialKernel" );
   parameter_.cache_size = ResourceMap::GetAsUnsignedInteger( "LibSVM-CacheSize" );
   parameter_.shrinking = ResourceMap::GetAsUnsignedInteger( "LibSVM-Shrinking" );
 
-  parameter_.eps = ResourceMap::GetAsNumericalScalar("LibSVM-Epsilon");
+  parameter_.eps = ResourceMap::GetAsScalar("LibSVM-Epsilon");
   svm_set_print_string_function( &SVMLog );
   
   problem_.x = 0;
@@ -82,13 +82,13 @@ LibSVM * LibSVM::clone() const
 }
 
 /* Kernel parameter accessor */
-void LibSVM::setGamma(const NumericalScalar gamma)
+void LibSVM::setGamma(const Scalar gamma)
 {
   parameter_.gamma = gamma;
 }
 
 /* Tradeoff factor accessor */
-void LibSVM::setTradeoffFactor(const NumericalScalar tradeoffFactor)
+void LibSVM::setTradeoffFactor(const Scalar tradeoffFactor)
 {
   parameter_.C = tradeoffFactor;
 }
@@ -106,14 +106,14 @@ void LibSVM::setModel(svm_model* model)
 }
 
 /* Support vectors accessor */
-NumericalSample LibSVM::getSupportVector(const UnsignedInteger dim)
+Sample LibSVM::getSupportVector(const UnsignedInteger dim)
 {
-  NumericalSample res( getNumberSupportVector() , dim );
+  Sample res( getNumberSupportVector() , dim );
 
 
   for ( UnsignedInteger l = 0 ; l < getNumberSupportVector() ; l++ )
   {
-    NumericalPoint node(dim);
+    Point node(dim);
     UnsignedInteger j = 0;
     svm_node* i = getNode(l);
     while(i -> index != -1)
@@ -129,32 +129,32 @@ NumericalSample LibSVM::getSupportVector(const UnsignedInteger dim)
 }
 
 /* Constant accessor */
-NumericalScalar LibSVM:: getConstant()
+Scalar LibSVM:: getConstant()
 {
   return -p_model_->rho[0];
 }
 
 /* Epsilon parameter accessor */
-void LibSVM::setEpsilon(const NumericalScalar epsilon)
+void LibSVM::setEpsilon(const Scalar epsilon)
 {
   parameter_.eps = epsilon;
 }
 
-void LibSVM::setNu(const OT::NumericalScalar nu)
+void LibSVM::setNu(const OT::Scalar nu)
 {
   parameter_.nu = nu;
 }
 
-void LibSVM::setP(const OT::NumericalScalar p)
+void LibSVM::setP(const OT::Scalar p)
 {
   parameter_.p = p;
 }
 
 
 /* Coefficient support vector accessor */
-NumericalPoint LibSVM::getSupportVectorCoef( )
+Point LibSVM::getSupportVectorCoef( )
 {
-  NumericalPoint res(getNumberSupportVector());
+  Point res(getNumberSupportVector());
   for( UnsignedInteger j = 0 ; j < getNumberSupportVector() ; j++ )
   {
     res[j] = p_model_->sv_coef[0][j];
@@ -186,7 +186,7 @@ void LibSVM::setSvmType(const UnsignedInteger svmType)
 }
 
 /*kernelParameter accessor */
-void LibSVM::setKernelParameter(const NumericalScalar kernelParameter)
+void LibSVM::setKernelParameter(const Scalar kernelParameter)
 {
   if (fabs(kernelParameter) < 1e-25)
   {
@@ -196,7 +196,7 @@ void LibSVM::setKernelParameter(const NumericalScalar kernelParameter)
 }
 
 /* Gamma accessor */
-NumericalScalar LibSVM::getGamma()
+Scalar LibSVM::getGamma()
 {
   return parameter_.gamma;
 }
@@ -212,13 +212,13 @@ void LibSVM::setDegree(const UnsignedInteger Degree)
 }
 
 /* Coefficient accessor */
-NumericalScalar LibSVM::getPolynomialConstant()
+Scalar LibSVM::getPolynomialConstant()
 {
   return parameter_.coef0;
 }
 
 /* Output component accessor */
-NumericalScalar LibSVM::getOutput(const UnsignedInteger index)
+Scalar LibSVM::getOutput(const UnsignedInteger index)
 {
   return problem_.y[index];
 }
@@ -231,16 +231,16 @@ void LibSVM::performTrain()
 }
 
 
-NumericalScalar LibSVM::runCrossValidation()
+Scalar LibSVM::runCrossValidation()
 { 
   UnsignedInteger size = problem_.l;
-  NumericalPoint target(size);
+  Point target(size);
   
   // launch validation
   srand (1);
   svm_cross_validation(&problem_, &parameter_, ResourceMap::GetAsUnsignedInteger("LibSVMRegression-NumberOfFolds"), &target[0]);
   
-  NumericalScalar totalError = 0.0;
+  Scalar totalError = 0.0;
   for (UnsignedInteger i = 0; i < size; ++ i)
   {
     totalError += (problem_.y[i] - target[i]) * (problem_.y[i] - target[i]) / size;
@@ -252,9 +252,9 @@ NumericalScalar LibSVM::runCrossValidation()
 }
 
 
-NumericalScalar LibSVM::computeError()
+Scalar LibSVM::computeError()
 {
-  NumericalScalar totalerror = 0;
+  Scalar totalerror = 0;
 
   for ( UnsignedInteger k = 0 ; k < (UnsignedInteger)problem_.l ; k++ )
   {
@@ -266,7 +266,7 @@ NumericalScalar LibSVM::computeError()
   return totalerror;
 }
 
-NumericalScalar LibSVM::computeAccuracy()
+Scalar LibSVM::computeAccuracy()
 {
   UnsignedInteger totalerror = 0;
   for ( UnsignedInteger k = 0 ; k < (UnsignedInteger)problem_.l ; k++ )
@@ -287,28 +287,28 @@ template <typename T> T * LibSVM::Allocation(const UnsignedInteger size) const
 
 
 /* normalize the sample */
-void LibSVM::normalize(const NumericalSample &data, NumericalMathFunction & transformation, NumericalMathFunction & inverseTransformation) const
+void LibSVM::normalize(const Sample &data, Function & transformation, Function & inverseTransformation) const
 {
   UnsignedInteger dimension = data.getDimension();
-  NumericalPoint mean(data.computeMean());
-  NumericalPoint stdev(data.computeStandardDeviationPerComponent());
+  Point mean(data.computeMean());
+  Point stdev(data.computeStandardDeviationPerComponent());
   SquareMatrix linear(dimension);
   SquareMatrix linearInv(dimension);
   for (UnsignedInteger j = 0; j < dimension; ++ j) {
     linearInv(j, j) = 1.0;
     linear(j, j) = 1.0;
-    if (fabs(stdev[j]) > SpecFunc::MinNumericalScalar) {
+    if (fabs(stdev[j]) > SpecFunc::MinScalar) {
       linear(j, j) /= stdev[j];
       linearInv(j, j) *= stdev[j];
     }
   }
-  NumericalPoint zero(dimension);
-  transformation = LinearNumericalMathFunction(mean, zero, linear);  
-  inverseTransformation = LinearNumericalMathFunction(zero, mean, linearInv);
+  Point zero(dimension);
+  transformation = LinearFunction(mean, zero, linear);  
+  inverseTransformation = LinearFunction(zero, mean, linearInv);
 }
 
 
-OT::NumericalMathFunction LibSVM::getInputTransformation() const
+OT::Function LibSVM::getInputTransformation() const
 {
   return inputTransformation_;
 }
@@ -316,12 +316,12 @@ OT::NumericalMathFunction LibSVM::getInputTransformation() const
 
 
 /* Create the problem with libsvm format */
-void LibSVM::convertData(const NumericalSample & inputSample, const NumericalSample & outputSample)
+void LibSVM::convertData(const Sample & inputSample, const Sample & outputSample)
 {
   const UnsignedInteger size = inputSample.getSize();
   const UnsignedInteger inputDimension = inputSample.getDimension();
 
-  NumericalMathFunction inputInverseTransformation;
+  Function inputInverseTransformation;
   normalize(inputSample, inputTransformation_, inputInverseTransformation);
   
   // write in/out into problem data
@@ -367,7 +367,7 @@ void LibSVM::destroyModel()
   }
 }
 
-UnsignedInteger LibSVM::getLabel(const NumericalPoint & vector) const
+UnsignedInteger LibSVM::getLabel(const Point & vector) const
 {
   const UnsignedInteger size = vector.getSize();
   svm_problem prob;
@@ -393,7 +393,7 @@ UnsignedInteger LibSVM::getLabel(const NumericalPoint & vector) const
 
 }
 
-UnsignedInteger LibSVM::getLabelValues(const NumericalPoint & vector, const SignedInteger outC) const
+UnsignedInteger LibSVM::getLabelValues(const Point & vector, const SignedInteger outC) const
 {
   const UnsignedInteger size = vector.getSize();
   svm_problem prob;
@@ -412,7 +412,7 @@ UnsignedInteger LibSVM::getLabelValues(const NumericalPoint & vector, const Sign
 
   const UnsignedInteger numberclass = svm_get_nr_class( p_model_ );
   double *dec_values = Allocation < double > ( numberclass * ( numberclass - 1 ) / 2);
-  NumericalPoint vote(numberclass);
+  Point vote(numberclass);
   UnsignedInteger pos = 0;
 
   svm_predict_values( p_model_, prob.x[0], dec_values );
@@ -447,7 +447,7 @@ UnsignedInteger LibSVM::getLabelValues(const NumericalPoint & vector, const Sign
 }
 
 
-NumericalScalar LibSVM::predict(const NumericalPoint & inP) const
+Scalar LibSVM::predict(const Point & inP) const
 {
   UnsignedInteger inputDimension = inP.getDimension();
   struct svm_node *x = Allocation<struct svm_node>(inputDimension + 1);
@@ -509,7 +509,7 @@ NumericalScalar LibSVM::predict(const NumericalPoint & inP) const
 }
 
 
-void LibSVM::setWeight(const NumericalPoint & weight, const NumericalPoint & label)
+void LibSVM::setWeight(const Point & weight, const Point & label)
 {
   const UnsignedInteger size = weight.getSize();
 

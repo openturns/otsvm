@@ -10,7 +10,7 @@ dimension = 3
 # Create the Sobol function
 # Reference analytical values
 meanTh = 1.0
-a = NumericalPoint(dimension)
+a = Point(dimension)
 inputVariables = Description(dimension)
 outputVariables = Description(1)
 outputVariables[0] = "y"
@@ -25,7 +25,7 @@ for i in range(dimension):
         " * ((abs(4.0 * xi" + str(i) + " - 2.0) + " + \
         str(a[i]) + ") / (1.0 + " + str(a[i]) + "))"
 covTh = covTh - 1.0
-model = NumericalMathFunction(inputVariables, outputVariables, formula)
+model = Function(inputVariables, outputVariables, formula)
 RandomGenerator.SetSeed(0)
 # Create the input distribution
 marginals = DistributionCollection(dimension)
@@ -36,9 +36,9 @@ distribution = ComposedDistribution(marginals)
 dataIn = distribution.getSample(250)
 dataOut = model(dataIn)
 # list of tradeOff parameter
-cp = NumericalPoint([5, 10, 100, 200, 500, 1000, 10000])
+cp = Point([5, 10, 100, 200, 500, 1000, 10000])
 # list of gamma parameter in kernel function
-gamma = NumericalPoint([0.001, 0.01, 0.1, 0.5, 1, 5, 10, 20, 30, 40, 50, 100])
+gamma = Point([0.001, 0.01, 0.1, 0.5, 1, 5, 10, 20, 30, 40, 50, 100])
 RandomGenerator.SetSeed(0)
 # create the Problem
 Regression = SVMRegression(dataIn, dataOut, LibSVM.NormalRbf)

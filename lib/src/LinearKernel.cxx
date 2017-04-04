@@ -58,18 +58,18 @@ String LinearKernel::__repr__() const
 
 
 /* Operator */
-NumericalScalar LinearKernel::operator() ( const NumericalPoint & x1 , const NumericalPoint & x2 ) const
+Scalar LinearKernel::operator() ( const Point & x1 , const Point & x2 ) const
 {
-  NumericalScalar value = dot( x1 , x2 );
+  Scalar value = dot( x1 , x2 );
   return value;
 }
 
 
 /* Partial Gradient */
-NumericalPoint LinearKernel::partialGradient( const NumericalPoint & x1 , const NumericalPoint & x2 ) const
+Point LinearKernel::partialGradient( const Point & x1 , const Point & x2 ) const
 {
   UnsignedInteger dimension = x1.getDimension();
-  NumericalPoint result(dimension , 0.0);
+  Point result(dimension , 0.0);
   for( UnsignedInteger i = 0 ; i < dimension ; i ++ )
   {
     result[i] = x2[i];
@@ -79,7 +79,7 @@ NumericalPoint LinearKernel::partialGradient( const NumericalPoint & x1 , const 
 
 
 /* Partial Hessian */
-SymmetricMatrix LinearKernel::partialHessian( const NumericalPoint & x1 , const NumericalPoint & x2 )const
+SymmetricMatrix LinearKernel::partialHessian( const Point & x1 , const Point & x2 )const
 {
   UnsignedInteger dimension = x1.getDimension();
   SymmetricMatrix result(dimension);

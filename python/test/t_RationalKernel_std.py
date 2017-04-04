@@ -6,8 +6,8 @@ from otsvm import *
 
 # instantiate a kernel=Gaussian with sigma = 2
 kernel = RationalKernel(2)
-x = NumericalPoint(2, 2)
-y = NumericalPoint(2, 1)
+x = Point(2, 2)
+y = Point(2, 1)
 
 print(" kernel ([2 2],[1 1]) = %.12g" % kernel(x, y))
 print(" dkernel/dx_i([2 2],[1 1]) = ", repr(kernel.partialGradient(x, y)))

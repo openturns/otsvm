@@ -38,8 +38,8 @@ SVMRegression::SVMRegression(): OT::TypedInterfaceObject < SVMRegressionImplemen
 }
 
 /* constructor with parameters */
-SVMRegression::SVMRegression(const NumericalSample & dataIn,
-                             const NumericalSample & dataOut,
+SVMRegression::SVMRegression(const Sample & dataIn,
+                             const Sample & dataOut,
                              const LibSVM::KernelType kerneltype)
 : TypedInterfaceObject< SVMRegressionImplementation >(new LibSVMRegression(dataIn, dataOut, kerneltype))
 {
@@ -56,25 +56,25 @@ SVMRegression::SVMRegression( Implementation & p_implementation ): TypedInterfac
 }
 
 /* Tradeoff factor accessor */
-void SVMRegression::setTradeoffFactor( NumericalPoint factor )
+void SVMRegression::setTradeoffFactor( Point factor )
 {
   copyOnWrite();
   getImplementation() -> setTradeoffFactor( factor );
 }
 
-NumericalPoint SVMRegression::getTradeoffFactor()
+Point SVMRegression::getTradeoffFactor()
 {
   return getImplementation() -> getTradeoffFactor();
 }
 
 /* Kernel parameter accessor */
-void SVMRegression::setKernelParameter( NumericalPoint kernel )
+void SVMRegression::setKernelParameter( Point kernel )
 {
   copyOnWrite();
   getImplementation() -> setKernelParameter( kernel );
 }
 
-NumericalPoint SVMRegression::getKernelParameter()
+Point SVMRegression::getKernelParameter()
 {
   return getImplementation() -> getKernelParameter();
 }

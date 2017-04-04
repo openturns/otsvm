@@ -4,7 +4,7 @@
 #create a function, here we create the Sobol function
 dimension = 3
 meanTh = 1.0
-a = NumericalPoint(dimension)
+a = Point(dimension)
 inputVariables = Description(dimension)
 outputVariables = Description(1)
 outputVariables[0] = "y"
@@ -18,7 +18,7 @@ for i in range(dimension):
     formula[0] = formula[0] + " * ((abs(4.0 * xi" +str(i) + " -2.0) + " + 
     str(a[i]) + ") / (1.0 + " + str(a[i]) + "))"
 covTh = covTh -1.0
-model = NumericalMathFunction(inputVariables, outputVariables, formula)
+model = Function(inputVariables, outputVariables, formula)
 
 #create the input distribution
 RandomGenerator.SetSeed(0)
@@ -28,12 +28,12 @@ for i in range(dimension):
 distribution = ComposedDistribution(marginals)
 
 #create lists of kernel parameters and tradeoff factors
-tradeoff = NumericalPoint([0.01,0.1,1,10,100,1000])
-kernel = NumericalPoint([0.001,0.01,0.1,1,10,100])
+tradeoff = Point([0.01,0.1,1,10,100,1000])
+kernel = Point([0.001,0.01,0.1,1,10,100])
 
 #first example : create the problem with an input and output samples:
 #first, we create samples
-dataIn = distribution.getNumericalSample(250)
+dataIn = distribution.getSample(250)
 dataOut = model(dataIn)
 #second, we create our svm regression object, we must select the third parameter 
 #in an enumerate in the list { NormalRBF, Linear, Sigmoid, Polynomial }
@@ -76,7 +76,7 @@ for i in range(dimension):
   marginals[i] = Uniform(0.0, 1.0)
 distribution = ComposedDistribution(marginals)
 #second, we create input and output samples
-dataIn = distribution.getNumericalSample(250)
+dataIn = distribution.getSample(250)
 dataOut = model(dataIn)
 #third, we create our svm regression
 Regression3 = SVMRegression(dataIn,dataOut,distribution,
@@ -97,7 +97,7 @@ relativeError = result.getRelativeErrors()
 #Users can fix others parameters like the degree and the constant of the 
 #Polynomial Kernel,the cacheSize, the number of folds or the epsilon
 #first, we create samples
-dataIn = distribution.getNumericalSample(250)
+dataIn = distribution.getSample(250)
 dataOut = model(dataIn)
 #second, we create our svm regression object
 #here, we select the Polynomial Kernel but by default his degree is 3. We want a 

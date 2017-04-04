@@ -36,7 +36,7 @@ CLASSNAMEINIT(SigmoidKernel);
 static Factory<SigmoidKernel> RegisteredFactory;
 
 /* Constructor with parameters */
-SigmoidKernel::SigmoidKernel( const NumericalScalar linear , const NumericalScalar constant ):
+SigmoidKernel::SigmoidKernel( const Scalar linear , const Scalar constant ):
   SVMKernelImplementation(),
   linear_(linear),
   constant_(constant)
@@ -62,33 +62,33 @@ String SigmoidKernel::__repr__() const
 
 
 /* Linear term accessor */
-NumericalScalar SigmoidKernel::getLinear() const
+Scalar SigmoidKernel::getLinear() const
 {
   return linear_;
 }
 
-void SigmoidKernel::setLinear( NumericalScalar linear )
+void SigmoidKernel::setLinear( Scalar linear )
 {
   linear_ = linear;
 }
 
 
 /* Constant term accessor */
-NumericalScalar SigmoidKernel::getConstant() const
+Scalar SigmoidKernel::getConstant() const
 {
   return constant_;
 }
 
-void SigmoidKernel::setConstant( NumericalScalar constant )
+void SigmoidKernel::setConstant( Scalar constant )
 {
   constant_ = constant;
 }
 
 
 /* Parameters value and description accessor */
-NumericalPointWithDescription SigmoidKernel::getParameters() const
+PointWithDescription SigmoidKernel::getParameters() const
 {
-  NumericalPointWithDescription parameters(0);
+  PointWithDescription parameters(0);
   Description description(0);
   parameters.add(linear_);
   description.add("linear term");
@@ -98,7 +98,7 @@ NumericalPointWithDescription SigmoidKernel::getParameters() const
   return parameters;
 }
 
-void SigmoidKernel::setParameters( const NumericalPointWithDescription & parameters )
+void SigmoidKernel::setParameters( const PointWithDescription & parameters )
 {
   if( parameters.getDimension() > 0 )
     linear_ = parameters[0];
@@ -108,20 +108,20 @@ void SigmoidKernel::setParameters( const NumericalPointWithDescription & paramet
 
 
 /* Operator () */
-NumericalScalar SigmoidKernel::operator() ( const NumericalPoint & x1 , const NumericalPoint & x2 ) const
+Scalar SigmoidKernel::operator() ( const Point & x1 , const Point & x2 ) const
 {
-  NumericalScalar dotProduct = dot( x1 , x2 );
-  NumericalScalar value = tanh( linear_ * dotProduct + constant_ );
+  Scalar dotProduct = dot( x1 , x2 );
+  Scalar value = tanh( linear_ * dotProduct + constant_ );
   return value;
 }
 
 
 /* Partial gradient */
-NumericalPoint SigmoidKernel::partialGradient( const NumericalPoint & x1 , const NumericalPoint & x2 ) const
+Point SigmoidKernel::partialGradient( const Point & x1 , const Point & x2 ) const
 {
   UnsignedInteger dimension = x1.getDimension();
-  NumericalScalar dotProduct = dot( x1 , x2 );
-  NumericalPoint result(dimension , 0.0);
+  Scalar dotProduct = dot( x1 , x2 );
+  Point result(dimension , 0.0);
   for( UnsignedInteger i = 0 ; i < dimension ; i ++ )
   {
     result[i] = linear_ * x2[i] * ( 1 - std::pow( tanh( linear_ * dotProduct + constant_), 2));
@@ -131,10 +131,10 @@ NumericalPoint SigmoidKernel::partialGradient( const NumericalPoint & x1 , const
 
 
 /* Partial hessian */
-SymmetricMatrix SigmoidKernel::partialHessian( const NumericalPoint & x1 , const NumericalPoint & x2 )const
+SymmetricMatrix SigmoidKernel::partialHessian( const Point & x1 , const Point & x2 )const
 {
   UnsignedInteger dimension = x1.getDimension();
-  NumericalScalar dotProduct = dot( x1 , x2 );
+  Scalar dotProduct = dot( x1 , x2 );
   SymmetricMatrix result(dimension);
   for (UnsignedInteger i = 0 ; i < dimension ; ++ i)
   {

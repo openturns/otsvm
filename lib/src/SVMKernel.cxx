@@ -22,7 +22,7 @@
 #include "otsvm/SVMKernel.hxx"
 #include <openturns/OSS.hxx>
 #include <openturns/PersistentObjectFactory.hxx>
-#include <openturns/NumericalPoint.hxx>
+#include <openturns/Point.hxx>
 
 using namespace OT;
 
@@ -73,12 +73,12 @@ String SVMKernel::__str__(const String & offset) const
 
 
 /* Parameter accessor */
-NumericalScalar SVMKernel::getParameter() const
+Scalar SVMKernel::getParameter() const
 {
   return getImplementation()->getParameter();
 }
 
-void SVMKernel::setParameter(NumericalScalar value)
+void SVMKernel::setParameter(Scalar value)
 {
   copyOnWrite();
   getImplementation()->setParameter(value);
@@ -87,12 +87,12 @@ void SVMKernel::setParameter(NumericalScalar value)
 
 
 /* Parameters value and description accessor */
-NumericalPointWithDescription SVMKernel::getParameters() const
+PointWithDescription SVMKernel::getParameters() const
 {
   return getImplementation()->getParameters();
 }
 
-void SVMKernel::setParameters(const NumericalPointWithDescription & parameters)
+void SVMKernel::setParameters(const PointWithDescription & parameters)
 {
   copyOnWrite();
   getImplementation()->setParameters(parameters);
@@ -100,21 +100,21 @@ void SVMKernel::setParameters(const NumericalPointWithDescription & parameters)
 
 
 /* Operator () */
-NumericalScalar SVMKernel::operator() (const NumericalPoint & x1, const NumericalPoint & x2) const
+Scalar SVMKernel::operator() (const Point & x1, const Point & x2) const
 {
   return getImplementation()->operator()(x1, x2);
 }
 
 
 /* Partial gradient */
-NumericalPoint SVMKernel::partialGradient(const NumericalPoint & x1, const NumericalPoint & x2) const
+Point SVMKernel::partialGradient(const Point & x1, const Point & x2) const
 {
   return getImplementation()->partialGradient(x1, x2);
 }
 
 
 /* Partial hessian */
-SymmetricMatrix SVMKernel::partialHessian(const NumericalPoint & x1, const NumericalPoint & x2) const
+SymmetricMatrix SVMKernel::partialHessian(const Point & x1, const Point & x2) const
 {
   return getImplementation()->partialHessian(x1, x2);
 }

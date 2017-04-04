@@ -42,18 +42,18 @@ public:
 
   /**
   *Constructor with parameters.
-  * @param  dataIn a NumericalSample, an OpenTURNS object which is the input Sample.
+  * @param  dataIn a Sample, an OpenTURNS object which is the input Sample.
   * @param  outClasses an Indices, an OpenTURNS object which is the label for each vector.
   */
-  LibSVMClassification(const OT::NumericalSample & dataIn,
+  LibSVMClassification(const OT::Sample & dataIn,
                        const OT::Indices & outClasses);
 
   /**
   *Constructor with parameters.
-  * @param  dataIn a NumericalSample, an OpenTURNS object which is the input Sample.
+  * @param  dataIn a Sample, an OpenTURNS object which is the input Sample.
   * @param  outClasses an Indices, an OpenTURNS object which is the label for each vector.
   */
-  LibSVMClassification(const OT::NumericalSample &dataIn,
+  LibSVMClassification(const OT::Sample &dataIn,
                        const OT::Collection<OT::SignedInteger> & outClasses);
 
   /**
@@ -62,27 +62,27 @@ public:
   virtual LibSVMClassification * clone() const;
 
   /* Accuracy accessor */
-  OT::NumericalScalar getAccuracy();
+  OT::Scalar getAccuracy();
 
   /**
   *Associate a point with a class
-  *@param vector a NumericalPoint, an Openturns object.
+  *@param vector a Point, an Openturns object.
   */
-  OT::UnsignedInteger classify(const OT::NumericalPoint & vector) const;
+  OT::UnsignedInteger classify(const OT::Point & vector) const;
 
   /* String converter */
   OT::String __repr__() const;
 
   /* Grade a point as if it were associated to a class */
-  OT::UnsignedInteger grade(const OT::NumericalPoint & inP, const OT::SignedInteger & outC) const;
-  OT::NumericalScalar predict(const OT::NumericalPoint & inP) const;
+  OT::UnsignedInteger grade(const OT::Point & inP, const OT::SignedInteger & outC) const;
+  OT::Scalar predict(const OT::Point & inP) const;
 
   void runKMeans(const OT::UnsignedInteger k);
 
   void setKernelType(const LibSVM::KernelType & kerneltype);
-  void setTradeoffFactor(const OT::NumericalPoint & trade);
-  void setKernelParameter( const OT::NumericalPoint & kernel);
-  void setWeight( OT::NumericalPoint weight);
+  void setTradeoffFactor(const OT::Point & trade);
+  void setKernelParameter( const OT::Point & kernel);
+  void setWeight( OT::Point weight);
 
   /** Method run */
   virtual void run();
@@ -102,19 +102,19 @@ private:
   LibSVM driver_;
 
   /* Input Sample */
-  OT::NumericalSample inputSample_;
+  OT::Sample inputSample_;
 
   /* Output Sample */
   OT::Collection<OT::SignedInteger> classes_;
 
   /* Accuracy value */
-  OT::NumericalScalar accuracy_;
+  OT::Scalar accuracy_;
 
   /* Tradeoff factor parameter*/
-  OT::NumericalPoint tradeoffFactor_;
+  OT::Point tradeoffFactor_;
 
   /* Kernel parameter */
-  OT::NumericalPoint kernelParameter_;
+  OT::Point kernelParameter_;
 
 };
 

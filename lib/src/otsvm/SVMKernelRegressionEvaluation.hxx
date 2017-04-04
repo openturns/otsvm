@@ -28,7 +28,7 @@
 #define OPENTURNS_SVMKERNELREGRESSIONEVALUATION_HXX
 
 #include "SVMKernel.hxx"
-#include <openturns/NumericalMathEvaluationImplementation.hxx>
+#include <openturns/EvaluationImplementation.hxx>
 #include "SVMKernelRegressionGradient.hxx"
 #include "SVMKernelRegressionHessian.hxx"
 
@@ -43,7 +43,7 @@ namespace OTSVM
  */
 
 class OTSVM_API SVMKernelRegressionEvaluation
-  : public OT::NumericalMathEvaluationImplementation
+  : public OT::EvaluationImplementation
 {
   CLASSNAME;
 
@@ -55,9 +55,9 @@ public:
 
   /** Constructor with parameters */
   SVMKernelRegressionEvaluation(const SVMKernel & kernel,
-                                const OT::NumericalPoint & lagrangeMultiplier,
-                                const OT::NumericalSample & dataIn,
-                                const OT::NumericalScalar constant);
+                                const OT::Point & lagrangeMultiplier,
+                                const OT::Sample & dataIn,
+                                const OT::Scalar constant);
 
   /** Virtual constructor */
   virtual SVMKernelRegressionEvaluation * clone() const;
@@ -72,7 +72,7 @@ public:
   virtual OT::Bool isActualImplementation() const;
 
   /** Operator () */
-  virtual OT::NumericalPoint operator() (const OT::NumericalPoint & inP) const;
+  virtual OT::Point operator() (const OT::Point & inP) const;
 
   /** Accessor for input point dimension */
   virtual OT::UnsignedInteger getInputDimension() const;
@@ -93,9 +93,9 @@ private:
 
 protected:
   SVMKernel kernel_;
-  OT::NumericalPoint lagrangeMultiplier_;
-  OT::NumericalSample dataIn_;
-  OT::NumericalScalar constant_;
+  OT::Point lagrangeMultiplier_;
+  OT::Sample dataIn_;
+  OT::Scalar constant_;
 
 }; /* class SVMKernelRegressionEvaluation */
 

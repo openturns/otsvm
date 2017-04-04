@@ -51,15 +51,15 @@ public:
   SVMRegression(Implementation & p_implementation);
 
   /* constructor with parameters */
-  SVMRegression(const OT::NumericalSample & dataIn, const OT::NumericalSample & dataOut, const LibSVM::KernelType kerneltype);
+  SVMRegression(const OT::Sample & dataIn, const OT::Sample & dataOut, const LibSVM::KernelType kerneltype);
 
   /* Kernel parameter accessor */
-  void setKernelParameter( OT::NumericalPoint kernel );
-  OT::NumericalPoint getKernelParameter();
+  void setKernelParameter( OT::Point kernel );
+  OT::Point getKernelParameter();
 
   /* Tradeoff factor accessor */
-  void setTradeoffFactor( OT::NumericalPoint factor );
-  OT::NumericalPoint getTradeoffFactor();
+  void setTradeoffFactor( OT::Point factor );
+  OT::Point getTradeoffFactor();
 
   /* Results accessor */
   OT::MetaModelResult getResult();

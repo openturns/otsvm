@@ -28,7 +28,7 @@
 #define OTSVM_KMEANSCLUSTERING_HXX
 
 
-#include <openturns/NumericalSample.hxx>
+#include <openturns/Sample.hxx>
 #include "otsvm/OTSVMprivate.hxx"
 
 namespace OTSVM
@@ -44,23 +44,23 @@ public:
 
   virtual KMeansClustering * clone() const;
 
-  KMeansClustering(const OT::NumericalSample & dataIn, OT::UnsignedInteger k);
+  KMeansClustering(const OT::Sample & dataIn, OT::UnsignedInteger k);
 
   virtual void run();
 
   OT::Indices getCluster();
 
-  OT::NumericalSample getMeans();
+  OT::Sample getMeans();
 
 protected:
 
   OT::UnsignedInteger k_;
 
-  OT::NumericalSample inputSample_;
+  OT::Sample inputSample_;
 
   OT::Indices cluster_;
 
-  OT::NumericalSample means_;
+  OT::Sample means_;
 };
 
 }

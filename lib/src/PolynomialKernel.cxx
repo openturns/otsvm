@@ -35,7 +35,7 @@ CLASSNAMEINIT(PolynomialKernel);
 
 
 /* Constructor with parameters */
-PolynomialKernel::PolynomialKernel(const NumericalScalar degree, const NumericalScalar linear, const NumericalScalar constant)
+PolynomialKernel::PolynomialKernel(const Scalar degree, const Scalar linear, const Scalar constant)
   : SVMKernelImplementation(),
     degree_(degree),
     linear_(linear),
@@ -63,66 +63,66 @@ String PolynomialKernel::__repr__() const
 
 
 /* Sigma parameter accessor */
-NumericalScalar PolynomialKernel::getDegree() const
+Scalar PolynomialKernel::getDegree() const
 {
   return degree_;
 }
 
-void PolynomialKernel::setDegree(NumericalScalar degree)
+void PolynomialKernel::setDegree(Scalar degree)
 {
   degree_ = degree;
 }
 
 
 /* Linear term accessor */
-NumericalScalar PolynomialKernel::getLinear() const
+Scalar PolynomialKernel::getLinear() const
 {
   return linear_;
 }
 
-void PolynomialKernel::setLinear(NumericalScalar linear)
+void PolynomialKernel::setLinear(Scalar linear)
 {
   linear_ = linear;
 }
 
 
 /* Constant term accessor */
-NumericalScalar PolynomialKernel::getConstant() const
+Scalar PolynomialKernel::getConstant() const
 {
   return constant_;
 }
 
-void PolynomialKernel::setConstant(NumericalScalar constant)
+void PolynomialKernel::setConstant(Scalar constant)
 {
   constant_ = constant;
 }
 
 
 /* Accessor to the parameter used for cross-validation */
-NumericalScalar PolynomialKernel::getParameter() const
+Scalar PolynomialKernel::getParameter() const
 {
   return degree_;
 }
 
-void PolynomialKernel::setParameter(NumericalScalar value)
+void PolynomialKernel::setParameter(Scalar value)
 {
   degree_ = value;
 }
 
 
 /* Operator () */
-NumericalScalar PolynomialKernel::operator() (const NumericalPoint & x1, const NumericalPoint & x2) const
+Scalar PolynomialKernel::operator() (const Point & x1, const Point & x2) const
 {
-  NumericalScalar dotProduct = dot(x1, x2);
-  NumericalScalar value = std::pow(linear_ * dotProduct + constant_, degree_);
+  Scalar dotProduct = dot(x1, x2);
+  Scalar value = std::pow(linear_ * dotProduct + constant_, degree_);
   return value;
 }
 
 
 /* Parameters value and description accessor */
-NumericalPointWithDescription PolynomialKernel::getParameters() const
+PointWithDescription PolynomialKernel::getParameters() const
 {
-  NumericalPointWithDescription parameters(0);
+  PointWithDescription parameters(0);
   Description description(0);
   parameters.add(degree_);
   description.add("degree");
@@ -134,7 +134,7 @@ NumericalPointWithDescription PolynomialKernel::getParameters() const
   return parameters;
 }
 
-void PolynomialKernel::setParameters(const NumericalPointWithDescription & parameters)
+void PolynomialKernel::setParameters(const PointWithDescription & parameters)
 {
   if(parameters.getDimension() > 0)
     degree_ = parameters[0];
@@ -144,11 +144,11 @@ void PolynomialKernel::setParameters(const NumericalPointWithDescription & param
 
 
 /* Partial gradient */
-NumericalPoint PolynomialKernel::partialGradient(const NumericalPoint & x1, const NumericalPoint & x2) const
+Point PolynomialKernel::partialGradient(const Point & x1, const Point & x2) const
 {
   UnsignedInteger dimension = x1.getDimension();
-  NumericalScalar dotProduct = dot(x1, x2);
-  NumericalPoint result(dimension, 0.0);
+  Scalar dotProduct = dot(x1, x2);
+  Point result(dimension, 0.0);
   if(degree_ >= 1.0)
   {
     for(UnsignedInteger i = 0; i < dimension; ++ i)
@@ -161,11 +161,11 @@ NumericalPoint PolynomialKernel::partialGradient(const NumericalPoint & x1, cons
 
 
 /* Partial hessian */
-SymmetricMatrix PolynomialKernel::partialHessian(const NumericalPoint & x1, const NumericalPoint & x2) const
+SymmetricMatrix PolynomialKernel::partialHessian(const Point & x1, const Point & x2) const
 {
   UnsignedInteger dimension = x1.getDimension();
   SymmetricMatrix result(dimension);
-  NumericalScalar dotProduct = dot(x1, x2);
+  Scalar dotProduct = dot(x1, x2);
   if (degree_ >= 2.0)
   {
     for (UnsignedInteger i = 0; i < dimension; ++ i)

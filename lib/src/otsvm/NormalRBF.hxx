@@ -41,7 +41,7 @@ public:
 
 
   /** Constructor with parameters */
-  explicit NormalRBF(const OT::NumericalScalar sigma = 1.0);
+  explicit NormalRBF(const OT::Scalar sigma = 1.0);
 
   /** Virtual constructor */
   virtual NormalRBF * clone() const;
@@ -50,25 +50,25 @@ public:
   virtual OT::String __repr__() const;
 
   /** Sigma parameter accessor */
-  virtual OT::NumericalScalar getSigma() const;
-  virtual void setSigma(OT::NumericalScalar sigma);
+  virtual OT::Scalar getSigma() const;
+  virtual void setSigma(OT::Scalar sigma);
 
   /** Accessor to the parameter used for cross-validation */
-  virtual OT::NumericalScalar getParameter() const;
-  virtual void setParameter(OT::NumericalScalar value);
+  virtual OT::Scalar getParameter() const;
+  virtual void setParameter(OT::Scalar value);
 
   /** Parameters value and description accessor */
-  virtual OT::NumericalPointWithDescription getParameters() const;
-  virtual void setParameters(const OT::NumericalPointWithDescription & parameters);
+  virtual OT::PointWithDescription getParameters() const;
+  virtual void setParameters(const OT::PointWithDescription & parameters);
 
   /** Operator () */
-  virtual OT::NumericalScalar operator() (const OT::NumericalPoint & x1, const OT::NumericalPoint & x2) const;
+  virtual OT::Scalar operator() (const OT::Point & x1, const OT::Point & x2) const;
 
   /** Partial gradient */
-  virtual OT::NumericalPoint partialGradient(const OT::NumericalPoint & x1, const OT::NumericalPoint & x2) const;
+  virtual OT::Point partialGradient(const OT::Point & x1, const OT::Point & x2) const;
 
   /** Partial hessian */
-  virtual OT::SymmetricMatrix partialHessian(const OT::NumericalPoint & x1, const OT::NumericalPoint & x2) const;
+  virtual OT::SymmetricMatrix partialHessian(const OT::Point & x1, const OT::Point & x2) const;
   
   /** Method save() stores the object through the StorageManager */
   void save(OT::Advocate & adv) const;
@@ -78,7 +78,7 @@ public:
   
   
 protected:
-  OT::NumericalScalar sigma_;
+  OT::Scalar sigma_;
 
 private:
 

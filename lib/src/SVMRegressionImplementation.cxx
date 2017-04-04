@@ -54,23 +54,23 @@ void SVMRegressionImplementation::run()
 }
 
 /* Tradeoff factor accessor */
-void SVMRegressionImplementation::setTradeoffFactor(const NumericalPoint & tradeoffFactor)
+void SVMRegressionImplementation::setTradeoffFactor(const Point & tradeoffFactor)
 {
   tradeoffFactor_ = tradeoffFactor;
 }
 
-NumericalPoint SVMRegressionImplementation::getTradeoffFactor()
+Point SVMRegressionImplementation::getTradeoffFactor()
 {
   return tradeoffFactor_;
 }
 
 /* Kernel parameter accessor */
-void SVMRegressionImplementation::setKernelParameter(const NumericalPoint & kernelParameter)
+void SVMRegressionImplementation::setKernelParameter(const Point & kernelParameter)
 {
   kernelParameter_ = kernelParameter;
 }
 
-NumericalPoint SVMRegressionImplementation::getKernelParameter()
+Point SVMRegressionImplementation::getKernelParameter()
 {
   return kernelParameter_;
 }

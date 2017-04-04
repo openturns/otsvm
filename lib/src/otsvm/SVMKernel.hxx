@@ -63,21 +63,21 @@ public:
   OT::String __str__(const OT::String & offset = "") const;
 
   /** Parameter accessor */
-  OT::NumericalScalar getParameter() const;
-  void setParameter(OT::NumericalScalar value);
+  OT::Scalar getParameter() const;
+  void setParameter(OT::Scalar value);
 
   /** Parameters value and description accessor */
-  OT::NumericalPointWithDescription getParameters() const;
-  void setParameters(const OT::NumericalPointWithDescription & parameters);
+  OT::PointWithDescription getParameters() const;
+  void setParameters(const OT::PointWithDescription & parameters);
 
   /** Operator () */
-  OT::NumericalScalar operator () (const OT::NumericalPoint & x1, const OT::NumericalPoint & x2) const;
+  OT::Scalar operator () (const OT::Point & x1, const OT::Point & x2) const;
 
   /** Partial Gradient */
-  OT::NumericalPoint partialGradient(const OT::NumericalPoint & x1, const OT::NumericalPoint & x2) const;
+  OT::Point partialGradient(const OT::Point & x1, const OT::Point & x2) const;
 
   /** Partial hessian */
-  OT::SymmetricMatrix partialHessian(const OT::NumericalPoint & x1, const OT::NumericalPoint & x2) const;
+  OT::SymmetricMatrix partialHessian(const OT::Point & x1, const OT::Point & x2) const;
 
 } ; /* class SVMKernel */
 

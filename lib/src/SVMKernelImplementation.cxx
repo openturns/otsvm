@@ -56,45 +56,45 @@ String SVMKernelImplementation::__repr__() const
 
 
 /* Parameter accessor */
-NumericalScalar SVMKernelImplementation::getParameter() const
+Scalar SVMKernelImplementation::getParameter() const
 {
   throw NotYetImplementedException(HERE);
 }
 
-void SVMKernelImplementation::setParameter(NumericalScalar value)
+void SVMKernelImplementation::setParameter(Scalar value)
 {
   throw NotYetImplementedException(HERE);
 }
 
 
 /* Parameters value and description accessor */
-NumericalPointWithDescription SVMKernelImplementation::getParameters() const
+PointWithDescription SVMKernelImplementation::getParameters() const
 {
   throw NotYetImplementedException(HERE);
 }
 
-void SVMKernelImplementation::setParameters(const NumericalPointWithDescription & parameters)
+void SVMKernelImplementation::setParameters(const PointWithDescription & parameters)
 {
   throw NotYetImplementedException(HERE);
 }
 
 
 /* Operator () */
-NumericalScalar SVMKernelImplementation::operator () (const NumericalPoint & x1, const NumericalPoint & x2) const
+Scalar SVMKernelImplementation::operator () (const Point & x1, const Point & x2) const
 {
   throw NotYetImplementedException(HERE);
 }
 
 
 /* Partial gradient */
-NumericalPoint SVMKernelImplementation::partialGradient(const NumericalPoint & x, const NumericalPoint & y) const
+Point SVMKernelImplementation::partialGradient(const Point & x, const Point & y) const
 {
   throw NotYetImplementedException(HERE);
 }
 
 
 /* Partial hessian */
-SymmetricMatrix SVMKernelImplementation::partialHessian(const NumericalPoint & x, const NumericalPoint & y) const
+SymmetricMatrix SVMKernelImplementation::partialHessian(const Point & x, const Point & y) const
 {
   return SymmetricMatrix(x.getDimension());
   //      throw NotYetImplementedException(HERE);

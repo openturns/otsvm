@@ -38,7 +38,7 @@ class OTSVM_API SigmoidKernel : public SVMKernelImplementation
 public:
 
   /* Constructor with parameters */
-  SigmoidKernel( const OT::NumericalScalar linear = 1.0 , const OT::NumericalScalar constant = 0.0 );
+  SigmoidKernel( const OT::Scalar linear = 1.0 , const OT::Scalar constant = 0.0 );
 
   /* Virtual constructor */
   virtual SigmoidKernel * clone() const;
@@ -47,25 +47,25 @@ public:
   virtual OT::String __repr__() const;
 
   /* Linear term accessor */
-  virtual OT::NumericalScalar getLinear() const;
-  virtual void setLinear( OT::NumericalScalar linear );
+  virtual OT::Scalar getLinear() const;
+  virtual void setLinear( OT::Scalar linear );
 
   /* Constant term accessor */
-  virtual OT::NumericalScalar getConstant() const;
-  virtual void setConstant( OT::NumericalScalar constant );
+  virtual OT::Scalar getConstant() const;
+  virtual void setConstant( OT::Scalar constant );
 
   /* Parameters value and description accessor */
-  virtual OT::NumericalPointWithDescription getParameters() const;
-  virtual void setParameters( const OT::NumericalPointWithDescription & parameters );
+  virtual OT::PointWithDescription getParameters() const;
+  virtual void setParameters( const OT::PointWithDescription & parameters );
 
   /* Operator () */
-  virtual OT::NumericalScalar operator() ( const OT::NumericalPoint & x1 , const OT::NumericalPoint & x2 ) const;
+  virtual OT::Scalar operator() ( const OT::Point & x1 , const OT::Point & x2 ) const;
 
   /* Partial gradient */
-  virtual OT::NumericalPoint partialGradient( const OT::NumericalPoint & x1 , const OT::NumericalPoint & x2 ) const;
+  virtual OT::Point partialGradient( const OT::Point & x1 , const OT::Point & x2 ) const;
 
   /* Partial hessian */
-  virtual OT::SymmetricMatrix partialHessian( const OT::NumericalPoint & x1 , const OT::NumericalPoint & x2 ) const;
+  virtual OT::SymmetricMatrix partialHessian( const OT::Point & x1 , const OT::Point & x2 ) const;
 
   /** Method save() stores the object through the StorageManager */
   void save(OT::Advocate & adv) const;
@@ -76,10 +76,10 @@ public:
 protected:
 
   /* Linear term */
-  OT::NumericalScalar linear_;
+  OT::Scalar linear_;
 
   /* Constant term */
-  OT::NumericalScalar constant_;
+  OT::Scalar constant_;
 
 };
 
