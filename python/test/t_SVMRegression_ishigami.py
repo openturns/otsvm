@@ -32,7 +32,7 @@ outputVariables[0] = "y"
 formula = Description(1)
 formula[0] = "sin(xi1) + (" + str(a) + \
     ") * (sin(xi2)) ^ 2 + (" + str(b) + ") * xi3^4 * sin(xi1)"
-model = NumericalMathFunction(inputVariables, outputVariables, formula)
+model = Function(inputVariables, outputVariables, formula)
 
 # Create the input distribution
 marginals = DistributionCollection(dimension)
@@ -45,9 +45,9 @@ dataOut = model(dataIn)
 
 # Create the SVMRegression result
 # list of tradeOff parameter
-cp = NumericalPoint([500, 200, 150, 100, 75, 50, 10])
+cp = Point([500, 200, 150, 100, 75, 50, 10])
 # list of gamma parameter in kernel function
-gamma = NumericalPoint(
+gamma = Point(
     [0.0001, 0.001, 0.15, 0.25, 0.35, 0.4, 0.5, 0.6, 0.8, 1, 10, 100])
 
 RandomGenerator.SetSeed(0)

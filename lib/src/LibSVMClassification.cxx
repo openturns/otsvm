@@ -28,7 +28,7 @@
 #include "otsvm/LinearKernel.hxx"
 #include "otsvm/KMeansClustering.hxx"
 #include <openturns/PersistentObjectFactory.hxx>
-#include <openturns/ComposedNumericalMathFunction.hxx>
+#include <openturns/ComposedFunction.hxx>
 
 
 using namespace OT;
@@ -59,7 +59,7 @@ LibSVMClassification* LibSVMClassification::clone() const
 }
 
 
-LibSVMClassification::LibSVMClassification(const NumericalSample & dataIn,
+LibSVMClassification::LibSVMClassification(const Sample & dataIn,
                                             const Indices & outClasses):
   PersistentObject(),
   inputSample_(dataIn),
@@ -73,7 +73,7 @@ LibSVMClassification::LibSVMClassification(const NumericalSample & dataIn,
   driver_.setNu(0.);
 }
 
-LibSVMClassification::LibSVMClassification(const NumericalSample & dataIn,
+LibSVMClassification::LibSVMClassification(const Sample & dataIn,
                                            const Collection<SignedInteger> & outClasses ):
   PersistentObject(),
   inputSample_(dataIn),
@@ -85,7 +85,7 @@ LibSVMClassification::LibSVMClassification(const NumericalSample & dataIn,
 
 
 
-NumericalScalar LibSVMClassification::getAccuracy()
+Scalar LibSVMClassification::getAccuracy()
 {
   return accuracy_;
 }
@@ -106,12 +106,12 @@ void LibSVMClassification::run()
   UnsignedInteger tempTradeoff = 0;
   UnsignedInteger tempKernel = 0;
 
-  NumericalScalar totalerror = 0;
-  NumericalScalar minerror = 0;
+  Scalar totalerror = 0;
+  Scalar minerror = 0;
 
   if(sizeOutput != sizeInput) throw InvalidArgumentException(HERE) << "Error: the input sample and the output sample must have the same size ";
 
-  NumericalSample outputSample(inputSample_.getSize(), 1);
+  Sample outputSample(inputSample_.getSize(), 1);
   for (UnsignedInteger i = 0; i < classes_.getSize(); ++ i)
   {
     outputSample[i][0] = classes_[i];
@@ -149,7 +149,7 @@ void LibSVMClassification::run()
 }
 
 
-UnsignedInteger LibSVMClassification::classify(const NumericalPoint & vector) const
+UnsignedInteger LibSVMClassification::classify(const Point & vector) const
 {
   return driver_.getLabel(vector);
 }
@@ -160,30 +160,30 @@ void LibSVMClassification::setKernelType(const LibSVM::KernelType & kerneltype)
   driver_.setKernelType(kerneltype);
 }
 
-void LibSVMClassification::setTradeoffFactor(const NumericalPoint & trade)
+void LibSVMClassification::setTradeoffFactor(const Point & trade)
 {
   tradeoffFactor_ = trade;
 }
 
-void LibSVMClassification::setKernelParameter(const NumericalPoint & kernel)
+void LibSVMClassification::setKernelParameter(const Point & kernel)
 {
   kernelParameter_ = kernel;
 }
 
 /* Grade a point as if it were associated to a class */
-UnsignedInteger LibSVMClassification::grade(const NumericalPoint & inP, const  SignedInteger & outC) const
+UnsignedInteger LibSVMClassification::grade(const Point & inP, const  SignedInteger & outC) const
 {
   return driver_.getLabelValues(inP, outC);
 }
 
-OT::NumericalScalar LibSVMClassification::predict(const OT::NumericalPoint& inP) const
+OT::Scalar LibSVMClassification::predict(const OT::Point& inP) const
 {
   return driver_.predict(inP);
 }
 
-void LibSVMClassification::setWeight(NumericalPoint weight)
+void LibSVMClassification::setWeight(Point weight)
 {
-  NumericalPoint label(weight.getSize());
+  Point label(weight.getSize());
   UnsignedInteger j = 1;
   UnsignedInteger change = 0;
 
@@ -209,9 +209,9 @@ void LibSVMClassification::setWeight(NumericalPoint weight)
 
 void LibSVMClassification::runKMeans( UnsignedInteger k )
 {
-  NumericalScalar error = 0;
+  Scalar error = 0;
   Indices cluster;
-  NumericalSample finalSample(0, inputSample_[0].getDimension());
+  Sample finalSample(0, inputSample_[0].getDimension());
   Collection<SignedInteger> finalIndices;
   Collection<SignedInteger> tempIndices;
   KMeansClustering kmeans(inputSample_ , k);
@@ -222,7 +222,7 @@ void LibSVMClassification::runKMeans( UnsignedInteger k )
   for( UnsignedInteger i = 0 ; i < k ; i++)
   {
     Collection<SignedInteger> partialIndices;
-    NumericalSample partialSample(0, inputSample_[0].getDimension());
+    Sample partialSample(0, inputSample_[0].getDimension());
     for( UnsignedInteger j = 0 ; j < cluster.getSize() ; j++ )
     {
       if( cluster[j] == i )

@@ -34,7 +34,7 @@ static Factory<SVMKernelRegressionHessian> RegisteredFactory;
 
 /* Default constructor */
 SVMKernelRegressionHessian::SVMKernelRegressionHessian() :
-  NumericalMathHessianImplementation()
+  HessianImplementation()
 {
   // nothing to do
 }
@@ -42,9 +42,9 @@ SVMKernelRegressionHessian::SVMKernelRegressionHessian() :
 
 /* Constructor with parameters */
 SVMKernelRegressionHessian::SVMKernelRegressionHessian(const SVMKernel & kernel,
-    const NumericalPoint & lagrangeMultiplier,
-    const NumericalSample & dataIn,
-    const NumericalScalar constant) :
+    const Point & lagrangeMultiplier,
+    const Sample & dataIn,
+    const Scalar constant) :
   kernel_(kernel),
   lagrangeMultiplier_(lagrangeMultiplier),
   dataIn_(dataIn),
@@ -56,7 +56,7 @@ SVMKernelRegressionHessian::SVMKernelRegressionHessian(const SVMKernel & kernel,
 
 /* Constructor from SVMKernelRegressionEvaluation */
 SVMKernelRegressionHessian::SVMKernelRegressionHessian(const SVMKernelRegressionEvaluation & evaluation) :
-  NumericalMathHessianImplementation()
+  HessianImplementation()
   //  :
   //      kernel_(kernel),
   //      dataIn_(dataIn),
@@ -97,7 +97,7 @@ Bool SVMKernelRegressionHessian::isActualImplementation() const
 }
 
 /* Hessian method */
-SymmetricTensor SVMKernelRegressionHessian::hessian(const NumericalPoint & inP) const
+SymmetricTensor SVMKernelRegressionHessian::hessian(const Point & inP) const
 {
   ++ callsNumber_;
 
@@ -141,7 +141,7 @@ UnsignedInteger SVMKernelRegressionHessian::getOutputDimension() const
 /* Method save() stores the object through the StorageManager */
 void SVMKernelRegressionHessian::save(Advocate & adv) const
 {
-  NumericalMathHessianImplementation::save(adv);
+  HessianImplementation::save(adv);
   adv.saveAttribute("kernel_", kernel_);
   adv.saveAttribute("lagrangeMultiplier_", lagrangeMultiplier_);
   adv.saveAttribute("dataIn_", dataIn_);
@@ -151,7 +151,7 @@ void SVMKernelRegressionHessian::save(Advocate & adv) const
 /* Method load() reloads the object from the StorageManager */
 void SVMKernelRegressionHessian::load(Advocate & adv)
 {
-  NumericalMathHessianImplementation::load(adv);
+  HessianImplementation::load(adv);
   adv.loadAttribute("kernel_", kernel_);
   adv.loadAttribute("lagrangeMultiplier_", lagrangeMultiplier_);
   adv.loadAttribute("dataIn_", dataIn_);

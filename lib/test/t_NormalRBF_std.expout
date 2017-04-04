@@ -1,6 +1,6 @@
  kernel ([2 2],[1 1]) = 0.778801
- dkernel/dx_i([2 2],[1 1]) = class=NumericalPoint name=Unnamed dimension=2 values=[-0.1947,-0.1947]
+ dkernel/dx_i([2 2],[1 1]) = class=Point name=Unnamed dimension=2 values=[-0.1947,-0.1947]
  d2kernel/(dx_i*dx_j)([2 2],[1 1]) = class=SymmetricMatrix dimension=2 implementation=class=MatrixImplementation name=Unnamed rows=2 columns=2 values=[-0.146025,0.048675,0,-0.146025]
  kernel ([0 5],[0 3]) = 0.606531
- dkernel/dx_i([0 5],[0 3]) = class=NumericalPoint name=Unnamed dimension=2 values=[-0,-0.303265]
+ dkernel/dx_i([0 5],[0 3]) = class=Point name=Unnamed dimension=2 values=[-0,-0.303265]
  d2kernel/(dx_i*dx_j)([0 5],[0 3]) = class=SymmetricMatrix dimension=2 implementation=class=MatrixImplementation name=Unnamed rows=2 columns=2 values=[-0.151633,0,0,0]

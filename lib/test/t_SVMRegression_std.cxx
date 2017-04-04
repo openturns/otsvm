@@ -23,11 +23,11 @@
 #include <otsvm/LibSVMRegression.hxx>
 #include <otsvm/SVMRegressionImplementation.hxx>
 #include <otsvm/SVMRegression.hxx>
-#include <NumericalPoint.hxx>
+#include <Point.hxx>
 #include "OSS.hxx"
 #include <openturns/OStream.hxx>
 #include <otsvm/SVMResourceMap.hxx>
-#include "NumericalMathFunction.hxx"
+#include "Function.hxx"
 #include "ComposedDistribution.hxx"
 
 using namespace OT;
@@ -37,14 +37,14 @@ using namespace OTSVM;
 int main(int argc, char **argv)
 {
 
-  NumericalSample dataIn(100, 1);
-  NumericalSample dataOut(100, 2);
+  Sample dataIn(100, 1);
+  Sample dataOut(100, 2);
 
   for(int i = 0; i < 100; i++)
   {
-    NumericalPoint a(1);
+    Point a(1);
     a[0] = i + 1;
-    NumericalPoint b(2);
+    Point b(2);
     b[0] = 2 * (i + 1);
     b[1] = i + 4;
     dataIn[i] = a;
@@ -52,11 +52,11 @@ int main(int argc, char **argv)
   }
 
 
-  NumericalPoint cp(2);
+  Point cp(2);
   cp[0] = 5;
   cp[1] = 10;
 
-  NumericalPoint gamma(5);
+  Point gamma(5);
   gamma[1] = 0.1;
   gamma[0] = 0.001;
   gamma[2] = 10;
@@ -73,9 +73,9 @@ int main(int argc, char **argv)
   regression.run();
 
   MetaModelResult result(regression.getResult());
-  NumericalPoint residu(2);
+  Point residu(2);
   residu = result.getResiduals();
-  NumericalPoint error(2);
+  Point error(2);
   residu = result.getRelativeErrors();
 
   std::cout << std::setprecision(2) << result.getResiduals()[0] << " " << result.getResiduals()[1] << std::endl;

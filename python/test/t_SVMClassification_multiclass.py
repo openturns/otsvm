@@ -7,16 +7,16 @@ import os
 
 # we retreive the sample from the file sample.csv
 path = os.path.abspath(os.path.dirname(__file__))
-dataInOut = NumericalSample.ImportFromCSVFile(path + '/multiclass.csv', ',')
+dataInOut = Sample.ImportFromCSVFile(path + '/multiclass.csv', ',')
 
-dataIn = NumericalSample(148, 4)
+dataIn = Sample(148, 4)
 dataOut = Indices(148, 0)
 
 # we build the input Sample and the output Sample because we must separate
 # dataInOut
 for i in range(148):
     a = dataInOut[i]
-    b = NumericalPoint(4)
+    b = Point(4)
     b[0] = a[1]
     b[1] = a[2]
     b[2] = a[3]

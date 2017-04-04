@@ -35,7 +35,7 @@ CLASSNAMEINIT(RationalKernel);
 static Factory<RationalKernel> RegisteredFactory;
 
 /* Constructor with parameters */
-RationalKernel::RationalKernel(const NumericalScalar constant)
+RationalKernel::RationalKernel(const Scalar constant)
   : SVMKernelImplementation(),
     constant_(constant)
 {
@@ -59,33 +59,33 @@ String RationalKernel::__repr__() const
 
 
 /* Constant term accessor */
-NumericalScalar RationalKernel::getConstant() const
+Scalar RationalKernel::getConstant() const
 {
   return constant_;
 }
 
-void RationalKernel::setConstant(NumericalScalar constant)
+void RationalKernel::setConstant(Scalar constant)
 {
   constant_ = constant;
 }
 
 
 /* Accessor to the parameter used for cross-validation */
-NumericalScalar RationalKernel::getParameter() const
+Scalar RationalKernel::getParameter() const
 {
   return constant_;
 }
 
-void RationalKernel::setParameter(NumericalScalar value)
+void RationalKernel::setParameter(Scalar value)
 {
   constant_ = value;
 }
 
 
 /* Parameters value and description accessor */
-NumericalPointWithDescription RationalKernel::getParameters() const
+PointWithDescription RationalKernel::getParameters() const
 {
-  NumericalPointWithDescription parameters(0);
+  PointWithDescription parameters(0);
   Description description(0);
   parameters.add(constant_);
   description.add("constant");
@@ -93,29 +93,29 @@ NumericalPointWithDescription RationalKernel::getParameters() const
   return parameters;
 }
 
-void RationalKernel::setParameters(const NumericalPointWithDescription & parameters)
+void RationalKernel::setParameters(const PointWithDescription & parameters)
 {
   if(parameters.getDimension() > 0)
     constant_ = parameters[0];
 }
 
 /* Operator () */
-NumericalScalar RationalKernel::operator() (const NumericalPoint & x1, const NumericalPoint & x2) const
+Scalar RationalKernel::operator() (const Point & x1, const Point & x2) const
 {
-  NumericalPoint difference(x1 - x2);
-  NumericalScalar norm2 = difference.normSquare();
-  NumericalScalar value = 1.0 - norm2 / (norm2 + constant_);
+  Point difference(x1 - x2);
+  Scalar norm2 = difference.normSquare();
+  Scalar value = 1.0 - norm2 / (norm2 + constant_);
   return value;
 }
 
 
 /* Partial gradient */
-NumericalPoint RationalKernel::partialGradient(const NumericalPoint & x1, const NumericalPoint & x2) const
+Point RationalKernel::partialGradient(const Point & x1, const Point & x2) const
 {
   UnsignedInteger dimension = x1.getDimension();
-  NumericalPoint difference(x1 - x2);
-  NumericalScalar norm2 = difference.normSquare();
-  NumericalPoint result(dimension);
+  Point difference(x1 - x2);
+  Scalar norm2 = difference.normSquare();
+  Point result(dimension);
   for(UnsignedInteger i = 0; i < dimension; ++ i)
   {
     result[i] = - 2.0 * constant_ * (x1[i] - x2[i]) / ((norm2 + constant_) * (norm2 + constant_));
@@ -125,12 +125,12 @@ NumericalPoint RationalKernel::partialGradient(const NumericalPoint & x1, const 
 
 
 /* Partial hessian */
-SymmetricMatrix RationalKernel::partialHessian(const NumericalPoint & x1, const NumericalPoint & x2) const
+SymmetricMatrix RationalKernel::partialHessian(const Point & x1, const Point & x2) const
 {
   UnsignedInteger dimension = x1.getDimension();
-  NumericalPoint difference(x1 - x2);
-  NumericalScalar norm2 = difference.normSquare();
-  NumericalScalar denominator = (norm2 + constant_) * (norm2 + constant_) * (norm2 + constant_);
+  Point difference(x1 - x2);
+  Scalar norm2 = difference.normSquare();
+  Scalar denominator = (norm2 + constant_) * (norm2 + constant_) * (norm2 + constant_);
   SymmetricMatrix result(dimension);
   for(UnsignedInteger i = 0; i < dimension; ++ i)
   {

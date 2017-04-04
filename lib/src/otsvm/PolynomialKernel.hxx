@@ -41,7 +41,7 @@ public:
 
 
   /** Constructor with parameters */
-  PolynomialKernel(const OT::NumericalScalar degree = 3.0, const OT::NumericalScalar linear = 1.0, const OT::NumericalScalar constant = 0.0);
+  PolynomialKernel(const OT::Scalar degree = 3.0, const OT::Scalar linear = 1.0, const OT::Scalar constant = 0.0);
 
   /** Virtual constructor */
   virtual PolynomialKernel * clone() const;
@@ -50,33 +50,33 @@ public:
   virtual OT::String __repr__() const;
 
   /** Degree accessor */
-  virtual OT::NumericalScalar getDegree() const;
-  virtual void setDegree(OT::NumericalScalar degree);
+  virtual OT::Scalar getDegree() const;
+  virtual void setDegree(OT::Scalar degree);
 
   /** Linear term accessor */
-  virtual OT::NumericalScalar getLinear() const;
-  virtual void setLinear(OT::NumericalScalar linear);
+  virtual OT::Scalar getLinear() const;
+  virtual void setLinear(OT::Scalar linear);
 
   /** Constant term accessor */
-  virtual OT::NumericalScalar getConstant() const;
-  virtual void setConstant(OT::NumericalScalar constant);
+  virtual OT::Scalar getConstant() const;
+  virtual void setConstant(OT::Scalar constant);
 
   /** Accessor to the parameter used for cross-validation */
-  virtual OT::NumericalScalar getParameter() const;
-  virtual void setParameter(OT::NumericalScalar value);
+  virtual OT::Scalar getParameter() const;
+  virtual void setParameter(OT::Scalar value);
 
   /** Parameters value and description accessor */
-  virtual OT::NumericalPointWithDescription getParameters() const;
-  virtual void setParameters(const OT::NumericalPointWithDescription & parameters);
+  virtual OT::PointWithDescription getParameters() const;
+  virtual void setParameters(const OT::PointWithDescription & parameters);
 
   /** Operator () */
-  virtual OT::NumericalScalar operator() (const OT::NumericalPoint & x1, const OT::NumericalPoint & x2) const;
+  virtual OT::Scalar operator() (const OT::Point & x1, const OT::Point & x2) const;
 
   /** Partial gradient */
-  virtual OT::NumericalPoint partialGradient(const OT::NumericalPoint & x1, const OT::NumericalPoint & x2) const;
+  virtual OT::Point partialGradient(const OT::Point & x1, const OT::Point & x2) const;
 
   /** Partial hessian */
-  virtual OT::SymmetricMatrix partialHessian(const OT::NumericalPoint & x1, const OT::NumericalPoint & x2) const;
+  virtual OT::SymmetricMatrix partialHessian(const OT::Point & x1, const OT::Point & x2) const;
 
     
   /** Method save() stores the object through the StorageManager */
@@ -87,9 +87,9 @@ public:
   
   
 protected:
-  OT::NumericalScalar degree_;
-  OT::NumericalScalar linear_;
-  OT::NumericalScalar constant_;
+  OT::Scalar degree_;
+  OT::Scalar linear_;
+  OT::Scalar constant_;
 private:
 
 } ; /* class PolynomialKernel */

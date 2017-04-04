@@ -5,7 +5,7 @@ import os
 from openturns import *
 from otsvm import *
 
-model = NumericalMathFunction(['E', 'F', 'L', 'I'], ['d'], ['F*L^3/(3*E*I)'])
+model = Function(['E', 'F', 'L', 'I'], ['d'], ['F*L^3/(3*E*I)'])
 dim = model.getInputDimension()
 
 R = IdentityMatrix(dim)
@@ -35,7 +35,7 @@ if hasattr(openturns, 'XMLStorageManager'):
     myStudy = Study()
     myStudy.setStorageManager(XMLStorageManager(fileName))
     myStudy.load()
-    loadedMetamodel = NumericalMathFunction()
+    loadedMetamodel = Function()
     myStudy.fillObject("metamodel", loadedMetamodel)
 
     os.remove(fileName)

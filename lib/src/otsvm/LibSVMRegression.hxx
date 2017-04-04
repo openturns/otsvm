@@ -27,7 +27,7 @@
 
 #include "SVMRegressionImplementation.hxx"
 #include <openturns/Distribution.hxx>
-#include <openturns/NumericalMathFunction.hxx>
+#include <openturns/Function.hxx>
 #include "LibSVM.hxx"
 #include "SVMResourceMap.hxx"
 #include <openturns/ResourceMap.hxx>
@@ -49,8 +49,8 @@ public:
   LibSVMRegression();
 
   /* constructor with parameters */
-  LibSVMRegression(const OT::NumericalSample & dataIn,
-                   const OT::NumericalSample & dataOut,
+  LibSVMRegression(const OT::Sample & dataIn,
+                   const OT::Sample & dataOut,
                    const LibSVM::KernelType kerneltype = LibSVM::NormalRbf);
 
   /* Virtual constructor*/
@@ -59,8 +59,8 @@ public:
   /* Method run */
   virtual void run();
 
-  OT::NumericalSample getInputSample() const;
-  OT::NumericalSample getOutputSample() const;
+  OT::Sample getInputSample() const;
+  OT::Sample getOutputSample() const;
   
   /** Method save() stores the object through the StorageManager */
   virtual void save(OT::Advocate & adv) const;
@@ -76,10 +76,10 @@ private:
   LibSVM driver_;
 
   /* Input Sample */
-  OT::NumericalSample inputSample_;
+  OT::Sample inputSample_;
 
   /* Output Sample */
-  OT::NumericalSample outputSample_;
+  OT::Sample outputSample_;
 
 };
 

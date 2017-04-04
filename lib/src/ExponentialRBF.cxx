@@ -36,7 +36,7 @@ CLASSNAMEINIT(ExponentialRBF);
 static Factory<ExponentialRBF> RegisteredFactory;
 
 /* Constructor with parameters */
-ExponentialRBF::ExponentialRBF(const NumericalScalar sigma)
+ExponentialRBF::ExponentialRBF(const Scalar sigma)
   : SVMKernelImplementation(),
     sigma_(sigma)
 {
@@ -60,33 +60,33 @@ String ExponentialRBF::__repr__() const
 
 
 /* Sigma parameter accessor */
-NumericalScalar ExponentialRBF::getSigma() const
+Scalar ExponentialRBF::getSigma() const
 {
   return sigma_;
 }
 
-void ExponentialRBF::setSigma(NumericalScalar sigma)
+void ExponentialRBF::setSigma(Scalar sigma)
 {
   sigma_ = sigma;
 }
 
 
 /* Accessor to the parameter used for cross-validation */
-NumericalScalar ExponentialRBF::getParameter() const
+Scalar ExponentialRBF::getParameter() const
 {
   return sigma_;
 }
 
-void ExponentialRBF::setParameter(NumericalScalar value)
+void ExponentialRBF::setParameter(Scalar value)
 {
   sigma_ = value;
 }
 
 
 /* Parameters value and description accessor */
-NumericalPointWithDescription ExponentialRBF::getParameters() const
+PointWithDescription ExponentialRBF::getParameters() const
 {
-  NumericalPointWithDescription parameters(0);
+  PointWithDescription parameters(0);
   Description description(0);
   parameters.add(sigma_);
   description.add("sigma");
@@ -94,7 +94,7 @@ NumericalPointWithDescription ExponentialRBF::getParameters() const
   return parameters;
 }
 
-void ExponentialRBF::setParameters(const NumericalPointWithDescription & parameters)
+void ExponentialRBF::setParameters(const PointWithDescription & parameters)
 {
   if(parameters.getDimension() > 0)
     sigma_ = parameters[0];
@@ -102,21 +102,21 @@ void ExponentialRBF::setParameters(const NumericalPointWithDescription & paramet
 
 
 /* Operator () */
-NumericalScalar ExponentialRBF::operator() (const NumericalPoint & x1, const NumericalPoint & x2) const
+Scalar ExponentialRBF::operator() (const Point & x1, const Point & x2) const
 {
-  NumericalPoint difference(x1 - x2);
-  NumericalScalar value = exp(- difference.norm() / (2.0 * sigma_ * sigma_));
+  Point difference(x1 - x2);
+  Scalar value = exp(- difference.norm() / (2.0 * sigma_ * sigma_));
   return value;
 }
 
 
 /* Partial gradient */
-NumericalPoint ExponentialRBF::partialGradient(const NumericalPoint & x1, const NumericalPoint & x2) const
+Point ExponentialRBF::partialGradient(const Point & x1, const Point & x2) const
 {
   UnsignedInteger dimension = x1.getDimension();
-  NumericalPoint difference(x1 - x2);
-  NumericalScalar norm = difference.norm();
-  NumericalPoint result(dimension, 0.0);
+  Point difference(x1 - x2);
+  Scalar norm = difference.norm();
+  Point result(dimension, 0.0);
   if (norm > 0.0)
   {
     for (UnsignedInteger i = 0; i < dimension; ++ i)
@@ -129,11 +129,11 @@ NumericalPoint ExponentialRBF::partialGradient(const NumericalPoint & x1, const 
 
 
 /* Partial hessian */
-SymmetricMatrix ExponentialRBF::partialHessian(const NumericalPoint & x1, const NumericalPoint & x2) const
+SymmetricMatrix ExponentialRBF::partialHessian(const Point & x1, const Point & x2) const
 {
   UnsignedInteger dimension = x1.getDimension();
-  NumericalPoint difference(x1 - x2);
-  NumericalScalar norm = difference.norm();
+  Point difference(x1 - x2);
+  Scalar norm = difference.norm();
   SymmetricMatrix result(dimension);
   if (norm > 0.0)
   {

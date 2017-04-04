@@ -22,7 +22,7 @@
 #ifndef OPENTURNS_SVMKERNELIMPLEMENTATION_HXX
 #define OPENTURNS_SVMKERNELIMPLEMENTATION_HXX
 
-#include <openturns/NumericalPointWithDescription.hxx>
+#include <openturns/PointWithDescription.hxx>
 #include <openturns/SymmetricMatrix.hxx>
 #include "otsvm/OTSVMprivate.hxx"
 
@@ -54,21 +54,21 @@ public:
   virtual OT::String __repr__() const;
 
   /** Parameter accessor */
-  virtual OT::NumericalScalar getParameter() const;
-  virtual void setParameter(OT::NumericalScalar value);
+  virtual OT::Scalar getParameter() const;
+  virtual void setParameter(OT::Scalar value);
 
   /** Parameters value and description accessor */
-  virtual OT::NumericalPointWithDescription getParameters() const;
-  virtual void setParameters(const OT::NumericalPointWithDescription & parameters);
+  virtual OT::PointWithDescription getParameters() const;
+  virtual void setParameters(const OT::PointWithDescription & parameters);
 
   /** Operator () */
-  virtual OT::NumericalScalar operator () (const OT::NumericalPoint & x1, const OT::NumericalPoint & x2) const;
+  virtual OT::Scalar operator () (const OT::Point & x1, const OT::Point & x2) const;
 
   /** Partial gradient */
-  virtual OT::NumericalPoint partialGradient(const OT::NumericalPoint & x1, const OT::NumericalPoint & x2) const;
+  virtual OT::Point partialGradient(const OT::Point & x1, const OT::Point & x2) const;
 
   /** Partial hessian */
-  virtual OT::SymmetricMatrix partialHessian(const OT::NumericalPoint & x1, const OT::NumericalPoint & x2) const;
+  virtual OT::SymmetricMatrix partialHessian(const OT::Point & x1, const OT::Point & x2) const;
 
   /** Method save() stores the object through the StorageManager */
   virtual void save(OT::Advocate & adv) const;

@@ -5,8 +5,8 @@ from openturns import *
 from otsvm import *
 
 kernel = PolynomialKernel(3, 2, 1)
-x = NumericalPoint(2, 2)
-y = NumericalPoint(2, 1)
+x = Point(2, 2)
+y = Point(2, 1)
 
 print(" kernel ([2 2],[1 1]) = ", repr(kernel(x, y)))
 print(" dkernel/dx_i([2 2],[1 1]) = ", repr(kernel.partialGradient(x, y)))

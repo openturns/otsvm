@@ -56,12 +56,12 @@ public:
   virtual OT::MetaModelResult getResult() const;
 
   /** Tradeoff factor accessor */
-  virtual void setTradeoffFactor(const OT::NumericalPoint & factor);
-  virtual OT::NumericalPoint getTradeoffFactor();
+  virtual void setTradeoffFactor(const OT::Point & factor);
+  virtual OT::Point getTradeoffFactor();
 
   /** Kernel parameter accessor */
-  virtual OT::NumericalPoint getKernelParameter();
-  virtual void setKernelParameter(const OT::NumericalPoint & kernel);
+  virtual OT::Point getKernelParameter();
+  virtual void setKernelParameter(const OT::Point & kernel);
 
   /** Method save() stores the object through the StorageManager */
   virtual void save(OT::Advocate & adv) const;
@@ -72,10 +72,10 @@ public:
 protected:
 
   /* Tradeoff factor parameter*/
-  OT::NumericalPoint tradeoffFactor_;
+  OT::Point tradeoffFactor_;
 
   /* Kernel parameter */
-  OT::NumericalPoint kernelParameter_;
+  OT::Point kernelParameter_;
 
   /* Kernel on OpenTurns format*/
   SVMKernel kernel_;

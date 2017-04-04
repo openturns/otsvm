@@ -6,10 +6,10 @@ from otsvm import *
 
 # Instanciate one distribution object
 dimension = 2
-meanPoint = NumericalPoint(dimension, 1.0)
+meanPoint = Point(dimension, 1.0)
 meanPoint[0] = 0.5
 meanPoint[1] = -0.5
-sigma = NumericalPoint(dimension, 1.0)
+sigma = Point(dimension, 1.0)
 sigma[0] = 2.0
 sigma[1] = 3.0
 R = CorrelationMatrix(dimension)
@@ -20,9 +20,9 @@ for i in range(1, dimension):
 aCollection = DistributionCollection()
 
 aCollection.add(Normal(meanPoint, sigma, R))
-meanPoint += NumericalPoint(meanPoint.getDimension(), 1.0)
+meanPoint += Point(meanPoint.getDimension(), 1.0)
 aCollection.add(Normal(meanPoint, sigma, R))
-meanPoint += NumericalPoint(meanPoint.getDimension(), 1.0)
+meanPoint += Point(meanPoint.getDimension(), 1.0)
 aCollection.add(Normal(meanPoint, sigma, R))
 
 # Instanciate one distribution object
@@ -38,9 +38,9 @@ meanPoint[1] = 10
 aCollection = DistributionCollection()
 
 aCollection.add(Normal(meanPoint, sigma, R))
-meanPoint += NumericalPoint(meanPoint.getDimension(), 1.0)
+meanPoint += Point(meanPoint.getDimension(), 1.0)
 aCollection.add(Normal(meanPoint, sigma, R))
-meanPoint += NumericalPoint(meanPoint.getDimension(), 1.0)
+meanPoint += Point(meanPoint.getDimension(), 1.0)
 aCollection.add(Normal(meanPoint, sigma, R))
 
 # Instanciate one distribution object
@@ -57,9 +57,9 @@ meanPoint[1] = 12
 aCollection = DistributionCollection()
 
 aCollection.add(Normal(meanPoint, sigma, R))
-meanPoint += NumericalPoint(meanPoint.getDimension(), 1.0)
+meanPoint += Point(meanPoint.getDimension(), 1.0)
 aCollection.add(Normal(meanPoint, sigma, R))
-meanPoint += NumericalPoint(meanPoint.getDimension(), 1.0)
+meanPoint += Point(meanPoint.getDimension(), 1.0)
 aCollection.add(Normal(meanPoint, sigma, R))
 
 # Instanciate one distribution object
@@ -85,9 +85,9 @@ kmeans.run()
 result = kmeans.getCluster()
 print("result=", result)
 
-sample1 = NumericalSample(0, 2)
-sample2 = NumericalSample(0, 2)
-sample3 = NumericalSample(0, 2)
+sample1 = Sample(0, 2)
+sample2 = Sample(0, 2)
+sample3 = Sample(0, 2)
 
 for i in range(1500):
     if (result[i] == 1):

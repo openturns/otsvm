@@ -36,7 +36,7 @@ static Factory<SVMKernelRegressionGradient> RegisteredFactory;
 
 /* Default constructor */
 SVMKernelRegressionGradient::SVMKernelRegressionGradient() :
-  NumericalMathGradientImplementation()
+  GradientImplementation()
 {
   // nothing to do
 }
@@ -44,9 +44,9 @@ SVMKernelRegressionGradient::SVMKernelRegressionGradient() :
 
 /* Constructor with parameters */
 SVMKernelRegressionGradient::SVMKernelRegressionGradient(const SVMKernel & kernel,
-    const NumericalPoint & lagrangeMultiplier,
-    const NumericalSample & dataIn,
-    const NumericalScalar constant) :
+    const Point & lagrangeMultiplier,
+    const Sample & dataIn,
+    const Scalar constant) :
   kernel_(kernel),
   lagrangeMultiplier_(lagrangeMultiplier),
   dataIn_(dataIn),
@@ -87,7 +87,7 @@ Bool SVMKernelRegressionGradient::isActualImplementation() const
 }
 
 /* Gradient method */
-Matrix SVMKernelRegressionGradient::gradient(const NumericalPoint & inP) const
+Matrix SVMKernelRegressionGradient::gradient(const Point & inP) const
 {
   ++ callsNumber_;
 
@@ -97,7 +97,7 @@ Matrix SVMKernelRegressionGradient::gradient(const NumericalPoint & inP) const
 
   // compute the sum of the partial gradients
   UnsignedInteger size = dataIn_.getSize();
-  NumericalPoint partialGradient(dimension, 0.0);
+  Point partialGradient(dimension, 0.0);
   for(UnsignedInteger i = 0; i < size; ++ i)
   {
     if(lagrangeMultiplier_[i] != 0.0)
@@ -128,7 +128,7 @@ UnsignedInteger SVMKernelRegressionGradient::getOutputDimension() const
 /* Method save() stores the object through the StorageManager */
 void SVMKernelRegressionGradient::save(Advocate & adv) const
 {
-  NumericalMathGradientImplementation::save(adv);
+  GradientImplementation::save(adv);
   adv.saveAttribute("kernel_", kernel_);
   adv.saveAttribute("lagrangeMultiplier_", lagrangeMultiplier_);
   adv.saveAttribute("dataIn_", dataIn_);
@@ -138,7 +138,7 @@ void SVMKernelRegressionGradient::save(Advocate & adv) const
 /* Method load() reloads the object from the StorageManager */
 void SVMKernelRegressionGradient::load(Advocate & adv)
 {
-  NumericalMathGradientImplementation::load(adv);
+  GradientImplementation::load(adv);
   adv.loadAttribute("kernel_", kernel_);
   adv.loadAttribute("lagrangeMultiplier_", lagrangeMultiplier_);
   adv.loadAttribute("dataIn_", dataIn_);

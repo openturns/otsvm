@@ -35,7 +35,7 @@ static Factory<NormalRBF> RegisteredFactory;
 
 
 /* Constructor with parameters */
-NormalRBF::NormalRBF(const NumericalScalar sigma)
+NormalRBF::NormalRBF(const Scalar sigma)
   : SVMKernelImplementation(),
     sigma_(sigma)
 {
@@ -59,33 +59,33 @@ String NormalRBF::__repr__() const
 
 
 /* Sigma parameter accessor */
-NumericalScalar NormalRBF::getSigma() const
+Scalar NormalRBF::getSigma() const
 {
   return sigma_;
 }
 
-void NormalRBF::setSigma(NumericalScalar sigma)
+void NormalRBF::setSigma(Scalar sigma)
 {
   sigma_ = sigma;
 }
 
 
 /* Accessor to the parameter used for cross-validation */
-NumericalScalar NormalRBF::getParameter() const
+Scalar NormalRBF::getParameter() const
 {
   return sigma_;
 }
 
-void NormalRBF::setParameter(NumericalScalar value)
+void NormalRBF::setParameter(Scalar value)
 {
   sigma_ = value;
 }
 
 
 /* Parameters value and description accessor */
-NumericalPointWithDescription NormalRBF::getParameters() const
+PointWithDescription NormalRBF::getParameters() const
 {
-  NumericalPointWithDescription parameters(0);
+  PointWithDescription parameters(0);
   Description description(0);
   parameters.add(sigma_);
   description.add("sigma");
@@ -93,7 +93,7 @@ NumericalPointWithDescription NormalRBF::getParameters() const
   return parameters;
 }
 
-void NormalRBF::setParameters(const NumericalPointWithDescription & parameters)
+void NormalRBF::setParameters(const PointWithDescription & parameters)
 {
   if(parameters.getDimension() > 0)
     sigma_ = parameters[0];
@@ -101,20 +101,20 @@ void NormalRBF::setParameters(const NumericalPointWithDescription & parameters)
 
 
 /* Operator () */
-NumericalScalar NormalRBF::operator() (const NumericalPoint & x1, const NumericalPoint & x2) const
+Scalar NormalRBF::operator() (const Point & x1, const Point & x2) const
 {
-  NumericalPoint difference(x1 - x2);
-  NumericalScalar value = exp(- difference.normSquare() / (2.0 * sigma_ * sigma_));
+  Point difference(x1 - x2);
+  Scalar value = exp(- difference.normSquare() / (2.0 * sigma_ * sigma_));
   return value;
 }
 
 
 /* Partial gradient */
-NumericalPoint NormalRBF::partialGradient(const NumericalPoint & x1, const NumericalPoint & x2) const
+Point NormalRBF::partialGradient(const Point & x1, const Point & x2) const
 {
   UnsignedInteger dimension = x1.getDimension();
-  NumericalPoint difference(x1 - x2);
-  NumericalPoint result(dimension);
+  Point difference(x1 - x2);
+  Point result(dimension);
   for(UnsignedInteger i = 0; i < dimension; ++ i)
   {
     result[i]  = exp(- difference.normSquare() / (2.0 * sigma_ * sigma_)) * (- (x1[i] - x2[i]) / (sigma_ * sigma_));
@@ -124,11 +124,11 @@ NumericalPoint NormalRBF::partialGradient(const NumericalPoint & x1, const Numer
 
 
 /* Partial hessian */
-SymmetricMatrix NormalRBF::partialHessian(const NumericalPoint & x1, const NumericalPoint & x2) const
+SymmetricMatrix NormalRBF::partialHessian(const Point & x1, const Point & x2) const
 {
   UnsignedInteger dimension = x1.getDimension();
-  NumericalPoint difference(x1 - x2);
-  NumericalScalar norm2 = difference.normSquare();
+  Point difference(x1 - x2);
+  Scalar norm2 = difference.normSquare();
   SymmetricMatrix result(dimension);
   for (UnsignedInteger i = 0; i < dimension; ++ i)
   {

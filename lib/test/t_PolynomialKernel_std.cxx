@@ -37,8 +37,8 @@ int main(int argc, char *argv[])
   try
   {
     PolynomialKernel kernel(3, 2, 1);
-    NumericalPoint x(2, 2);
-    NumericalPoint y(2, 1);
+    Point x(2, 2);
+    Point y(2, 1);
 
     fullprint << " kernel ([2 2],[1 1]) = " << kernel(x, y) << std::endl;
     fullprint << " dkernel/dx_i([2 2],[1 1]) = " << kernel.partialGradient(x, y) << std::endl;

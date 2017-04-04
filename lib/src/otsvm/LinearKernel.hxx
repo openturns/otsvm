@@ -45,13 +45,13 @@ public:
   virtual OT::String __repr__() const;
 
   /* Operator () */
-  virtual OT::NumericalScalar operator() ( const OT::NumericalPoint & x1 , const OT::NumericalPoint & x2 ) const;
+  virtual OT::Scalar operator() ( const OT::Point & x1 , const OT::Point & x2 ) const;
 
   /* Partial gradient */
-  virtual OT::NumericalPoint partialGradient( const OT::NumericalPoint & x1 , const OT::NumericalPoint & x2 ) const;
+  virtual OT::Point partialGradient( const OT::Point & x1 , const OT::Point & x2 ) const;
 
   /* Partial hessian */
-  virtual OT::SymmetricMatrix partialHessian( const OT::NumericalPoint & x1 , const OT::NumericalPoint & x2 ) const;
+  virtual OT::SymmetricMatrix partialHessian( const OT::Point & x1 , const OT::Point & x2 ) const;
 
   /** Method save() stores the object through the StorageManager */
   void save(OT::Advocate & adv) const;

@@ -29,7 +29,7 @@ using namespace OT;
 using namespace OT::Test;
 using namespace OTSVM;
 
-NumericalPoint clean(NumericalPoint in)
+Point clean(Point in)
 {
   UnsignedInteger dim(in.getDimension());
   for(UnsignedInteger i = 0; i < dim; i++)
@@ -45,8 +45,8 @@ int main(int argc, char *argv[])
   {
     //instantiate a Gaussian kernel with sigma = 2
     ExponentialRBF kernel(2);
-    NumericalPoint x(2, 2);
-    NumericalPoint y(2, 1);
+    Point x(2, 2);
+    Point y(2, 1);
 
     fullprint << " kernel ([2 2],[1 1]) = " << kernel(x, y) << std::endl;
     fullprint << " dkernel/dx_i([2 2],[1 1]) = " << clean(kernel.partialGradient(x, y)) << std::endl;

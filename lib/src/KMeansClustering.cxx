@@ -18,7 +18,7 @@ KMeansClustering* KMeansClustering::clone() const
   return new KMeansClustering(*this);
 }
 
-KMeansClustering::KMeansClustering(const NumericalSample & dataIn, UnsignedInteger k)
+KMeansClustering::KMeansClustering(const Sample & dataIn, UnsignedInteger k)
   : PersistentObject()
   , k_(k)
   , inputSample_(dataIn)
@@ -32,14 +32,14 @@ void KMeansClustering::run()
   UnsignedInteger tempj = 0;
   UnsignedInteger count = 0;
   UnsignedInteger change = 0;
-  NumericalPoint min;
-  NumericalPoint max;
-  NumericalPoint temp;
-  NumericalPoint temp2;
-  NumericalScalar distance = 0;
-  NumericalScalar distancemin = 0;
+  Point min;
+  Point max;
+  Point temp;
+  Point temp2;
+  Scalar distance = 0;
+  Scalar distancemin = 0;
   Indices cluster( size );
-  NumericalSample means( k_ , dimension );
+  Sample means( k_ , dimension );
 
   min = inputSample_.getMin();
   max = inputSample_.getMax();
@@ -119,7 +119,7 @@ Indices KMeansClustering::getCluster()
   return cluster_;
 }
 
-NumericalSample KMeansClustering::getMeans()
+Sample KMeansClustering::getMeans()
 {
   return means_;
 }
