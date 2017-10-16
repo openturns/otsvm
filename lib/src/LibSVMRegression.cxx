@@ -28,7 +28,7 @@
 #include "otsvm/LinearKernel.hxx"
 #include <openturns/ComposedFunction.hxx>
 #include <openturns/PersistentObjectFactory.hxx>
-
+#include <openturns/AggregatedFunction.hxx>
 
 using namespace OT;
 
@@ -163,9 +163,9 @@ void LibSVMRegression::run()
     driver_.destroyModel();
   }
 
-  Function aggregated(marginals);
-  Function composed(aggregated, driver_.getInputTransformation());
-  Function metaModel(outputInverseTransformation, composed);
+  AggregatedFunction aggregated(marginals);
+  ComposedFunction composed(aggregated, driver_.getInputTransformation());
+  ComposedFunction metaModel(outputInverseTransformation, composed);
 
   // compute residual, relative error
   Point residuals(outputDimension);
