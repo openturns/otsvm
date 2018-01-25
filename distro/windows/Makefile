@@ -34,6 +34,7 @@ MOD_PREFIX ?= $(MOD_BUILD)/install
 MODULE_VERSION = $(shell cat $(MOD_SRC)/VERSION)
 
 # Wine
+WINE=/usr/bin/wine
 WINE_PREFIX = $(WINDEPS)/wine-$(ARCH)
 export WINEPREFIX = $(WINE_PREFIX)
 ifeq ($(ARCH), i686)
@@ -98,6 +99,9 @@ mod-config: mod-check-compiler
 	  -DPYTHON_LIBRARY=$(MINGW_PREFIX)/$(TARGET)/lib/libpython$(PYBASEVER_NODOT).dll.a \
 	  -DPYTHON_EXECUTABLE=$(PYTHON_EXECUTABLE) \
 	  -DCMAKE_INSTALL_PREFIX=$(MOD_PREFIX) \
+	  -DPYTHON_SITE_PACKAGES=Lib/site-packages \
+	  -DUSE_SPHINX=OFF \
+	  -DCMAKE_CROSSCOMPILING_EMULATOR=$(WINE) \
 	$(MOD_SRC)
 	touch mod-config
 
@@ -123,8 +127,8 @@ ifeq ($(CHECK_OT),y)
 	cp $(MOD_PREFIX)/bin/*.dll $(MOD_BUILD)/python/test
 	cp $(MINGW_PREFIX)/$(TARGET)/bin/python$(PYBASEVER_NODOT).dll $(MOD_BUILD)/python/test
 	cd $(MOD_BUILD) && ctest -j$(JOBS_TEST) --output-on-failure --timeout 1000
-	touch mod-test
 endif
+	touch mod-test
 
 mod-check-installer: mod-test
 	@echo -n "Check OpenTURNS prefix: "

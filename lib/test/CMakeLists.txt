@@ -77,20 +77,7 @@ macro ( ot_check_test TESTNAME )
   install ( FILES ${TESTNAME_SRC}
             DESTINATION ${OTSVM_EXAMPLE_PATH} 
           )
-
-  if ( INSTALL_TESTS )
-    install ( FILES ${TESTNAME_OUT}
-              DESTINATION ${OTSVM_EXAMPLE_PATH} 
-            )
-    install ( TARGETS ${TESTNAME_TGT}
-              DESTINATION ${OTSVM_EXAMPLE_PATH} 
-            )
-
-#     add_check_file ( ${EXTERNAL_CHECK_FILE} ${TESTNAME_TGT} ${EXTERNAL_COMMAND} ${CUR_CHECK} )
-#     math( EXPR CUR_CHECK "${CUR_CHECK} + 1" )
-  endif ()
-
-endmacro ( ot_check_test )
+endmacro ()
 
 include_directories ( ${INTERNAL_INCLUDE_DIRS} )
 
@@ -108,7 +95,3 @@ ot_check_test ( RationalKernel_std )
 add_custom_target ( cppcheck COMMAND ${CMAKE_CTEST_COMMAND} -R "^cppcheck_"
                     DEPENDS ${CHECK_TO_BE_RUN}
                     COMMENT "Run C++ pre-installation tests" )
-                    
-                    
-
-
