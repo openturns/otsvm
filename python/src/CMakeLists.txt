@@ -34,7 +34,13 @@ macro ( ot_add_python_module MODULENAME SOURCEFILE )
     endif ()
   endforeach ()
 
-  swig_add_module ( ${MODULENAME} python ${SOURCEFILE} ${swig_other_sources} )
+  # swig_add_module is deprecated
+  if (CMAKE_VERSION VERSION_LESS 3.8)
+    swig_add_module (${MODULENAME} python ${SOURCEFILE} ${swig_other_sources} )
+  else ()
+    swig_add_library (${MODULENAME} LANGUAGE python SOURCES ${SOURCEFILE} ${swig_other_sources})
+  endif ()
+
   add_dependencies ( ${SWIG_MODULE_${MODULENAME}_REAL_NAME} generate_docstrings )
   swig_link_libraries ( ${MODULENAME} otsvm )
   if ( LINK_PYTHON_LIBRARY )
@@ -85,7 +91,7 @@ install ( FILES ${SWIGFILES}
 
 
 
-if (SPHINX_FOUND AND SPHINX_EXECUTABLE)
+if (SPHINX_FOUND AND SPHINX_EXECUTABLE AND NUMPYDOC_FOUND)
 
   # create a build site-package from which sphinx can import
   set (OTSVM_PYTHON_BUILD_MODULE_PATH ${CMAKE_CURRENT_BINARY_DIR}/site-packages)
@@ -175,6 +181,7 @@ if (SPHINX_FOUND AND SPHINX_EXECUTABLE)
     add_custom_target ( sphinx_${format}
                         COMMAND ${SPHINX_EXECUTABLE}
                                   -b ${format}
+                                  -d ${SPHINX_BINARY_DIR}/.doctrees
                                   ${SPHINX_FLAGS}
                                   ${SPHINX_BINARY_DIR}
                                   ${SPHINX_BINARY_DIR}/${format}
