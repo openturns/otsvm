@@ -116,11 +116,6 @@ Point SVMKernelRegressionEvaluation::operator() (const Point & inP) const
       output += lagrangeMultiplier_[i] * kernel_(dataIn_[i], inP);
   }
   const Point result(1, output);
-  if (isHistoryEnabled_)
-  {
-    inputStrategy_.store(inP);
-    outputStrategy_.store(result);
-  }
   return Point(1, output);
 }
 
