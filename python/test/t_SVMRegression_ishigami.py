@@ -36,9 +36,9 @@ dataOut = model(dataIn)
 
 # Create the SVMRegression result
 # list of tradeOff parameter
-cp = Point([500.0, 200.0, 150.0, 100.0, 75.0, 50.0, 10.0])
+cp = [500.0, 200.0, 150.0, 100.0, 75.0, 50.0, 10.0]
 # list of gamma parameter in kernel function
-gamma = Point([0.0001, 0.001, 0.15, 0.25, 0.35, 0.4, 0.5, 0.6, 0.8, 1, 10, 100])
+gamma = [0.0001, 0.001, 0.15, 0.25, 0.35, 0.4, 0.5, 0.6, 0.8, 1, 10, 100]
 
 RandomGenerator.SetSeed(0)
 

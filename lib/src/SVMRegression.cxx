@@ -56,10 +56,10 @@ SVMRegression::SVMRegression( Implementation & p_implementation ): TypedInterfac
 }
 
 /* Tradeoff factor accessor */
-void SVMRegression::setTradeoffFactor( Point factor )
+void SVMRegression::setTradeoffFactor(const Point & factor)
 {
   copyOnWrite();
-  getImplementation() -> setTradeoffFactor( factor );
+  getImplementation() -> setTradeoffFactor(factor);
 }
 
 Point SVMRegression::getTradeoffFactor()
@@ -68,10 +68,10 @@ Point SVMRegression::getTradeoffFactor()
 }
 
 /* Kernel parameter accessor */
-void SVMRegression::setKernelParameter( Point kernel )
+void SVMRegression::setKernelParameter(const Point & kernel)
 {
   copyOnWrite();
-  getImplementation() -> setKernelParameter( kernel );
+  getImplementation() -> setKernelParameter(kernel);
 }
 
 Point SVMRegression::getKernelParameter()

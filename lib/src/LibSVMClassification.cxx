@@ -181,7 +181,7 @@ OT::Scalar LibSVMClassification::predict(const OT::Point& inP) const
   return driver_.predict(inP);
 }
 
-void LibSVMClassification::setWeight(Point weight)
+void LibSVMClassification::setWeight(const Point & weight)
 {
   Point label(weight.getSize());
   UnsignedInteger j = 1;

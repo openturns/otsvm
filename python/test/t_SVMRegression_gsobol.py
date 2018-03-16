@@ -32,9 +32,9 @@ distribution = ComposedDistribution(marginals)
 dataIn = distribution.getSample(250)
 dataOut = model(dataIn)
 # list of tradeOff parameter
-cp = Point([5.0, 10.0, 100.0, 200.0, 500.0, 1000.0, 10000.0])
+cp = [5.0, 10.0, 100.0, 200.0, 500.0, 1000.0, 10000.0]
 # list of gamma parameter in kernel function
-gamma = Point([0.001, 0.01, 0.1, 0.5, 1, 5, 10, 20, 30, 40, 50, 100])
+gamma = [0.001, 0.01, 0.1, 0.5, 1, 5, 10, 20, 30, 40, 50, 100]
 RandomGenerator.SetSeed(0)
 # create the Problem
 Regression = SVMRegression(dataIn, dataOut, LibSVM.NormalRbf)
