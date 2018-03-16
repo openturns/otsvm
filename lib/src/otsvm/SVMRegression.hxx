@@ -54,11 +54,11 @@ public:
   SVMRegression(const OT::Sample & dataIn, const OT::Sample & dataOut, const LibSVM::KernelType kerneltype);
 
   /* Kernel parameter accessor */
-  void setKernelParameter( OT::Point kernel );
+  void setKernelParameter(const OT::Point & kernel);
   OT::Point getKernelParameter();
 
   /* Tradeoff factor accessor */
-  void setTradeoffFactor( OT::Point factor );
+  void setTradeoffFactor(const OT::Point & factor);
   OT::Point getTradeoffFactor();
 
   /* Results accessor */

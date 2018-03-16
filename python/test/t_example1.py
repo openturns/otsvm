@@ -28,8 +28,8 @@ for i in range(dimension):
 distribution = ComposedDistribution(marginals)
 
 #create lists of kernel parameters and tradeoff factors
-tradeoff = Point([0.01,0.1,1,10,100,1000])
-kernel = Point([0.001,0.01,0.1,1,10,100])
+tradeoff = [0.01,0.1,1,10,100,1000]
+kernel = [0.001,0.01,0.1,1,10,100]
 
 #first example : create the problem with an input and output samples:
 #first, we create samples

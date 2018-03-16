@@ -23,32 +23,22 @@ sob_T2 = [sob_2[0] + sob_2[1] + sob_3[0], sob_2[0]
           + sob_2[2] + sob_3[0], sob_2[1] + sob_2[2] + sob_3[0]]
 sob_T3 = [sob_3[0]]
 # Create the Ishigami function
-inputVariables = Description(dimension)
-inputVariables[0] = "xi1"
-inputVariables[1] = "xi2"
-inputVariables[2] = "xi3"
-outputVariables = Description(1)
-outputVariables[0] = "y"
-formula = Description(1)
-formula[0] = "sin(xi1) + (" + str(a) + \
+inputVariables = ["xi1", "xi2", "xi3"]
+formula = "sin(xi1) + (" + str(a) + \
     ") * (sin(xi2)) ^ 2 + (" + str(b) + ") * xi3^4 * sin(xi1)"
-model = Function(inputVariables, outputVariables, formula)
+model = SymbolicFunction(inputVariables, [formula])
 
 # Create the input distribution
-marginals = DistributionCollection(dimension)
-marginals[0] = Uniform(-pi, pi)
-marginals[1] = Uniform(-pi, pi)
-marginals[2] = Uniform(-pi, pi)
+marginals = [Uniform(-pi, pi)] * 3
 distribution = ComposedDistribution(marginals)
 dataIn = distribution.getSample(250)
 dataOut = model(dataIn)
 
 # Create the SVMRegression result
 # list of tradeOff parameter
-cp = Point([500, 200, 150, 100, 75, 50, 10])
+cp = [500.0, 200.0, 150.0, 100.0, 75.0, 50.0, 10.0]
 # list of gamma parameter in kernel function
-gamma = Point(
-    [0.0001, 0.001, 0.15, 0.25, 0.35, 0.4, 0.5, 0.6, 0.8, 1, 10, 100])
+gamma = [0.0001, 0.001, 0.15, 0.25, 0.35, 0.4, 0.5, 0.6, 0.8, 1, 10, 100]
 
 RandomGenerator.SetSeed(0)
 

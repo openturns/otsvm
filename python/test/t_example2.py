@@ -17,9 +17,9 @@ for i in range(861):
     dataOut[i]=int(a[0])
 
 #list of C parameter 
-cp=Point([0.000001,0.00001,0.0001,0.001,0.01,0.1,1,10,100])
+cp = [0.000001,0.00001,0.0001,0.001,0.01,0.1,1,10,100]
 #list of gamma parameter in kernel function
-gamma=Point([0.000001,0.00001,0.0001,0.001,0.01,0.1,1,10,100])
+gamma = [0.000001,0.00001,0.0001,0.001,0.01,0.1,1,10,100]
 
 #create the Classification Problem 
 Regression=LibSVMClassification(dataIn,dataOut)
@@ -31,4 +31,4 @@ Regression.setKernelParameter(gamma)
 Regression.run()
 print "#######################"
 print "Results with Samples I/O"
-print "Accuracy(p.c.)=",Regression.getAccuracy()  
+print "Accuracy(p.c.)=",Regression.getAccuracy()
