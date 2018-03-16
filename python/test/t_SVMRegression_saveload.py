@@ -5,7 +5,7 @@ import os
 from openturns import *
 from otsvm import *
 
-model = Function(['E', 'F', 'L', 'I'], ['d'], ['F*L^3/(3*E*I)'])
+model = SymbolicFunction(['E', 'F', 'L', 'I'], ['F*L^3/(3*E*I)'])
 dim = model.getInputDimension()
 
 R = IdentityMatrix(dim)
