@@ -99,7 +99,7 @@ Bool SVMKernelRegressionHessian::isActualImplementation() const
 /* Hessian method */
 SymmetricTensor SVMKernelRegressionHessian::hessian(const Point & inP) const
 {
-  ++ callsNumber_;
+  callsNumber_.increment();
 
   UnsignedInteger dimension = inP.getDimension();
   if(dimension != dataIn_.getDimension())

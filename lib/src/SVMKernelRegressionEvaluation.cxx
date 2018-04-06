@@ -101,7 +101,7 @@ Bool SVMKernelRegressionEvaluation::isActualImplementation() const
 /* Operator () */
 Point SVMKernelRegressionEvaluation::operator() (const Point & inP) const
 {
-  ++callsNumber_;
+  callsNumber_.increment();
 
   const UnsignedInteger dimension(inP.getDimension());
   if (dimension != dataIn_.getDimension())
