@@ -37,7 +37,7 @@ namespace OTSVM
  */
 
 class OTSVM_API SVMKernelImplementation
-: public OT::PersistentObject
+  : public OT::PersistentObject
 
 {
   CLASSNAME

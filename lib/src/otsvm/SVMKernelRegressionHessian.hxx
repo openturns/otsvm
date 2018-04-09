@@ -80,7 +80,7 @@ public:
 
   /** Accessor for output point dimension */
   virtual OT::UnsignedInteger getOutputDimension() const;
-  
+
   /** Method save() stores the object through the StorageManager */
   void save(OT::Advocate & adv) const;
 

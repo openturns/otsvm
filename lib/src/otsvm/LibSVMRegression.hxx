@@ -61,7 +61,7 @@ public:
 
   OT::Sample getInputSample() const;
   OT::Sample getOutputSample() const;
-  
+
   /** Method save() stores the object through the StorageManager */
   virtual void save(OT::Advocate & adv) const;
 

@@ -41,7 +41,7 @@ SVMRegression::SVMRegression(): OT::TypedInterfaceObject < SVMRegressionImplemen
 SVMRegression::SVMRegression(const Sample & dataIn,
                              const Sample & dataOut,
                              const LibSVM::KernelType kerneltype)
-: TypedInterfaceObject< SVMRegressionImplementation >(new LibSVMRegression(dataIn, dataOut, kerneltype))
+  : TypedInterfaceObject< SVMRegressionImplementation >(new LibSVMRegression(dataIn, dataOut, kerneltype))
 {
 }
 

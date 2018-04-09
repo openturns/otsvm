@@ -42,7 +42,7 @@ public:
 
   /* Constructor */
   LibSVM();
-  
+
   /* Virtual Constructor */
   virtual LibSVM * clone() const;
 
@@ -117,7 +117,7 @@ public:
   void convertData(const OT::Sample & inputSample, const OT::Sample & outputSample);
 
   OT::Scalar runCrossValidation();
-  
+
   /* Destroy the libsvm problem */
   void destroy();
 
@@ -137,7 +137,7 @@ public:
   static void SVMLog(const char*);
 
   OT::Function getInputTransformation() const;
-  
+
 protected:
 
   /* Libsvm parameter */
@@ -154,7 +154,7 @@ protected:
 
   /* data normalization */
   OT::Function inputTransformation_;
-  
+
 };
 
 

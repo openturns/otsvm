@@ -69,14 +69,14 @@ public:
 
   /** Partial hessian */
   virtual OT::SymmetricMatrix partialHessian(const OT::Point & x1, const OT::Point & x2) const;
-  
+
   /** Method save() stores the object through the StorageManager */
   void save(OT::Advocate & adv) const;
 
   /** Method load() reloads the object from the StorageManager */
   void load(OT::Advocate & adv);
-  
-  
+
+
 protected:
   OT::Scalar sigma_;
 

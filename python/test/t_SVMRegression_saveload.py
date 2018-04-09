@@ -9,8 +9,8 @@ model = SymbolicFunction(['E', 'F', 'L', 'I'], ['F*L^3/(3*E*I)'])
 dim = model.getInputDimension()
 
 R = IdentityMatrix(dim)
-mean = [50.,1.,10.,5.]
-distribution = Normal(mean, [1.]*dim, R)
+mean = [50., 1., 10., 5.]
+distribution = Normal(mean, [1.] * dim, R)
 
 
 dataIn = distribution.getSample(250)

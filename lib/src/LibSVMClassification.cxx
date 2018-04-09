@@ -37,8 +37,8 @@ using namespace OT;
 namespace OTSVM
 {
 
-  
-  
+
+
 CLASSNAMEINIT(LibSVMClassification)
 
 
@@ -46,8 +46,8 @@ static Factory<LibSVMClassification> RegisteredFactory;
 
 
 LibSVMClassification::LibSVMClassification()
-: PersistentObject()
-, accuracy_(0.)
+  : PersistentObject()
+  , accuracy_(0.)
 {
   ///Nothing to do
 }
@@ -60,21 +60,22 @@ LibSVMClassification* LibSVMClassification::clone() const
 
 
 LibSVMClassification::LibSVMClassification(const Sample & dataIn,
-                                            const Indices & outClasses):
+    const Indices & outClasses):
   PersistentObject(),
   inputSample_(dataIn),
   classes_(outClasses.getSize())
 {
-  for (UnsignedInteger i = 0; i < outClasses.getSize(); ++ i) {
+  for (UnsignedInteger i = 0; i < outClasses.getSize(); ++ i)
+  {
     classes_[i] = outClasses[i];
   }
-  
+
   driver_.setSvmType(LibSVM::CSupportClassification);
   driver_.setNu(0.);
 }
 
 LibSVMClassification::LibSVMClassification(const Sample & dataIn,
-                                           const Collection<SignedInteger> & outClasses ):
+    const Collection<SignedInteger> & outClasses ):
   PersistentObject(),
   inputSample_(dataIn),
   classes_(outClasses)
@@ -94,7 +95,7 @@ Scalar LibSVMClassification::getAccuracy()
 String LibSVMClassification::__repr__() const
 {
   return OSS()  << "class=" << getClassName()
-                << "accuracy=" << accuracy_;
+         << "accuracy=" << accuracy_;
 }
 
 void LibSVMClassification::run()

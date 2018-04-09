@@ -72,7 +72,7 @@ public:
 
   /** Method load() reloads the object from the StorageManager */
   void load(OT::Advocate & adv);
-  
+
 protected:
 
   /* Linear term */

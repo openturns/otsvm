@@ -42,10 +42,11 @@ print('#######################')
 print('Results with Samples I/O')
 if Regression.getAccuracy() < 0.97:
     raise ValueError('acc<0.97')
-#print('Accuracy(p.c.)= %.12g' % Regression.getAccuracy())
+# print('Accuracy(p.c.)= %.12g' % Regression.getAccuracy())
 
 test = [0.0555554, -0.25, 0.118644, -4.03573e-08]
-print('We predict the class for the point [0.0555554,-0.25,0.118644,-4.03573e-08]: ', Regression.classify(test))
+print(
+    'We predict the class for the point [0.0555554,-0.25,0.118644,-4.03573e-08]: ', Regression.classify(test))
 print('We grade the previous point for the 3 classes :')
 print('class 1 :', Regression.grade(test, 1))
 print('class 2: ', Regression.grade(test, 2))

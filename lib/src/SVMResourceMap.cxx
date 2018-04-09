@@ -67,8 +67,8 @@ void SVMResourceMap::Initialize()
   ResourceMap::SetAsScalar("LibSVM-Epsilon", 1e-3);
   ResourceMap::SetAsUnsignedInteger("LibSVMRegression-NumberOfFolds", 3);
   ResourceMap::SetAsUnsignedInteger("LibSVM-Shrinking", 1);
-  
-  
+
+
 }
 
 

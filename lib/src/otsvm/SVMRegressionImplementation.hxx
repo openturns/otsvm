@@ -36,7 +36,7 @@ namespace OTSVM
 
 
 class OTSVM_API SVMRegressionImplementation
-: public OT::PersistentObject
+  : public OT::PersistentObject
 {
 
   CLASSNAME

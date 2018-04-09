@@ -33,9 +33,9 @@ CLASSNAMEINIT(SVMRegressionImplementation)
 
 /* Default constructor*/
 SVMRegressionImplementation::SVMRegressionImplementation()
-: PersistentObject()
-, tradeoffFactor_(1, 10.)
-, kernelParameter_(1, 1.0)
+  : PersistentObject()
+  , tradeoffFactor_(1, 10.)
+  , kernelParameter_(1, 1.0)
 {
   //Nothing to do
 }

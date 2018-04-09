@@ -40,9 +40,9 @@ void LibSVM::SVMLog(const char *s)
 
 /* Constructor */
 LibSVM::LibSVM()
-: PersistentObject()
-, p_model_(0)
-, p_node_(0)
+  : PersistentObject()
+  , p_model_(0)
+  , p_node_(0)
 {
   // default parameters
   parameter_.svm_type = C_SVC;  //-s svm_type : set type of SVM (default 0) 0=C-SVC, 1=nu-SVC, 2=one-class SVM, 3=epsilon-SVR, 4=nu-SVR
@@ -60,8 +60,8 @@ LibSVM::LibSVM()
   parameter_.nr_weight = 0;     //-wi weight: set the parameter C of class i to weight*C, for C-SVC (default 1)
   parameter_.weight_label = 0;
   parameter_.weight = 0;
-  
-  
+
+
   parameter_.degree = ResourceMap::GetAsUnsignedInteger( "LibSVM-DegreePolynomialKernel" );
   parameter_.coef0 = ResourceMap::GetAsScalar( "LibSVM-ConstantPolynomialKernel" );
   parameter_.cache_size = ResourceMap::GetAsUnsignedInteger( "LibSVM-CacheSize" );
@@ -69,7 +69,7 @@ LibSVM::LibSVM()
 
   parameter_.eps = ResourceMap::GetAsScalar("LibSVM-Epsilon");
   svm_set_print_string_function( &SVMLog );
-  
+
   problem_.x = 0;
   problem_.y = 0;
 }
@@ -190,9 +190,9 @@ void LibSVM::setKernelParameter(const Scalar kernelParameter)
 {
   if (fabs(kernelParameter) < 1e-25)
   {
-    throw InvalidArgumentException(HERE) << "Kernel parameter too small: "<<kernelParameter;
-  }  
-  parameter_.gamma = 1.0/(2.0*kernelParameter* kernelParameter);
+    throw InvalidArgumentException(HERE) << "Kernel parameter too small: " << kernelParameter;
+  }
+  parameter_.gamma = 1.0 / (2.0 * kernelParameter * kernelParameter);
 }
 
 /* Gamma accessor */
@@ -232,21 +232,21 @@ void LibSVM::performTrain()
 
 
 Scalar LibSVM::runCrossValidation()
-{ 
+{
   UnsignedInteger size = problem_.l;
   Point target(size);
-  
+
   // launch validation
   srand (1);
   svm_cross_validation(&problem_, &parameter_, ResourceMap::GetAsUnsignedInteger("LibSVMRegression-NumberOfFolds"), &target[0]);
-  
+
   Scalar totalError = 0.0;
   for (UnsignedInteger i = 0; i < size; ++ i)
   {
     totalError += (problem_.y[i] - target[i]) * (problem_.y[i] - target[i]) / size;
   }
 
-  Log::Info(OSS() << "LibSVM::runCrossValidation gamma="<<parameter_.gamma<<" C="<<parameter_.C<<" err="<<totalError);
+  Log::Info(OSS() << "LibSVM::runCrossValidation gamma=" << parameter_.gamma << " C=" << parameter_.C << " err=" << totalError);
 
   return totalError;
 }
@@ -294,16 +294,18 @@ void LibSVM::normalize(const Sample &data, Function & transformation, Function &
   Point stdev(data.computeStandardDeviationPerComponent());
   SquareMatrix linear(dimension);
   SquareMatrix linearInv(dimension);
-  for (UnsignedInteger j = 0; j < dimension; ++ j) {
+  for (UnsignedInteger j = 0; j < dimension; ++ j)
+  {
     linearInv(j, j) = 1.0;
     linear(j, j) = 1.0;
-    if (fabs(stdev[j]) > SpecFunc::MinScalar) {
+    if (fabs(stdev[j]) > SpecFunc::MinScalar)
+    {
       linear(j, j) /= stdev[j];
       linearInv(j, j) *= stdev[j];
     }
   }
   Point zero(dimension);
-  transformation = LinearFunction(mean, zero, linear);  
+  transformation = LinearFunction(mean, zero, linear);
   inverseTransformation = LinearFunction(zero, mean, linearInv);
 }
 
@@ -323,7 +325,7 @@ void LibSVM::convertData(const Sample & inputSample, const Sample & outputSample
 
   Function inputInverseTransformation;
   normalize(inputSample, inputTransformation_, inputInverseTransformation);
-  
+
   // write in/out into problem data
   problem_.l = size;
   problem_.y = Allocation<double>(size);
@@ -345,23 +347,27 @@ void LibSVM::convertData(const Sample & inputSample, const Sample & outputSample
 
 void LibSVM::destroy()
 {
-  if (problem_.x) {
+  if (problem_.x)
+  {
     free(problem_.x);
     problem_.x = 0;
   }
-  if (problem_.y) {
-    free(problem_.y); 
+  if (problem_.y)
+  {
+    free(problem_.y);
     problem_.y = 0;
   }
 }
 
 void LibSVM::destroyModel()
 {
-  if (p_model_) {
+  if (p_model_)
+  {
     svm_free_model_content(p_model_);
     p_model_ = 0;
   }
-  if (p_node_) {
+  if (p_node_)
+  {
     free(p_node_);
     p_node_ = 0;
   }
@@ -465,7 +471,7 @@ Scalar LibSVM::predict(const Point & inP) const
   {
 
     svm_predict_values(p_model_, x, &res);
-    
+
     if (svm_get_svm_type(p_model_) == ONE_CLASS)
       res = (res > 0) ? 1 : -1;
   }
@@ -473,7 +479,7 @@ Scalar LibSVM::predict(const Point & inP) const
   {
     int i;
     int nr_class = svm_get_nr_class(p_model_);
-    double *dec_values = new double[nr_class*(nr_class-1)/2];
+    double *dec_values = new double[nr_class * (nr_class - 1) / 2];
     svm_predict_values(p_model_, x, dec_values);
 
     int *vote = new int[nr_class];
