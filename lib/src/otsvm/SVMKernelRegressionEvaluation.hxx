@@ -3,7 +3,7 @@
  * @file  SVMKernelRegressionEvaluation.hxx
  * @brief Abstract top-level class for all numerical math function implementations
  *
- *  (C) Copyright 2005-2012 EDF-EADS-Phimeca
+ *  Copyright 2005-2018 EDF-EADS-Phimeca
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public

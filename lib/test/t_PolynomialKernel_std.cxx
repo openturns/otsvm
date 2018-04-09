@@ -2,7 +2,7 @@
 /**
  *  @brief The test file for PolynomialKernel class.
  *
- *  Copyright 2005-2012 EDF-EADS-Phimeca
+ *  Copyright 2005-2018 EDF-EADS-Phimeca
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
