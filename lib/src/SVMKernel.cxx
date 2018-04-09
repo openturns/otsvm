@@ -30,7 +30,7 @@ namespace OTSVM
 {
 
 
-CLASSNAMEINIT(SVMKernel);
+CLASSNAMEINIT(SVMKernel)
 
 
 /* Default constructor */

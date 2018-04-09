@@ -29,7 +29,7 @@ namespace OTSVM
 {
 
 
-CLASSNAMEINIT(NormalRBF);
+CLASSNAMEINIT(NormalRBF)
 
 static Factory<NormalRBF> RegisteredFactory;
 

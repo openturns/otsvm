@@ -35,7 +35,7 @@ using namespace OT;
 namespace OTSVM
 {
 
-CLASSNAMEINIT(SVMResourceMap);
+CLASSNAMEINIT(SVMResourceMap)
 
 static pthread_mutex_t SVMResourceMap_InstanceMutex_;
 

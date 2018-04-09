@@ -31,7 +31,7 @@ using namespace OT;
 namespace OTSVM
 {
 
-CLASSNAMEINIT(LibSVM);
+CLASSNAMEINIT(LibSVM)
 
 void LibSVM::SVMLog(const char *s)
 {

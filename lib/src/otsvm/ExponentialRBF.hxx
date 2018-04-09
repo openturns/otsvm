@@ -41,7 +41,7 @@ namespace OTSVM
 class OTSVM_API ExponentialRBF
   : public SVMKernelImplementation
 {
-  CLASSNAME;
+  CLASSNAME
 public:
 
 

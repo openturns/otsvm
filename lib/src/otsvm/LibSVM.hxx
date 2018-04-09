@@ -33,7 +33,7 @@ namespace OTSVM
 
 class OTSVM_API LibSVM : public OT::PersistentObject
 {
-  CLASSNAME;
+  CLASSNAME
 
 public:
 

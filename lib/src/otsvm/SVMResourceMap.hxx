@@ -34,7 +34,7 @@ namespace OTSVM
 
 class OTSVM_API SVMResourceMap
 {
-  CLASSNAME;
+  CLASSNAME
 
 public:
 

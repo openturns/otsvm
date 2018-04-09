@@ -41,7 +41,7 @@ namespace OTSVM
 class OTSVM_API RationalKernel
   : public SVMKernelImplementation
 {
-  CLASSNAME;
+  CLASSNAME
 public:
 
 

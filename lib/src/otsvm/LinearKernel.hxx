@@ -31,7 +31,7 @@ namespace OTSVM
 
 class OTSVM_API LinearKernel : public SVMKernelImplementation
 {
-  CLASSNAME;
+  CLASSNAME
 
 public:
 

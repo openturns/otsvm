@@ -41,7 +41,7 @@ class OTSVM_API SVMKernel
   : public OT::TypedInterfaceObject<SVMKernelImplementation>
 {
 
-  CLASSNAME;
+  CLASSNAME
 
 public:
 

@@ -44,7 +44,7 @@ class SVMKernelRegressionEvaluation;
 class OTSVM_API SVMKernelRegressionHessian
   : public OT::HessianImplementation
 {
-  CLASSNAME;
+  CLASSNAME
 public:
 
 

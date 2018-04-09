@@ -45,7 +45,7 @@ namespace OTSVM
 class OTSVM_API SVMKernelRegressionEvaluation
   : public OT::EvaluationImplementation
 {
-  CLASSNAME;
+  CLASSNAME
 
 public:
 

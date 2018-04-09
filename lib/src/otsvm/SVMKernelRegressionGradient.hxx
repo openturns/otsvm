@@ -44,7 +44,7 @@ class SVMKernelRegressionEvaluation;
 class OTSVM_API SVMKernelRegressionGradient
   : public OT::GradientImplementation
 {
-  CLASSNAME;
+  CLASSNAME
 public:
 
   typedef OT::Pointer<SVMKernelRegressionEvaluation> SVMEvaluation;

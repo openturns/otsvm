@@ -36,7 +36,7 @@ namespace OTSVM
 class OTSVM_API NormalRBF
   : public SVMKernelImplementation
 {
-  CLASSNAME;
+  CLASSNAME
 public:
 
 

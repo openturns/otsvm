@@ -31,7 +31,7 @@ namespace OTSVM
  * @class SVMKernelImplementation
  */
 
-CLASSNAMEINIT(SVMKernelImplementation);
+CLASSNAMEINIT(SVMKernelImplementation)
 
 /* Constructor with parameters */
 SVMKernelImplementation::SVMKernelImplementation()

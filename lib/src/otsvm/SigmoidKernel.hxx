@@ -33,7 +33,7 @@ namespace OTSVM
 
 class OTSVM_API SigmoidKernel : public SVMKernelImplementation
 {
-  CLASSNAME;
+  CLASSNAME
 
 public:
 

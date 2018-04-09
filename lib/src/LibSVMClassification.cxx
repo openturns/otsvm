@@ -39,7 +39,7 @@ namespace OTSVM
 
   
   
-CLASSNAMEINIT(LibSVMClassification);
+CLASSNAMEINIT(LibSVMClassification)
 
 
 static Factory<LibSVMClassification> RegisteredFactory;

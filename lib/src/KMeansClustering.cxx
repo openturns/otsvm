@@ -7,7 +7,7 @@ using namespace OT;
 namespace OTSVM
 {
 
-CLASSNAMEINIT(KMeansClustering);
+CLASSNAMEINIT(KMeansClustering)
 
 KMeansClustering::KMeansClustering(): PersistentObject()
 {

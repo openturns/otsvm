@@ -30,7 +30,7 @@ namespace OTSVM
 
 
 
-CLASSNAMEINIT(SVMKernelRegressionEvaluation);
+CLASSNAMEINIT(SVMKernelRegressionEvaluation)
 
 static Factory<SVMKernelRegressionEvaluation> RegisteredFactory;
 

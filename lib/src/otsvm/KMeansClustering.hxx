@@ -36,7 +36,7 @@ namespace OTSVM
 
 class OTSVM_API KMeansClustering : public OT::PersistentObject
 {
-  CLASSNAME;
+  CLASSNAME
 
 public:
 

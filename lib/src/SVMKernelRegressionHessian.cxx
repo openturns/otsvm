@@ -28,7 +28,7 @@ using namespace OT;
 namespace OTSVM
 {
 
-CLASSNAMEINIT(SVMKernelRegressionHessian);
+CLASSNAMEINIT(SVMKernelRegressionHessian)
 
 static Factory<SVMKernelRegressionHessian> RegisteredFactory;
 

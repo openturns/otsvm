@@ -31,7 +31,7 @@ namespace OTSVM
 
 class OTSVM_API LibSVMClassification: public OT::PersistentObject
 {
-  CLASSNAME;
+  CLASSNAME
 
 public:
 

@@ -31,7 +31,7 @@ namespace OTSVM
 
 
 
-CLASSNAMEINIT(PolynomialKernel);
+CLASSNAMEINIT(PolynomialKernel)
 
 
 /* Constructor with parameters */

@@ -35,7 +35,7 @@ namespace OTSVM
 
 class OTSVM_API SVMRegression : public OT::TypedInterfaceObject< SVMRegressionImplementation >
 {
-  CLASSNAME;
+  CLASSNAME
 
 public:
 

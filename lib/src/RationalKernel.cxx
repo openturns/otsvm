@@ -30,7 +30,7 @@ namespace OTSVM
 
 
 
-CLASSNAMEINIT(RationalKernel);
+CLASSNAMEINIT(RationalKernel)
 
 static Factory<RationalKernel> RegisteredFactory;
 

@@ -31,7 +31,7 @@ namespace OTSVM
 {
 
 
-CLASSNAMEINIT(LinearKernel);
+CLASSNAMEINIT(LinearKernel)
 
 static Factory<LinearKernel> RegisteredFactory;
 

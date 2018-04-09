@@ -36,7 +36,7 @@ namespace OTSVM
 class OTSVM_API PolynomialKernel
   : public SVMKernelImplementation
 {
-  CLASSNAME;
+  CLASSNAME
 public:
 
 

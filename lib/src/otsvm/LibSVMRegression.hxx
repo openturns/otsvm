@@ -41,7 +41,7 @@ namespace OTSVM
 
 class OTSVM_API LibSVMRegression: public SVMRegressionImplementation
 {
-  CLASSNAME;
+  CLASSNAME
 
 public:
 

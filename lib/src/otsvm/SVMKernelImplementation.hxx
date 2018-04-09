@@ -40,7 +40,7 @@ class OTSVM_API SVMKernelImplementation
 : public OT::PersistentObject
 
 {
-  CLASSNAME;
+  CLASSNAME
 public:
 
 

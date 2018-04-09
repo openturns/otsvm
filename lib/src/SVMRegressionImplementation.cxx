@@ -29,7 +29,7 @@ namespace OTSVM
 {
 
 
-CLASSNAMEINIT(SVMRegressionImplementation);
+CLASSNAMEINIT(SVMRegressionImplementation)
 
 /* Default constructor*/
 SVMRegressionImplementation::SVMRegressionImplementation()

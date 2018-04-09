@@ -39,7 +39,7 @@ namespace OTSVM
 static Factory<LibSVMRegression> RegisteredFactory;
 
 
-CLASSNAMEINIT(LibSVMRegression);
+CLASSNAMEINIT(LibSVMRegression)
 
 /* Default constructor */
 LibSVMRegression::LibSVMRegression(): SVMRegressionImplementation()

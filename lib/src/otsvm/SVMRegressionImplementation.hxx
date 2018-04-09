@@ -39,7 +39,7 @@ class OTSVM_API SVMRegressionImplementation
 : public OT::PersistentObject
 {
 
-  CLASSNAME;
+  CLASSNAME
 
 public:
 

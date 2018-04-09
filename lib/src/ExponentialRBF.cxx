@@ -31,7 +31,7 @@ namespace OTSVM
 
 
 
-CLASSNAMEINIT(ExponentialRBF);
+CLASSNAMEINIT(ExponentialRBF)
 
 static Factory<ExponentialRBF> RegisteredFactory;
 

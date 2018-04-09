@@ -31,7 +31,7 @@ namespace OTSVM
 {
 
 
-CLASSNAMEINIT(SigmoidKernel);
+CLASSNAMEINIT(SigmoidKernel)
 
 static Factory<SigmoidKernel> RegisteredFactory;
 
