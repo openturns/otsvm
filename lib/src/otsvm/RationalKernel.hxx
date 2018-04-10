@@ -3,7 +3,7 @@
  *  @file  RationalKernel.hxx
  *  @brief Implementation of the rational kernel
  *
- *  Copyright 2005-2015 EDF-EADS-Phimeca
+ *  Copyright 2005-2018 EDF-EADS-Phimeca
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -41,7 +41,7 @@ namespace OTSVM
 class OTSVM_API RationalKernel
   : public SVMKernelImplementation
 {
-  CLASSNAME;
+  CLASSNAME
 public:
 
 
@@ -80,7 +80,7 @@ public:
 
   /** Method load() reloads the object from the StorageManager */
   void load(OT::Advocate & adv);
-  
+
 protected:
   OT::Scalar constant_;
 

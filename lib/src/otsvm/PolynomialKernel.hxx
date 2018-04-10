@@ -3,7 +3,7 @@
  *  @file  PolynomialKernel.hxx
  *  @brief Implementation of the polynomial kernel
  *
- *  (C) Copyright 2005-2015 EDF-EADS-Phimeca
+ *  Copyright 2005-2018 EDF-EADS-Phimeca
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -36,7 +36,7 @@ namespace OTSVM
 class OTSVM_API PolynomialKernel
   : public SVMKernelImplementation
 {
-  CLASSNAME;
+  CLASSNAME
 public:
 
 
@@ -78,14 +78,14 @@ public:
   /** Partial hessian */
   virtual OT::SymmetricMatrix partialHessian(const OT::Point & x1, const OT::Point & x2) const;
 
-    
+
   /** Method save() stores the object through the StorageManager */
   void save(OT::Advocate & adv) const;
 
   /** Method load() reloads the object from the StorageManager */
   void load(OT::Advocate & adv);
-  
-  
+
+
 protected:
   OT::Scalar degree_;
   OT::Scalar linear_;

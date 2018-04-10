@@ -2,7 +2,7 @@
 /**
  *  @brief Custom ResourceMap keys
  *
- *  Copyright 2005-2016 EDF-EADS-Phimeca
+ *  Copyright 2005-2018 EDF-EADS-Phimeca
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -35,7 +35,7 @@ using namespace OT;
 namespace OTSVM
 {
 
-CLASSNAMEINIT(SVMResourceMap);
+CLASSNAMEINIT(SVMResourceMap)
 
 static pthread_mutex_t SVMResourceMap_InstanceMutex_;
 
@@ -67,8 +67,8 @@ void SVMResourceMap::Initialize()
   ResourceMap::SetAsScalar("LibSVM-Epsilon", 1e-3);
   ResourceMap::SetAsUnsignedInteger("LibSVMRegression-NumberOfFolds", 3);
   ResourceMap::SetAsUnsignedInteger("LibSVM-Shrinking", 1);
-  
-  
+
+
 }
 
 

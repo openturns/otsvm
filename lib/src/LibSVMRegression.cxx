@@ -2,7 +2,7 @@
 /**
  *  @brief Regression
  *
- *  Copyright 2005-2015 EDF-EADS-Phimeca
+ *  Copyright 2005-2018 EDF-EADS-Phimeca
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -35,11 +35,11 @@ using namespace OT;
 
 namespace OTSVM
 {
-  
+
 static Factory<LibSVMRegression> RegisteredFactory;
 
 
-CLASSNAMEINIT(LibSVMRegression);
+CLASSNAMEINIT(LibSVMRegression)
 
 /* Default constructor */
 LibSVMRegression::LibSVMRegression(): SVMRegressionImplementation()
@@ -51,9 +51,9 @@ LibSVMRegression::LibSVMRegression(): SVMRegressionImplementation()
 LibSVMRegression::LibSVMRegression(const Sample & dataIn,
                                    const Sample & dataOut,
                                    const LibSVM::KernelType kerneltype )
-: SVMRegressionImplementation()
-, inputSample_(dataIn)
-, outputSample_(dataOut)
+  : SVMRegressionImplementation()
+  , inputSample_(dataIn)
+  , outputSample_(dataOut)
 {
   driver_.setSvmType(LibSVM::EpsilonSupportRegression);
   driver_.setKernelType(kerneltype);
@@ -98,7 +98,7 @@ void LibSVMRegression::run()
   driver_.normalize(outputSample_, outputTransformation, outputInverseTransformation);
   Sample normalizedOutputSample(outputTransformation(outputSample_));
 
-  /* For each component of the output Sample , we compute the same algorithm. 
+  /* For each component of the output Sample , we compute the same algorithm.
   * First, we make a cross validation to determinate the best parameters.
   * Second, we train the problem and retreive some results ( support vectors, support vectors coefficients, kernel parameters).
   * Third, we build the model with OpenTurns and save results in the MetaModelResult */
@@ -129,7 +129,7 @@ void LibSVMRegression::run()
       }
     }
     driver_.setTradeoffFactor( tradeoffFactor_[tempTradeoff] );
-    driver_.setKernelParameter( kernelParameter_[tempKernel] );    
+    driver_.setKernelParameter( kernelParameter_[tempKernel] );
     driver_.performTrain();
 
     Point svcoef(driver_.getSupportVectorCoef());
@@ -169,13 +169,15 @@ void LibSVMRegression::run()
 
   // compute residual, relative error
   Point residuals(outputDimension);
-  Point relativeErrors(outputDimension);  
+  Point relativeErrors(outputDimension);
   Sample mY(metaModel(inputSample_));
   Point outputVariance(outputSample_.computeVariance());
 
-  for ( UnsignedInteger outputIndex = 0; outputIndex < outputDimension; ++ outputIndex ) {
+  for ( UnsignedInteger outputIndex = 0; outputIndex < outputDimension; ++ outputIndex )
+  {
     Scalar quadraticResidual = 0.;
-    for ( UnsignedInteger i = 0; i < size; ++ i ) {
+    for ( UnsignedInteger i = 0; i < size; ++ i )
+    {
       const Scalar slack = outputSample_[i][outputIndex] - mY[i][outputIndex];
       quadraticResidual += slack * slack;
     }
@@ -183,7 +185,7 @@ void LibSVMRegression::run()
     const Scalar empiricalError = quadraticResidual / size;
     relativeErrors[outputIndex] = empiricalError / outputVariance[outputIndex];
   }
-  
+
   result_ = MetaModelResult(Function(), metaModel, residuals, relativeErrors);
 }
 

@@ -11,7 +11,7 @@
     Classes
     --------
     LibSVMRegression                                The class that supports the regression.
-          
+
 """
 
 import sys
@@ -21,5 +21,4 @@ if sys.platform.startswith('win'):
 
 from .otsvm import *
 
-__version__ = '0.3'
-
+__version__ = '0.4'

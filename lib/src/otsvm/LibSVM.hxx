@@ -2,7 +2,7 @@
 /**
  *  @brief LibSVM wrapper
  *
- *  Copyright 2005-2015 EDF-EADS-Phimeca
+ *  Copyright 2005-2018 EDF-EADS-Phimeca
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -33,7 +33,7 @@ namespace OTSVM
 
 class OTSVM_API LibSVM : public OT::PersistentObject
 {
-  CLASSNAME;
+  CLASSNAME
 
 public:
 
@@ -42,7 +42,7 @@ public:
 
   /* Constructor */
   LibSVM();
-  
+
   /* Virtual Constructor */
   virtual LibSVM * clone() const;
 
@@ -117,7 +117,7 @@ public:
   void convertData(const OT::Sample & inputSample, const OT::Sample & outputSample);
 
   OT::Scalar runCrossValidation();
-  
+
   /* Destroy the libsvm problem */
   void destroy();
 
@@ -137,7 +137,7 @@ public:
   static void SVMLog(const char*);
 
   OT::Function getInputTransformation() const;
-  
+
 protected:
 
   /* Libsvm parameter */
@@ -154,7 +154,7 @@ protected:
 
   /* data normalization */
   OT::Function inputTransformation_;
-  
+
 };
 
 

@@ -3,7 +3,7 @@
  *  @file  NormalRBF.hxx
  *  @brief Implementation of the Normal RBF kernel, also known as the gaussian kernel
  *
- *  Copyright 2005-2015 EDF-EADS-Phimeca
+ *  Copyright 2005-2018 EDF-EADS-Phimeca
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -36,7 +36,7 @@ namespace OTSVM
 class OTSVM_API NormalRBF
   : public SVMKernelImplementation
 {
-  CLASSNAME;
+  CLASSNAME
 public:
 
 
@@ -69,14 +69,14 @@ public:
 
   /** Partial hessian */
   virtual OT::SymmetricMatrix partialHessian(const OT::Point & x1, const OT::Point & x2) const;
-  
+
   /** Method save() stores the object through the StorageManager */
   void save(OT::Advocate & adv) const;
 
   /** Method load() reloads the object from the StorageManager */
   void load(OT::Advocate & adv);
-  
-  
+
+
 protected:
   OT::Scalar sigma_;
 

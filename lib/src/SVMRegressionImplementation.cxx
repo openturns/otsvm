@@ -2,7 +2,7 @@
 /**
  *  @brief Implementation of the regression
  *
- *  Copyright 2005-2016 EDF-EADS-Phimeca
+ *  Copyright 2005-2018 EDF-EADS-Phimeca
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -29,13 +29,13 @@ namespace OTSVM
 {
 
 
-CLASSNAMEINIT(SVMRegressionImplementation);
+CLASSNAMEINIT(SVMRegressionImplementation)
 
 /* Default constructor*/
 SVMRegressionImplementation::SVMRegressionImplementation()
-: PersistentObject()
-, tradeoffFactor_(1, 10.)
-, kernelParameter_(1, 1.0)
+  : PersistentObject()
+  , tradeoffFactor_(1, 10.)
+  , kernelParameter_(1, 1.0)
 {
   //Nothing to do
 }

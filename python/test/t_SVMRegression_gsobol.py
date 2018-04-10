@@ -46,17 +46,16 @@ result = Regression.getResult()
 residuals = result.getResiduals()
 # Examine the results
 print('#######################')
-#print "residuals=%.4f" % residuals[0]
+# print "residuals=%.4f" % residuals[0]
 if residuals[0] <= 4.5e-3:
     print('OK')
 else:
     print('FAIL')
 relativeErrors = result.getRelativeErrors()
-#print "relative errors=%.6f" % relativeErrors[0]
+# print "relative errors=%.6f" % relativeErrors[0]
 if relativeErrors[0] <= 8.0e-3:
     print('OK')
 else:
     print('FAIL')
 print('#######################')
 print('')
-

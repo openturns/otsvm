@@ -2,7 +2,7 @@
 /**
  *  @brief Regression
  *
- *  Copyright 2005-2012 EDF-EADS-Phimeca
+ *  Copyright 2005-2018 EDF-EADS-Phimeca
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -29,7 +29,7 @@ namespace OTSVM
 {
 
 
-CLASSNAMEINIT(SVMRegression);
+CLASSNAMEINIT(SVMRegression)
 
 /* Default constructor */
 SVMRegression::SVMRegression(): OT::TypedInterfaceObject < SVMRegressionImplementation > ()
@@ -41,7 +41,7 @@ SVMRegression::SVMRegression(): OT::TypedInterfaceObject < SVMRegressionImplemen
 SVMRegression::SVMRegression(const Sample & dataIn,
                              const Sample & dataOut,
                              const LibSVM::KernelType kerneltype)
-: TypedInterfaceObject< SVMRegressionImplementation >(new LibSVMRegression(dataIn, dataOut, kerneltype))
+  : TypedInterfaceObject< SVMRegressionImplementation >(new LibSVMRegression(dataIn, dataOut, kerneltype))
 {
 }
 

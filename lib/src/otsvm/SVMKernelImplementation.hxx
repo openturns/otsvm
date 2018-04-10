@@ -2,7 +2,7 @@
 /**
  *  @brief This is a abstract class for the kernels used by support vector regression
  *
- *  Copyright 2005-2012 EDF-EADS-Phimeca
+ *  Copyright 2005-2018 EDF-EADS-Phimeca
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -37,10 +37,10 @@ namespace OTSVM
  */
 
 class OTSVM_API SVMKernelImplementation
-: public OT::PersistentObject
+  : public OT::PersistentObject
 
 {
-  CLASSNAME;
+  CLASSNAME
 public:
 
 
