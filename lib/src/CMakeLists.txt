@@ -44,11 +44,12 @@ ot_install_header_file ( KMeansClustering.hxx )
 ot_install_header_file ( SVMResourceMap.hxx )
 
 
-include_directories ( ${INTERNAL_INCLUDE_DIRS} )
+include_directories (${INTERNAL_INCLUDE_DIRS})
 
-add_library ( otsvm ${SOURCEFILES} )
-if ( BUILD_SHARED_LIBS )
-  set_target_properties ( otsvm PROPERTIES COMPILE_DEFINITIONS "OTSVM_DLL_EXPORTS" )
+add_library (otsvm ${SOURCEFILES})
+set_target_properties (otsvm PROPERTIES POSITION_INDEPENDENT_CODE ON)
+if (BUILD_SHARED_LIBS)
+  set_target_properties (otsvm PROPERTIES COMPILE_DEFINITIONS "OTSVM_DLL_EXPORTS")
 endif ()
 
 if ( NOT DEFINED LIB_VERSION ) 
