@@ -60,7 +60,7 @@ String LinearKernel::__repr__() const
 /* Operator */
 Scalar LinearKernel::operator() ( const Point & x1 , const Point & x2 ) const
 {
-  Scalar value = dot( x1 , x2 );
+  Scalar value = x1.dot(x2);
   return value;
 }
 

@@ -113,7 +113,7 @@ void PolynomialKernel::setParameter(Scalar value)
 /* Operator () */
 Scalar PolynomialKernel::operator() (const Point & x1, const Point & x2) const
 {
-  Scalar dotProduct = dot(x1, x2);
+  Scalar dotProduct = x1.dot(x2);
   Scalar value = std::pow(linear_ * dotProduct + constant_, degree_);
   return value;
 }
@@ -147,7 +147,7 @@ void PolynomialKernel::setParameters(const PointWithDescription & parameters)
 Point PolynomialKernel::partialGradient(const Point & x1, const Point & x2) const
 {
   UnsignedInteger dimension = x1.getDimension();
-  Scalar dotProduct = dot(x1, x2);
+  Scalar dotProduct = x1.dot(x2);
   Point result(dimension, 0.0);
   if(degree_ >= 1.0)
   {
@@ -165,7 +165,7 @@ SymmetricMatrix PolynomialKernel::partialHessian(const Point & x1, const Point &
 {
   UnsignedInteger dimension = x1.getDimension();
   SymmetricMatrix result(dimension);
-  Scalar dotProduct = dot(x1, x2);
+  Scalar dotProduct = x1.dot(x2);
   if (degree_ >= 2.0)
   {
     for (UnsignedInteger i = 0; i < dimension; ++ i)
