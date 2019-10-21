@@ -34,6 +34,11 @@ set ( OTSVM_EXAMPLE_PATH ${OTSVM_DATA_PATH}/${PACKAGE_NAME}/examples )
 set ( OTSVM_CONFIG_CMAKE_PATH lib${LIB_SUFFIX}/cmake/otsvm )
 set (OTSVM_DOC_PATH share/${PACKAGE_NAME}/doc)
 
+if (NOT CMAKE_VERSION VERSION_LESS 3.1)
+  # beware swig<3.0 does not like c++11: https://github.com/swig/swig/issues/73
+  set (CMAKE_CXX_STANDARD 11)
+endif ()
+
 if (BUILD_PYTHON)
   # workaround for cmake bug #0013449
   if (CMAKE_VERSION VERSION_LESS 3 AND DEFINED CMAKE_FIND_ROOT_PATH)
