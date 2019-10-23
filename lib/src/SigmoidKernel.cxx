@@ -110,7 +110,7 @@ void SigmoidKernel::setParameters( const PointWithDescription & parameters )
 /* Operator () */
 Scalar SigmoidKernel::operator() ( const Point & x1 , const Point & x2 ) const
 {
-  Scalar dotProduct = dot( x1 , x2 );
+  Scalar dotProduct = x1.dot(x2);
   Scalar value = tanh( linear_ * dotProduct + constant_ );
   return value;
 }
@@ -120,7 +120,7 @@ Scalar SigmoidKernel::operator() ( const Point & x1 , const Point & x2 ) const
 Point SigmoidKernel::partialGradient( const Point & x1 , const Point & x2 ) const
 {
   UnsignedInteger dimension = x1.getDimension();
-  Scalar dotProduct = dot( x1 , x2 );
+  Scalar dotProduct = x1.dot(x2);
   Point result(dimension , 0.0);
   for( UnsignedInteger i = 0 ; i < dimension ; i ++ )
   {
@@ -134,7 +134,7 @@ Point SigmoidKernel::partialGradient( const Point & x1 , const Point & x2 ) cons
 SymmetricMatrix SigmoidKernel::partialHessian( const Point & x1 , const Point & x2 )const
 {
   UnsignedInteger dimension = x1.getDimension();
-  Scalar dotProduct = dot( x1 , x2 );
+  Scalar dotProduct = x1.dot(x2);
   SymmetricMatrix result(dimension);
   for (UnsignedInteger i = 0 ; i < dimension ; ++ i)
   {
