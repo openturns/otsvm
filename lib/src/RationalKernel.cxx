@@ -32,7 +32,7 @@ namespace OTSVM
 
 CLASSNAMEINIT(RationalKernel)
 
-static Factory<RationalKernel> RegisteredFactory;
+static Factory<RationalKernel> RegisteredFactory_RationalKernel;
 
 /* Constructor with parameters */
 RationalKernel::RationalKernel(const Scalar constant)

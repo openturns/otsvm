@@ -36,7 +36,7 @@ using namespace OT;
 namespace OTSVM
 {
 
-static Factory<LibSVMRegression> RegisteredFactory;
+static Factory<LibSVMRegression> RegisteredFactory_LibSVMRegression;
 
 
 CLASSNAMEINIT(LibSVMRegression)

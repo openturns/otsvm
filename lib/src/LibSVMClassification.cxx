@@ -42,7 +42,7 @@ namespace OTSVM
 CLASSNAMEINIT(LibSVMClassification)
 
 
-static Factory<LibSVMClassification> RegisteredFactory;
+static Factory<LibSVMClassification> RegisteredFactory_LibSVMClassification;
 
 
 LibSVMClassification::LibSVMClassification()

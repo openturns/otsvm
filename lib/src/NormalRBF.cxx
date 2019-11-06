@@ -31,7 +31,7 @@ namespace OTSVM
 
 CLASSNAMEINIT(NormalRBF)
 
-static Factory<NormalRBF> RegisteredFactory;
+static Factory<NormalRBF> RegisteredFactory_NormalRBF;
 
 
 /* Constructor with parameters */
