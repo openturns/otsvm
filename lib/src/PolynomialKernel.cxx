@@ -33,6 +33,7 @@ namespace OTSVM
 
 CLASSNAMEINIT(PolynomialKernel)
 
+static Factory<PolynomialKernel> RegisteredFactory_PolynomialKernel;
 
 /* Constructor with parameters */
 PolynomialKernel::PolynomialKernel(const Scalar degree, const Scalar linear, const Scalar constant)
