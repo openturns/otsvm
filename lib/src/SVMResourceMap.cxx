@@ -61,14 +61,12 @@ void SVMResourceMap::Initialize()
     perror("ResourceMap::Initialize mutex initialization failed");
     exit(1);
   }
-  ResourceMap::SetAsUnsignedInteger("LibSVM-DegreePolynomialKernel", 3);
-  ResourceMap::SetAsScalar("LibSVM-ConstantPolynomialKernel", 0);
-  ResourceMap::SetAsUnsignedInteger("LibSVM-CacheSize", 100);
-  ResourceMap::SetAsScalar("LibSVM-Epsilon", 1e-3);
-  ResourceMap::SetAsUnsignedInteger("LibSVMRegression-NumberOfFolds", 3);
-  ResourceMap::SetAsUnsignedInteger("LibSVM-Shrinking", 1);
-
-
+  ResourceMap::AddAsUnsignedInteger("LibSVM-DegreePolynomialKernel", 3);
+  ResourceMap::AddAsScalar("LibSVM-ConstantPolynomialKernel", 0);
+  ResourceMap::AddAsUnsignedInteger("LibSVM-CacheSize", 100);
+  ResourceMap::AddAsScalar("LibSVM-Epsilon", 1e-3);
+  ResourceMap::AddAsUnsignedInteger("LibSVMRegression-NumberOfFolds", 3);
+  ResourceMap::AddAsUnsignedInteger("LibSVM-Shrinking", 1);
 }
 
 
