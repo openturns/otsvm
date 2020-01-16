@@ -4,7 +4,7 @@
 #
 #  Find otsvm includes and libraries
 #
-#  (C) Copyright 2008-2013 Phimeca
+#  Copyright 2014-2020 Phimeca
 #
 
 # Use the following variables to compile and link against otsvm:
