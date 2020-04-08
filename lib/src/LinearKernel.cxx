@@ -79,7 +79,7 @@ Point LinearKernel::partialGradient( const Point & x1 , const Point & x2 ) const
 
 
 /* Partial Hessian */
-SymmetricMatrix LinearKernel::partialHessian( const Point & x1 , const Point & x2 )const
+SymmetricMatrix LinearKernel::partialHessian( const Point & x1 , const Point & /*x2*/) const
 {
   UnsignedInteger dimension = x1.getDimension();
   SymmetricMatrix result(dimension);
@@ -87,7 +87,7 @@ SymmetricMatrix LinearKernel::partialHessian( const Point & x1 , const Point & x
   {
     for( UnsignedInteger j = 0 ; j <= i ; j++ )
     {
-      result( i , j ) = 0;
+      result(i , j) = 0;
     }
   }
   return result;

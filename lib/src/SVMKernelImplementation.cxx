@@ -61,7 +61,7 @@ Scalar SVMKernelImplementation::getParameter() const
   throw NotYetImplementedException(HERE);
 }
 
-void SVMKernelImplementation::setParameter(Scalar value)
+void SVMKernelImplementation::setParameter(Scalar /*value*/)
 {
   throw NotYetImplementedException(HERE);
 }
@@ -73,28 +73,28 @@ PointWithDescription SVMKernelImplementation::getParameters() const
   throw NotYetImplementedException(HERE);
 }
 
-void SVMKernelImplementation::setParameters(const PointWithDescription & parameters)
+void SVMKernelImplementation::setParameters(const PointWithDescription & /*parameters*/)
 {
   throw NotYetImplementedException(HERE);
 }
 
 
 /* Operator () */
-Scalar SVMKernelImplementation::operator () (const Point & x1, const Point & x2) const
+Scalar SVMKernelImplementation::operator () (const Point & /*x1*/, const Point & /*x2*/) const
 {
   throw NotYetImplementedException(HERE);
 }
 
 
 /* Partial gradient */
-Point SVMKernelImplementation::partialGradient(const Point & x, const Point & y) const
+Point SVMKernelImplementation::partialGradient(const Point & /*x*/, const Point & /*y*/) const
 {
   throw NotYetImplementedException(HERE);
 }
 
 
 /* Partial hessian */
-SymmetricMatrix SVMKernelImplementation::partialHessian(const Point & x, const Point & y) const
+SymmetricMatrix SVMKernelImplementation::partialHessian(const Point & x, const Point & /*y*/) const
 {
   return SymmetricMatrix(x.getDimension());
   //      throw NotYetImplementedException(HERE);

@@ -66,7 +66,7 @@ String SVMKernel::__repr__() const
 
 
 /* String converter */
-String SVMKernel::__str__(const String & offset) const
+String SVMKernel::__str__(const String & /*offset*/) const
 {
   return __repr__();
 }

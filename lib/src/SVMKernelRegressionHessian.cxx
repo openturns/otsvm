@@ -53,19 +53,6 @@ SVMKernelRegressionHessian::SVMKernelRegressionHessian(const SVMKernel & kernel,
   // Nothing to do
 }
 
-
-/* Constructor from SVMKernelRegressionEvaluation */
-SVMKernelRegressionHessian::SVMKernelRegressionHessian(const SVMKernelRegressionEvaluation & evaluation) :
-  HessianImplementation()
-  //  :
-  //      kernel_(kernel),
-  //      dataIn_(dataIn),
-  //      constant_(constant)
-{
-  // Nothing to do
-}
-
-
 /* Virtual constructor */
 SVMKernelRegressionHessian * SVMKernelRegressionHessian::clone() const
 {
@@ -73,7 +60,7 @@ SVMKernelRegressionHessian * SVMKernelRegressionHessian::clone() const
 }
 
 /* Comparison operator */
-Bool SVMKernelRegressionHessian::operator==(const SVMKernelRegressionHessian & other) const
+Bool SVMKernelRegressionHessian::operator==(const SVMKernelRegressionHessian & /*other*/) const
 {
   return true;
 }

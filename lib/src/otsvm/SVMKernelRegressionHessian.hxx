@@ -57,9 +57,6 @@ public:
                              const OT::Sample & dataIn,
                              const OT::Scalar constant);
 
-  /** Constructor from SVMKernelRegressionEvaluation */
-  SVMKernelRegressionHessian(const SVMKernelRegressionEvaluation & evaluation);
-
   /** Virtual constructor */
   virtual SVMKernelRegressionHessian * clone() const;
 

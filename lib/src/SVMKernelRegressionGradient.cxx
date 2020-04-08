@@ -63,7 +63,7 @@ SVMKernelRegressionGradient * SVMKernelRegressionGradient::clone() const
 }
 
 /* Comparison operator */
-Bool SVMKernelRegressionGradient::operator==(const SVMKernelRegressionGradient & other) const
+Bool SVMKernelRegressionGradient::operator==(const SVMKernelRegressionGradient & /*other*/) const
 {
   return true;
 }
