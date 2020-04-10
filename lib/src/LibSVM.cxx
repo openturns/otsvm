@@ -33,7 +33,7 @@ namespace OTSVM
 
 CLASSNAMEINIT(LibSVM)
 
-void LibSVM::SVMLog(const char *s)
+void LibSVM::SVMLog(const char * /*s*/)
 {
 //   LOGDEBUG(OSS() << "LibSVM: " << s);
 }

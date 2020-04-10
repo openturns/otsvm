@@ -30,7 +30,7 @@ using namespace OT;
 using namespace OT::Test;
 using namespace OTSVM;
 
-int main(int argc, char *argv[])
+int main(void)
 {
   TESTPREAMBLE;
   OStream fullprint(std::cout);

@@ -74,7 +74,7 @@ SVMKernelRegressionEvaluation * SVMKernelRegressionEvaluation::clone() const
 }
 
 /* Comparison operator */
-Bool SVMKernelRegressionEvaluation::operator==(const SVMKernelRegressionEvaluation & other) const
+Bool SVMKernelRegressionEvaluation::operator==(const SVMKernelRegressionEvaluation & /*other*/) const
 {
   return true;
 }
