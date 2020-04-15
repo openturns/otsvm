@@ -74,7 +74,7 @@ Python textual interface to OTSVM uncertainty library
 %cmake -DINSTALL_DESTDIR:PATH=%{buildroot} \
        -DCMAKE_SKIP_INSTALL_RPATH:BOOL=ON \
        -DPYTHON_EXECUTABLE=%{__python} \
-       -DBUILD_DOC=OFF .
+       -DUSE_SPHINX=OFF .
 make %{?_smp_mflags}
 
 %install
@@ -111,6 +111,7 @@ rm -rf %{buildroot}
 %files -n python3-%{name}
 %defattr(-,root,root,-)
 %{python_sitearch}/%{name}/
+%{python_sitearch}/%{name}-*.dist-info/
 
 
 %changelog
