@@ -59,7 +59,7 @@ public:
   /**
   *Virtual constructor
   */
-  virtual LibSVMClassification * clone() const;
+  LibSVMClassification * clone() const override;
 
   /* Accuracy accessor */
   OT::Scalar getAccuracy();
@@ -71,7 +71,7 @@ public:
   OT::UnsignedInteger classify(const OT::Point & vector) const;
 
   /* String converter */
-  OT::String __repr__() const;
+  OT::String __repr__() const override;
 
   /* Grade a point as if it were associated to a class */
   OT::UnsignedInteger grade(const OT::Point & inP, const OT::SignedInteger & outC) const;

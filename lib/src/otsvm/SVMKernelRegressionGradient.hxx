@@ -59,31 +59,31 @@ public:
                               const OT::Scalar constant);
 
   /** Virtual constructor */
-  virtual SVMKernelRegressionGradient * clone() const;
+  SVMKernelRegressionGradient * clone() const override;
 
   /** Comparison operator */
   OT::Bool operator ==(const SVMKernelRegressionGradient & other) const;
 
   /** String converter */
-  virtual OT::String __repr__() const;
+  OT::String __repr__() const override;
 
   /** Test for actual implementation */
-  virtual OT::Bool isActualImplementation() const;
+  OT::Bool isActualImplementation() const override;
 
   /** Gradient method */
-  virtual OT::Matrix gradient(const OT::Point & inP) const;
+  OT::Matrix gradient(const OT::Point & inP) const override;
 
   /** Accessor for input point dimension */
-  virtual OT::UnsignedInteger getInputDimension() const;
+  OT::UnsignedInteger getInputDimension() const override;
 
   /** Accessor for output point dimension */
-  virtual OT::UnsignedInteger getOutputDimension() const;
+  OT::UnsignedInteger getOutputDimension() const override;
 
   /** Method save() stores the object through the StorageManager */
-  void save(OT::Advocate & adv) const;
+  void save(OT::Advocate & adv) const override;
 
   /** Method load() reloads the object from the StorageManager */
-  void load(OT::Advocate & adv);
+  void load(OT::Advocate & adv) override;
 
 private:
 

@@ -39,25 +39,25 @@ public:
   LinearKernel();
 
   /* Virtual constructor */
-  virtual LinearKernel * clone() const;
+  LinearKernel * clone() const override;
 
   /* String converter */
-  virtual OT::String __repr__() const;
+  OT::String __repr__() const override;
 
   /* Operator () */
-  virtual OT::Scalar operator() ( const OT::Point & x1 , const OT::Point & x2 ) const;
+  OT::Scalar operator() ( const OT::Point & x1 , const OT::Point & x2 ) const override;
 
   /* Partial gradient */
-  virtual OT::Point partialGradient( const OT::Point & x1 , const OT::Point & x2 ) const;
+  OT::Point partialGradient( const OT::Point & x1 , const OT::Point & x2 ) const override;
 
   /* Partial hessian */
-  virtual OT::SymmetricMatrix partialHessian( const OT::Point & x1 , const OT::Point & x2 ) const;
+  OT::SymmetricMatrix partialHessian( const OT::Point & x1 , const OT::Point & x2 ) const override;
 
   /** Method save() stores the object through the StorageManager */
-  void save(OT::Advocate & adv) const;
+  void save(OT::Advocate & adv) const override;
 
   /** Method load() reloads the object from the StorageManager */
-  void load(OT::Advocate & adv);
+  void load(OT::Advocate & adv) override;
 };
 
 }

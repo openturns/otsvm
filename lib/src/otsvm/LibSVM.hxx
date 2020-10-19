@@ -44,7 +44,7 @@ public:
   LibSVM();
 
   /* Virtual Constructor */
-  virtual LibSVM * clone() const;
+  LibSVM * clone() const override;
 
   /* Kernel parameter accessor */
   void setKernelParameter(const OT::Scalar kernelParameter);
