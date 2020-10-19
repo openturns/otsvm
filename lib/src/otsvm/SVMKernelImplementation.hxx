@@ -48,10 +48,10 @@ public:
   SVMKernelImplementation();
 
   /** Virtual constructor */
-  virtual SVMKernelImplementation * clone() const;
+  SVMKernelImplementation * clone() const override;
 
   /** String converter */
-  virtual OT::String __repr__() const;
+  OT::String __repr__() const override;
 
   /** Parameter accessor */
   virtual OT::Scalar getParameter() const;
@@ -71,10 +71,10 @@ public:
   virtual OT::SymmetricMatrix partialHessian(const OT::Point & x1, const OT::Point & x2) const;
 
   /** Method save() stores the object through the StorageManager */
-  virtual void save(OT::Advocate & adv) const;
+  void save(OT::Advocate & adv) const override;
 
   /** Method load() reloads the object from the StorageManager */
-  virtual void load(OT::Advocate & adv);
+  void load(OT::Advocate & adv) override;
 
 protected:
 

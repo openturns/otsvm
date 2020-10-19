@@ -42,7 +42,7 @@ public:
 
   KMeansClustering();
 
-  virtual KMeansClustering * clone() const;
+  KMeansClustering * clone() const override;
 
   KMeansClustering(const OT::Sample & dataIn, OT::UnsignedInteger k);
 

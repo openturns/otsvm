@@ -54,19 +54,19 @@ public:
                    const LibSVM::KernelType kerneltype = LibSVM::NormalRbf);
 
   /* Virtual constructor*/
-  virtual LibSVMRegression * clone() const;
+  LibSVMRegression * clone() const override;
 
   /* Method run */
-  virtual void run();
+  void run() override;
 
   OT::Sample getInputSample() const;
   OT::Sample getOutputSample() const;
 
   /** Method save() stores the object through the StorageManager */
-  virtual void save(OT::Advocate & adv) const;
+  void save(OT::Advocate & adv) const override;
 
   /** Method load() reloads the object from the StorageManager */
-  virtual void load(OT::Advocate & adv);
+  void load(OT::Advocate & adv) override;
 
 protected:
 

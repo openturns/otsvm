@@ -47,7 +47,7 @@ public:
   SVMRegressionImplementation();
 
   /** Virtual constructor */
-  virtual SVMRegressionImplementation * clone() const;
+  SVMRegressionImplementation * clone() const override;
 
   /** Method run */
   virtual void run();
@@ -64,10 +64,10 @@ public:
   virtual void setKernelParameter(const OT::Point & kernel);
 
   /** Method save() stores the object through the StorageManager */
-  virtual void save(OT::Advocate & adv) const;
+  void save(OT::Advocate & adv) const override;
 
   /** Method load() reloads the object from the StorageManager */
-  virtual void load(OT::Advocate & adv);
+  void load(OT::Advocate & adv) override;
 
 protected:
 

@@ -57,10 +57,10 @@ public:
   SVMKernel(Implementation & p_implementation);
 
   /** String converter */
-  OT::String __repr__() const;
+  OT::String __repr__() const override;
 
   /** String converter */
-  OT::String __str__(const OT::String & offset = "") const;
+  OT::String __str__(const OT::String & offset = "") const override;
 
   /** Parameter accessor */
   OT::Scalar getParameter() const;
