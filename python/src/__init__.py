@@ -21,4 +21,4 @@ if sys.platform.startswith('win'):
 
 from .otsvm import *
 
-__version__ = '0.9'
+__version__ = '0.10'
