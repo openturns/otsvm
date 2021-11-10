@@ -291,7 +291,7 @@ void LibSVM::normalize(const Sample &data, Function & transformation, Function &
 {
   UnsignedInteger dimension = data.getDimension();
   Point mean(data.computeMean());
-  Point stdev(data.computeStandardDeviationPerComponent());
+  Point stdev(data.computeStandardDeviation());
   SquareMatrix linear(dimension);
   SquareMatrix linearInv(dimension);
   for (UnsignedInteger j = 0; j < dimension; ++ j)
