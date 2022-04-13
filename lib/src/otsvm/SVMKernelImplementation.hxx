@@ -2,7 +2,7 @@
 /**
  *  @brief This is a abstract class for the kernels used by support vector regression
  *
- *  Copyright 2014-2020 Phimeca
+ *  Copyright 2014-2022 Phimeca
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
