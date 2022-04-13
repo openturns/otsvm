@@ -20,7 +20,7 @@ FFLAGS="${FFLAGS:-%optflags}" ; export FFLAGS ; \
 -DBUILD_SHARED_LIBS:BOOL=ON
 
 Name:           otsvm
-Version:        0.10
+Version:        0.11
 Release:        0%{?dist}
 Summary:        OpenTURNS module
 Group:          System Environment/Libraries
@@ -66,17 +66,14 @@ Python textual interface to OTSVM uncertainty library
 %build
 %cmake -DINSTALL_DESTDIR:PATH=%{buildroot} \
        -DCMAKE_SKIP_INSTALL_RPATH:BOOL=ON \
-       -DPYTHON_EXECUTABLE=%{__python} \
        -DUSE_SPHINX=OFF .
 make %{?_smp_mflags}
 
 %install
-rm -rf %{buildroot}
 make install DESTDIR=%{buildroot}
 
 %check
-make tests %{?_smp_mflags}
-LD_LIBRARY_PATH=%{buildroot}%{_libdir} ctest %{?_smp_mflags} --output-on-failure
+LD_LIBRARY_PATH=%{buildroot}%{_libdir} ctest %{?_smp_mflags} -R pyinstallcheck --output-on-failure --schedule-random
 
 %clean
 rm -rf %{buildroot}
