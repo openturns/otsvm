@@ -14,10 +14,8 @@
 
 """
 
-import sys
-if sys.platform.startswith('win'):
-    # this ensures OT dll is loaded
-    import openturns
+# ensures swig type tables order & dll load
+import openturns as _ot
 
 from .otsvm import *
 
