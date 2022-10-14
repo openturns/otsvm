@@ -46,7 +46,7 @@ static Factory<LibSVMClassification> RegisteredFactory_LibSVMClassification;
 
 
 LibSVMClassification::LibSVMClassification()
-  : PersistentObject()
+  : ClassifierImplementation()
   , accuracy_(0.)
 {
   ///Nothing to do
@@ -60,31 +60,13 @@ LibSVMClassification* LibSVMClassification::clone() const
 
 
 LibSVMClassification::LibSVMClassification(const Sample & dataIn,
-    const Indices & outClasses):
-  PersistentObject(),
-  inputSample_(dataIn),
-  classes_(outClasses.getSize())
-{
-  for (UnsignedInteger i = 0; i < outClasses.getSize(); ++ i)
-  {
-    classes_[i] = outClasses[i];
-  }
-
-  driver_.setSvmType(LibSVM::CSupportClassification);
-  driver_.setNu(0.);
-}
-
-LibSVMClassification::LibSVMClassification(const Sample & dataIn,
-    const Collection<SignedInteger> & outClasses ):
-  PersistentObject(),
-  inputSample_(dataIn),
-  classes_(outClasses)
+    const Indices & outClasses)
+: ClassifierImplementation(dataIn, outClasses)
+//   inputSample_(dataIn),
 {
   driver_.setSvmType(LibSVM::CSupportClassification);
   driver_.setNu(0.);
 }
-
-
 
 Scalar LibSVMClassification::getAccuracy()
 {
@@ -172,7 +154,7 @@ void LibSVMClassification::setKernelParameter(const Point & kernel)
 }
 
 /* Grade a point as if it were associated to a class */
-UnsignedInteger LibSVMClassification::grade(const Point & inP, const  SignedInteger & outC) const
+Scalar LibSVMClassification::grade(const Point & inP, const UnsignedInteger outC) const
 {
   return driver_.getLabelValues(inP, outC);
 }
@@ -213,8 +195,8 @@ void LibSVMClassification::runKMeans( UnsignedInteger k )
   Scalar error = 0;
   Indices cluster;
   Sample finalSample(0, inputSample_[0].getDimension());
-  Collection<SignedInteger> finalIndices;
-  Collection<SignedInteger> tempIndices;
+  Indices finalIndices;
+  Indices tempIndices;
   KMeansClustering kmeans(inputSample_ , k);
   kmeans.run();
 
@@ -222,7 +204,7 @@ void LibSVMClassification::runKMeans( UnsignedInteger k )
 
   for( UnsignedInteger i = 0 ; i < k ; i++)
   {
-    Collection<SignedInteger> partialIndices;
+    Indices partialIndices;
     Sample partialSample(0, inputSample_[0].getDimension());
     for( UnsignedInteger j = 0 ; j < cluster.getSize() ; j++ )
     {
@@ -233,7 +215,7 @@ void LibSVMClassification::runKMeans( UnsignedInteger k )
         tempIndices.add(classes_[j]);
       }
     }
-    LibSVMClassification partial(partialSample , partialIndices);
+    LibSVMClassification partial(partialSample, partialIndices);
     partial.setKernelType(driver_.getKernelType());
     partial.setTradeoffFactor(tradeoffFactor_);
     partial.setKernelParameter(kernelParameter_);
@@ -260,27 +242,23 @@ void LibSVMClassification::runKMeans( UnsignedInteger k )
 }
 
 
-// void LibSVMClassification::save(Advocate & adv) const
-// {
-//   Classifier::save(adv);
-//   adv.saveAttribute( "inputSample_", inputSample_ );
-//   adv.saveAttribute( "classes_", classes_ );
-//   adv.saveAttribute( "tradeoffFactor_", tradeoffFactor_ );
-//   adv.saveAttribute( "kernelParameter_", kernelParameter_ );
-//   adv.saveAttribute( "accuracy_", accuracy_ );
-// }
+void LibSVMClassification::save(Advocate & adv) const
+{
+  ClassifierImplementation::save(adv);
+  adv.saveAttribute( "tradeoffFactor_", tradeoffFactor_ );
+  adv.saveAttribute( "kernelParameter_", kernelParameter_ );
+  adv.saveAttribute( "accuracy_", accuracy_ );
+}
 
 
 /* Method load() reloads the object from the StorageManager */
-// void LibSVMClassification::load(Advocate & adv)
-// {
-//   Classifier::load(adv);
-//   adv.saveAttribute( "inputSample_", inputSample_ );
-//   adv.saveAttribute( "classes_", classes_ );
-//   adv.saveAttribute( "tradeoffFactor_", tradeoffFactor_ );
-//   adv.saveAttribute( "kernelParameter_", kernelParameter_ );
-//   adv.saveAttribute( "accuracy_", accuracy_ );
-// }
+void LibSVMClassification::load(Advocate & adv)
+{
+  ClassifierImplementation::load(adv);
+  adv.saveAttribute( "tradeoffFactor_", tradeoffFactor_ );
+  adv.saveAttribute( "kernelParameter_", kernelParameter_ );
+  adv.saveAttribute( "accuracy_", accuracy_ );
+}
 
 
 }
