@@ -24,12 +24,12 @@
 #define OTSVM_LIBSVMCLASSIFICATION_HXX
 
 #include "LibSVM.hxx"
-#include <openturns/PersistentCollection.hxx>
+#include <openturns/ClassifierImplementation.hxx>
 
 namespace OTSVM
 {
 
-class OTSVM_API LibSVMClassification: public OT::PersistentObject
+class OTSVM_API LibSVMClassification: public OT::ClassifierImplementation
 {
   CLASSNAME
 
@@ -49,14 +49,6 @@ public:
                        const OT::Indices & outClasses);
 
   /**
-  *Constructor with parameters.
-  * @param  dataIn a Sample, an OpenTURNS object which is the input Sample.
-  * @param  outClasses an Indices, an OpenTURNS object which is the label for each vector.
-  */
-  LibSVMClassification(const OT::Sample &dataIn,
-                       const OT::Collection<OT::SignedInteger> & outClasses);
-
-  /**
   *Virtual constructor
   */
   LibSVMClassification * clone() const override;
@@ -68,13 +60,13 @@ public:
   *Associate a point with a class
   *@param vector a Point, an Openturns object.
   */
-  OT::UnsignedInteger classify(const OT::Point & vector) const;
+  OT::UnsignedInteger classify(const OT::Point & vector) const override;
 
   /* String converter */
   OT::String __repr__() const override;
 
   /* Grade a point as if it were associated to a class */
-  OT::UnsignedInteger grade(const OT::Point & inP, const OT::SignedInteger & outC) const;
+  OT::Scalar grade(const OT::Point & inP, const OT::UnsignedInteger outC) const override;
   OT::Scalar predict(const OT::Point & inP) const;
 
   void runKMeans(const OT::UnsignedInteger k);
@@ -88,10 +80,10 @@ public:
   virtual void run();
 
   /** Method save() stores the object through the StorageManager */
-//     virtual void save(Advocate & adv) const;
+  void save(OT::Advocate & adv) const override;
 
   /** Method load() reloads the object from the StorageManager */
-//     virtual void load(Advocate & adv);
+  void load(OT::Advocate & adv) override;
 
 protected:
 
@@ -100,12 +92,6 @@ private:
 
   /* Libsvm model */
   LibSVM driver_;
-
-  /* Input Sample */
-  OT::Sample inputSample_;
-
-  /* Output Sample */
-  OT::Collection<OT::SignedInteger> classes_;
 
   /* Accuracy value */
   OT::Scalar accuracy_;
