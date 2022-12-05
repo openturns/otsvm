@@ -186,7 +186,7 @@ void LibSVMRegression::run()
     relativeErrors[outputIndex] = empiricalError / outputVariance[outputIndex];
   }
 
-  result_ = MetaModelResult(Function(), metaModel, residuals, relativeErrors);
+  result_ = MetaModelResult(inputSample_, outputSample_, metaModel, residuals, relativeErrors);
 }
 
 
