@@ -1,13 +1,12 @@
 #! /usr/bin/env python
 
-from openturns import *
-from otsvm import *
-
+import openturns as ot
+import otsvm
 
 # instantiate a kernel=Gaussian with sigma = 2
-kernel = LinearKernel()
-x = Point(2, 2)
-y = Point(2, 1)
+kernel = otsvm.LinearKernel()
+x = ot.Point(2, 2)
+y = ot.Point(2, 1)
 
 print(" kernel ([2 2],[1 1]) = ", kernel(x, y))
 print(" dkernel/dx_i([2 2],[1 1]) = ", repr(kernel.partialGradient(x, y)))

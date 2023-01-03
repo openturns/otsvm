@@ -17,6 +17,7 @@
 # ensures swig type tables order & dll load
 import openturns as _ot
 
+# flake8: noqa
 from .otsvm import *
 
 __version__ = '0.11'

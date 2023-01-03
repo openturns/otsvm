@@ -20,7 +20,7 @@ the other.
 
 More formally, a SVM constructs a hyperplane in a high or infinite-dimensional
 space, which can be used for classification or regression. A good separation
-is achived by the hyperplane that has the largest distance to the nearest
+is achieved by the hyperplane that has the largest distance to the nearest
 training data point of any class.
 
 Whereas the original problem may be stated in a finite dimensional space,

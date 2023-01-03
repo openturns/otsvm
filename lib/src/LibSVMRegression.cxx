@@ -2,7 +2,7 @@
 /**
  *  @brief Regression
  *
- *  Copyright 2014-2022 Phimeca
+ *  Copyright 2014-2023 Phimeca
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -100,8 +100,8 @@ void LibSVMRegression::run()
 
   /* For each component of the output Sample , we compute the same algorithm.
   * First, we make a cross validation to determinate the best parameters.
-  * Second, we train the problem and retreive some results ( support vectors, support vectors coefficients, kernel parameters).
-  * Third, we build the model with OpenTurns and save results in the MetaModelResult */
+  * Second, we train the problem and retrieve some results (support vectors, support vectors coefficients, kernel parameters).
+  * Third, we build the model with OT and save results in the MetaModelResult */
   for( UnsignedInteger componentIndex = 0 ; componentIndex < outputDimension ; componentIndex ++)
   {
     driver_.convertData(inputSample_, normalizedOutputSample.getMarginal(componentIndex) );

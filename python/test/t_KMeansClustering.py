@@ -1,31 +1,31 @@
 #! /usr/bin/env python
 
-from openturns import *
-from otsvm import *
+import openturns as ot
+import otsvm
 
-# Instanciate one distribution object
+# Instantiate one distribution object
 dimension = 2
-meanPoint = Point(dimension, 1.0)
+meanPoint = ot.Point(dimension, 1.0)
 meanPoint[0] = 0.5
 meanPoint[1] = -0.5
-sigma = Point(dimension, 1.0)
+sigma = ot.Point(dimension, 1.0)
 sigma[0] = 2.0
 sigma[1] = 3.0
-R = CorrelationMatrix(dimension)
+R = ot.CorrelationMatrix(dimension)
 for i in range(1, dimension):
     R[i, i - 1] = 0.5
 
 # Create a collection of distribution
-aCollection = DistributionCollection()
+aCollection = ot.DistributionCollection()
 
-aCollection.add(Normal(meanPoint, sigma, R))
-meanPoint += Point(meanPoint.getDimension(), 1.0)
-aCollection.add(Normal(meanPoint, sigma, R))
-meanPoint += Point(meanPoint.getDimension(), 1.0)
-aCollection.add(Normal(meanPoint, sigma, R))
+aCollection.add(ot.Normal(meanPoint, sigma, R))
+meanPoint += ot.Point(meanPoint.getDimension(), 1.0)
+aCollection.add(ot.Normal(meanPoint, sigma, R))
+meanPoint += ot.Point(meanPoint.getDimension(), 1.0)
+aCollection.add(ot.Normal(meanPoint, sigma, R))
 
-# Instanciate one distribution object
-distribution = Mixture(aCollection)
+# Instantiate one distribution object
+distribution = ot.Mixture(aCollection)
 
 size = 500
 sample = distribution.getSample(size)
@@ -34,16 +34,16 @@ meanPoint[0] = 10
 meanPoint[1] = 10
 
 # Create a collection of distribution
-aCollection = DistributionCollection()
+aCollection = ot.DistributionCollection()
 
-aCollection.add(Normal(meanPoint, sigma, R))
-meanPoint += Point(meanPoint.getDimension(), 1.0)
-aCollection.add(Normal(meanPoint, sigma, R))
-meanPoint += Point(meanPoint.getDimension(), 1.0)
-aCollection.add(Normal(meanPoint, sigma, R))
+aCollection.add(ot.Normal(meanPoint, sigma, R))
+meanPoint += ot.Point(meanPoint.getDimension(), 1.0)
+aCollection.add(ot.Normal(meanPoint, sigma, R))
+meanPoint += ot.Point(meanPoint.getDimension(), 1.0)
+aCollection.add(ot.Normal(meanPoint, sigma, R))
 
-# Instanciate one distribution object
-distribution = Mixture(aCollection)
+# Instantiate one distribution object
+distribution = ot.Mixture(aCollection)
 
 sample2 = distribution.getSample(size)
 sample.add(sample2)
@@ -53,23 +53,23 @@ meanPoint[0] = 3
 meanPoint[1] = 12
 
 # Create a collection of distribution
-aCollection = DistributionCollection()
+aCollection = ot.DistributionCollection()
 
-aCollection.add(Normal(meanPoint, sigma, R))
-meanPoint += Point(meanPoint.getDimension(), 1.0)
-aCollection.add(Normal(meanPoint, sigma, R))
-meanPoint += Point(meanPoint.getDimension(), 1.0)
-aCollection.add(Normal(meanPoint, sigma, R))
+aCollection.add(ot.Normal(meanPoint, sigma, R))
+meanPoint += ot.Point(meanPoint.getDimension(), 1.0)
+aCollection.add(ot.Normal(meanPoint, sigma, R))
+meanPoint += ot.Point(meanPoint.getDimension(), 1.0)
+aCollection.add(ot.Normal(meanPoint, sigma, R))
 
-# Instanciate one distribution object
-distribution = Mixture(aCollection)
+# Instantiate one distribution object
+distribution = ot.Mixture(aCollection)
 
 sample3 = distribution.getSample(size)
 sample.add(sample3)
 
 # Create the cloud
-myCloud = Cloud(sample, "blue", "fsquare", "Normal Cloud")
-myGraph = Graph("", "x1", "x2", True, "topright", 1.0)
+myCloud = ot.Cloud(sample, "blue", "fsquare", "Normal Cloud")
+myGraph = ot.Graph("", "x1", "x2", True, "topright", 1.0)
 myGraph.add(myCloud)
 
 # myGraph.draw("Sample", 640, 480)
@@ -78,15 +78,15 @@ myGraph.add(myCloud)
 # print "bitmap=", myGraph.getBitmap()
 
 
-kmeans = KMeansClustering(sample, 3)
+kmeans = otsvm.KMeansClustering(sample, 3)
 kmeans.run()
 
 result = kmeans.getCluster()
 print("result=", result)
 
-sample1 = Sample(0, 2)
-sample2 = Sample(0, 2)
-sample3 = Sample(0, 2)
+sample1 = ot.Sample(0, 2)
+sample2 = ot.Sample(0, 2)
+sample3 = ot.Sample(0, 2)
 
 for i in range(1500):
     if (result[i] == 1):
@@ -97,10 +97,10 @@ for i in range(1500):
         sample3.add(sample[i])
 
 
-myCloud = Cloud(sample1, "blue", "fsquare", "Normal Cloud")
-myCloud2 = Cloud(sample2, "red", "fsquare", "Normal Cloud")
-myCloud3 = Cloud(sample3, "green", "fsquare", "Normal Cloud")
-myGraph2 = Graph("", "x1", "x2", True, "topright", 1.0)
+myCloud = ot.Cloud(sample1, "blue", "fsquare", "Normal Cloud")
+myCloud2 = ot.Cloud(sample2, "red", "fsquare", "Normal Cloud")
+myCloud3 = ot.Cloud(sample3, "green", "fsquare", "Normal Cloud")
+myGraph2 = ot.Graph("", "x1", "x2", True, "topright", 1.0)
 myGraph2.add(myCloud)
 myGraph2.add(myCloud2)
 myGraph2.add(myCloud3)

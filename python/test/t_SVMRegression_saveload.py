@@ -1,21 +1,21 @@
 #! /usr/bin/env python
 
 import os
-from openturns import *
-from otsvm import *
+import openturns as ot
+import otsvm
 
-model = SymbolicFunction(['E', 'F', 'L', 'I'], ['F*L^3/(3*E*I)'])
+model = ot.SymbolicFunction(['E', 'F', 'L', 'I'], ['F*L^3/(3*E*I)'])
 dim = model.getInputDimension()
 
-R = IdentityMatrix(dim)
+R = ot.IdentityMatrix(dim)
 mean = [50., 1., 10., 5.]
-distribution = Normal(mean, [1.] * dim, R)
+distribution = ot.Normal(mean, [1.] * dim, R)
 
 
 dataIn = distribution.getSample(250)
 dataOut = model(dataIn)
 
-algo = SVMRegression(dataIn, dataOut, LibSVM.NormalRbf)
+algo = otsvm.LibSVMRegression(dataIn, dataOut, otsvm.LibSVM.NormalRbf)
 algo.run()
 result = algo.getResult()
 
@@ -23,18 +23,18 @@ metamodel = result.getMetaModel()
 
 fileName = 'myStudy.xml'
 
-if hasattr(openturns, 'XMLStorageManager'):
+if ot.PlatformInfo.HasFeature('libxml2'):
     # save
-    myStudy = Study()
-    myStudy.setStorageManager(XMLStorageManager(fileName))
+    myStudy = ot.Study()
+    myStudy.setStorageManager(ot.XMLStorageManager(fileName))
     myStudy.add('metamodel', metamodel)
     myStudy.save()
 
     # load
-    myStudy = Study()
-    myStudy.setStorageManager(XMLStorageManager(fileName))
+    myStudy = ot.Study()
+    myStudy.setStorageManager(ot.XMLStorageManager(fileName))
     myStudy.load()
-    loadedMetamodel = Function()
+    loadedMetamodel = ot.Function()
     myStudy.fillObject("metamodel", loadedMetamodel)
 
     os.remove(fileName)

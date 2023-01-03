@@ -3,7 +3,7 @@
  * @file  SVMKernelRegressionEvaluation.hxx
  * @brief Abstract top-level class for all numerical math function implementations
  *
- *  Copyright 2014-2022 Phimeca
+ *  Copyright 2014-2023 Phimeca
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public

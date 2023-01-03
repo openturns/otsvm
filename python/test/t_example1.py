@@ -1,30 +1,29 @@
-
+import openturns as ot
+import otsvm
 
 # create a function, here we create the Sobol function
 dimension = 3
 meanTh = 1.0
-a = Point(dimension)
-inputVariables = Description(dimension)
-outputVariables = Description(1)
+a = ot.Point(dimension)
+inputVariables = ot.Description(dimension)
+outputVariables = ot.Description(1)
 outputVariables[0] = "y"
-formula = Description(1)
-formula[0] = "1.0"
+formula = "1.0"
 covTh = 1.0
 for i in range(dimension):
     a[i] = 0.5 * i
     covTh = covTh * (1.0 + 1.0 / (3.0 * (1.0 + a[i])**2))
     inputVariables[i] = "xi" + str(i)
-    formula[0] = formula[0] + " * ((abs(4.0 * xi" + str(i) + " -2.0) + " +
-    str(a[i]) + ") / (1.0 + " + str(a[i]) + "))"
+    formula += " * ((abs(4.0 * xi" + str(i) + " -2.0) + " + str(a[i]) + ") / (1.0 + " + str(a[i]) + "))"
 covTh = covTh - 1.0
-model = Function(inputVariables, outputVariables, formula)
+model = ot.Function(inputVariables, outputVariables, ot.Description(1, formula))
 
 # create the input distribution
-RandomGenerator.SetSeed(0)
-marginals = DistributionCollection(dimension)
+ot.RandomGenerator.SetSeed(0)
+marginals = ot.DistributionCollection(dimension)
 for i in range(dimension):
-    marginals[i] = Uniform(0.0, 1.0)
-distribution = ComposedDistribution(marginals)
+    marginals[i] = ot.Uniform(0.0, 1.0)
+distribution = ot.ComposedDistribution(marginals)
 
 # create lists of kernel parameters and tradeoff factors
 tradeoff = [0.01, 0.1, 1, 10, 100, 1000]
@@ -36,14 +35,14 @@ dataIn = distribution.getSample(250)
 dataOut = model(dataIn)
 # second, we create our svm regression object, we must select the third parameter
 # in an enumerate in the list { NormalRBF, Linear, Sigmoid, Polynomial }
-Regression = SVMRegression(dataIn, dataOut, LibSVM.NormalRBF)
+algo = otsvm.SVMRegression(dataIn, dataOut, otsvm.LibSVM.NormalRBF)
 # third, we set kernel parameter and tradeoff factor
-Regression.setTradeoffFactor(tradeoff)
-Regression.setKernelParameter(kernel)
+algo.setTradeoffFactor(tradeoff)
+algo.setKernelParameter(kernel)
 # Perform the algorithm
-Regression.run()
+algo.run()
 # Stream out the results
-SVMRegressionResult = Regression.getResult()
+result = algo.getResult()
 # get the residual error
 residual = result.getResiduals()
 # get the relative error
@@ -51,19 +50,18 @@ relativeError = result.getRelativeErrors()
 
 # second example : create the problem with an experiment plane:
 # first, we create the plane
-myPlane = MonteCarloExperiment(distribution, 250)
-myExperiment = Experiment(myPlane, "example")
+myExperiment = ot.MonteCarloExperiment(distribution, 250)
 # second, we create our svm regression object, the first parameter is the
 # function
-Regression2 = SVMRegression(model, myExperiment,
-                            LibSVM.Linear)
+algo2 = otsvm.SVMRegression(model, myExperiment,
+                            otsvm.LibSVM.Linear)
 # third, we set kernel parameter and tradeoff factor
-Regression2.setTradeoffFactor(tradeoff)
-Regression2.setKernelParameter(kernel)
+algo2.setTradeoffFactor(tradeoff)
+algo2.setKernelParameter(kernel)
 # Perform the algorithm
-Regression2.run()
+algo2.run()
 # Stream out the results
-SVMRegressionResult = Regression2.getResult()
+result = algo2.getResult()
 # get the residual error
 residual = result.getResiduals()
 # get the relative error
@@ -71,23 +69,23 @@ relativeError = result.getRelativeErrors()
 
 # third example : create the problem with an isoprobabilistic distribution
 # first, we create our distribution
-marginals = DistributionCollection(dimension)
+marginals = ot.DistributionCollection(dimension)
 for i in range(dimension):
-    marginals[i] = Uniform(0.0, 1.0)
-distribution = ComposedDistribution(marginals)
+    marginals[i] = ot.Uniform(0.0, 1.0)
+distribution = ot.ComposedDistribution(marginals)
 # second, we create input and output samples
 dataIn = distribution.getSample(250)
 dataOut = model(dataIn)
 # third, we create our svm regression
-Regression3 = SVMRegression(dataIn, dataOut, distribution,
-                            LibSVM.Polynomial)
+algo3 = otsvm.SVMRegression(dataIn, dataOut, distribution,
+                            otsvm.LibSVM.Polynomial)
 # and to finish, we set kernel parameter and tradeoff factor
-Regression3.setTradeoffFactor(tradeoff)
-Regression3.setKernelParameter(kernel)
+algo3.setTradeoffFactor(tradeoff)
+algo3.setKernelParameter(kernel)
 # Perform the algorithm
-Regression3.run()
+algo3.run()
 # Stream out the results
-SVMRegressionResult = Regression3.getResult()
+result = algo3.getResult()
 # get the residual error
 residual = result.getResiduals()
 # get the relative error
@@ -102,16 +100,16 @@ dataOut = model(dataIn)
 # second, we create our svm regression object
 # here, we select the Polynomial Kernel but by default his degree is 3. We want a
 # degree of 2
-ResourceMap.Set("LibSVM-DegreePolynomialKernel", "2")
+ot.ResourceMap.Set("LibSVM-DegreePolynomialKernel", "2")
 # now the degree of the Polynomial kernel is 2
-Regression = SVMRegression(dataIn, dataOut, LibSVM.Polynomial)
+algo = otsvm.SVMRegression(dataIn, dataOut, otsvm.LibSVM.Polynomial)
 # third, we set kernel parameter and tradeoff factor
-Regression.setTradeoffFactor(tradeoff)
-Regression.setKernelParameter(kernel)
+algo.setTradeoffFactor(tradeoff)
+algo.setKernelParameter(kernel)
 # Perform the algorithm
-Regression.run()
+algo.run()
 # Stream out the results
-SVMRegressionResult = Regression.getResult()
+result = algo.getResult()
 # get the residual error
 residual = result.getResiduals()
 # get the relative error

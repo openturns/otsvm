@@ -2,7 +2,7 @@
 /**
  *  @brief Implementation of the Normal RBF kernel, also known as the gaussian kernel
  *
- *  Copyright 2014-2022 Phimeca
+ *  Copyright 2014-2023 Phimeca
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public

@@ -1,8 +1,8 @@
 #! /usr/bin/env python
 
-from openturns import *
-from otsvm import *
-from math import *
+import openturns as ot
+import otsvm
+from math import pi
 
 # Problem parameters
 dimension = 3
@@ -25,11 +25,11 @@ sob_T3 = [sob_3[0]]
 inputVariables = ["xi1", "xi2", "xi3"]
 formula = "sin(xi1) + (" + str(a) + \
     ") * (sin(xi2)) ^ 2 + (" + str(b) + ") * xi3^4 * sin(xi1)"
-model = SymbolicFunction(inputVariables, [formula])
+model = ot.SymbolicFunction(inputVariables, [formula])
 
 # Create the input distribution
-marginals = [Uniform(-pi, pi)] * 3
-distribution = ComposedDistribution(marginals)
+marginals = [ot.Uniform(-pi, pi)] * 3
+distribution = ot.ComposedDistribution(marginals)
 dataIn = distribution.getSample(250)
 dataOut = model(dataIn)
 
@@ -39,15 +39,15 @@ cp = [500.0, 200.0, 150.0, 100.0, 75.0, 50.0, 10.0]
 # list of gamma parameter in kernel function
 gamma = [0.0001, 0.001, 0.15, 0.25, 0.35, 0.4, 0.5, 0.6, 0.8, 1, 10, 100]
 
-RandomGenerator.SetSeed(0)
+ot.RandomGenerator.SetSeed(0)
 
 # create the Problem
-Regression = SVMRegression(dataIn, dataOut, LibSVM.NormalRbf)
-Regression.setTradeoffFactor(cp)
-Regression.setKernelParameter(gamma)
+algo = otsvm.SVMRegression(dataIn, dataOut, otsvm.LibSVM.NormalRbf)
+algo.setTradeoffFactor(cp)
+algo.setKernelParameter(gamma)
 # compute the SVMRegression
-Regression.run()
-result = Regression.getResult()
+algo.run()
+result = algo.getResult()
 residuals = result.getResiduals()
 # Examine the results
 print('######################')

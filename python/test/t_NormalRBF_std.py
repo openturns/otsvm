@@ -1,12 +1,12 @@
 #! /usr/bin/env python
 
-from openturns import *
-from otsvm import *
+import openturns as ot
+import otsvm
 
 # instantiate a kernel=Gaussian with sigma = 2
-kernel = NormalRBF(2)
-x = Point(2, 2.0)
-y = Point(2, 1.0)
+kernel = otsvm.NormalRBF(2)
+x = ot.Point(2, 2.0)
+y = ot.Point(2, 1.0)
 
 print(" kernel ([2 2],[1 1]) = %.12g" % kernel(x, y))
 print(" dkernel/dx_i([2 2],[1 1]) = ", repr(kernel.partialGradient(x, y)))

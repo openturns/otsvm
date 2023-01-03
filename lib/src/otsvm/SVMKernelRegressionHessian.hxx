@@ -3,7 +3,7 @@
  * @file  SVMKernelRegressionHessian.hxx
  * @brief Implementation of SVM regression hessian
  *
- *  Copyright 2014-2022 Phimeca
+ *  Copyright 2014-2023 Phimeca
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
