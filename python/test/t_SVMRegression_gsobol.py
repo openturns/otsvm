@@ -17,9 +17,16 @@ for i in range(dimension):
     a[i] = 0.5 * i
     covTh = covTh * (1.0 + 1.0 / (3.0 * (1.0 + a[i]) ** 2))
     inputVariables[i] = "xi" + str(i)
-    formula[0] = formula[0] + \
-        " * ((abs(4.0 * xi" + str(i) + " - 2.0) + " + \
-        str(a[i]) + ") / (1.0 + " + str(a[i]) + "))"
+    formula[0] = (
+        formula[0]
+        + " * ((abs(4.0 * xi"
+        + str(i)
+        + " - 2.0) + "
+        + str(a[i])
+        + ") / (1.0 + "
+        + str(a[i])
+        + "))"
+    )
 covTh = covTh - 1.0
 model = ot.SymbolicFunction(inputVariables, formula)
 ot.RandomGenerator.SetSeed(0)
@@ -43,17 +50,17 @@ algo.run()
 result = algo.getResult()
 residuals = result.getResiduals()
 # Examine the results
-print('#######################')
+print("#######################")
 # print "residuals=%.4f" % residuals[0]
 if residuals[0] <= 4.5e-3:
-    print('OK')
+    print("OK")
 else:
-    print('FAIL')
+    print("FAIL")
 relativeErrors = result.getRelativeErrors()
 # print "relative errors=%.6f" % relativeErrors[0]
 if relativeErrors[0] <= 8.0e-3:
-    print('OK')
+    print("OK")
 else:
-    print('FAIL')
-print('#######################')
-print('')
+    print("FAIL")
+print("#######################")
+print("")

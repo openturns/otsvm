@@ -24,7 +24,6 @@
 #include <openturns/ResourceMap.hxx>
 #include <unistd.h>
 #include <string.h>
-#include <openturns/OTthread.hxx>
 #include <openturns/OTconfig.hxx>
 #include <openturns/OSS.hxx>
 #include <openturns/Exception.hxx>

@@ -6,7 +6,7 @@ import os
 
 # we retrieve the sample from the file sample.csv
 path = os.path.abspath(os.path.dirname(__file__))
-dataInOut = ot.Sample.ImportFromCSVFile(path + '/multiclass.csv', ',')
+dataInOut = ot.Sample.ImportFromCSVFile(path + "/multiclass.csv", ",")
 
 dataIn = ot.Sample(148, 4)
 dataOut = ot.Indices(148, 0)
@@ -37,16 +37,18 @@ algo.setKernelParameter(gamma)
 
 # compute the classification
 algo.run()
-print('#######################')
-print('Results with Samples I/O')
+print("#######################")
+print("Results with Samples I/O")
 if algo.getAccuracy() < 0.97:
-    raise ValueError('acc<0.97')
+    raise ValueError("acc<0.97")
 # print('Accuracy(p.c.)= %.12g' % algo.getAccuracy())
 
 test = [0.0555554, -0.25, 0.118644, -4.03573e-08]
 print(
-    'We predict the class for the point [0.0555554,-0.25,0.118644,-4.03573e-08]: ', algo.classify(test))
-print('We grade the previous point for the 3 classes :')
-print('class 1 :', algo.grade(test, 1))
-print('class 2: ', algo.grade(test, 2))
-print('class 3: ', algo.grade(test, 3))
+    "We predict the class for the point [0.0555554,-0.25,0.118644,-4.03573e-08]: ",
+    algo.classify(test),
+)
+print("We grade the previous point for the 3 classes :")
+print("class 1 :", algo.grade(test, 1))
+print("class 2: ", algo.grade(test, 2))
+print("class 3: ", algo.grade(test, 3))

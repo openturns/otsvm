@@ -89,11 +89,11 @@ sample2 = ot.Sample(0, 2)
 sample3 = ot.Sample(0, 2)
 
 for i in range(1500):
-    if (result[i] == 1):
+    if result[i] == 1:
         sample1.add(sample[i])
-    if (result[i] == 2):
+    if result[i] == 2:
         sample2.add(sample[i])
-    if (result[i] == 0):
+    if result[i] == 0:
         sample3.add(sample[i])
 
 

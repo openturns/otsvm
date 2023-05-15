@@ -2,11 +2,14 @@
 
 set -xe
 
-export SOURCE_DATE_EPOCH=1609455600
-
 cd /tmp
 mkdir build && cd build
-cmake -DCMAKE_INSTALL_PREFIX=~/.local -DCMAKE_CXX_FLAGS="-Wall -Wextra -Werror" /io
+cmake -DCMAKE_INSTALL_PREFIX=~/.local \
+      -DCMAKE_UNITY_BUILD=ON -DCMAKE_UNITY_BUILD_BATCH_SIZE=32 \
+      -DCMAKE_CXX_FLAGS="-Wall -Wextra -Werror -D_GLIBCXX_ASSERTIONS" \
+      -DSWIG_COMPILE_FLAGS="-O1 -Wno-unused-parameter" \
+      -DSPHINX_FLAGS="-W -T -j4" \
+      /io
 make install
 make tests
 ctest --output-on-failure --timeout 100 ${MAKEFLAGS}

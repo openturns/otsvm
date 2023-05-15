@@ -1,4 +1,3 @@
-
 import openturns as ot
 import otsvm
 import os

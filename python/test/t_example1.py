@@ -12,9 +12,17 @@ formula = "1.0"
 covTh = 1.0
 for i in range(dimension):
     a[i] = 0.5 * i
-    covTh = covTh * (1.0 + 1.0 / (3.0 * (1.0 + a[i])**2))
+    covTh = covTh * (1.0 + 1.0 / (3.0 * (1.0 + a[i]) ** 2))
     inputVariables[i] = "xi" + str(i)
-    formula += " * ((abs(4.0 * xi" + str(i) + " -2.0) + " + str(a[i]) + ") / (1.0 + " + str(a[i]) + "))"
+    formula += (
+        " * ((abs(4.0 * xi"
+        + str(i)
+        + " -2.0) + "
+        + str(a[i])
+        + ") / (1.0 + "
+        + str(a[i])
+        + "))"
+    )
 covTh = covTh - 1.0
 model = ot.Function(inputVariables, outputVariables, ot.Description(1, formula))
 
@@ -53,8 +61,7 @@ relativeError = result.getRelativeErrors()
 myExperiment = ot.MonteCarloExperiment(distribution, 250)
 # second, we create our svm regression object, the first parameter is the
 # function
-algo2 = otsvm.SVMRegression(model, myExperiment,
-                            otsvm.LibSVM.Linear)
+algo2 = otsvm.SVMRegression(model, myExperiment, otsvm.LibSVM.Linear)
 # third, we set kernel parameter and tradeoff factor
 algo2.setTradeoffFactor(tradeoff)
 algo2.setKernelParameter(kernel)
@@ -77,8 +84,7 @@ distribution = ot.ComposedDistribution(marginals)
 dataIn = distribution.getSample(250)
 dataOut = model(dataIn)
 # third, we create our svm regression
-algo3 = otsvm.SVMRegression(dataIn, dataOut, distribution,
-                            otsvm.LibSVM.Polynomial)
+algo3 = otsvm.SVMRegression(dataIn, dataOut, distribution, otsvm.LibSVM.Polynomial)
 # and to finish, we set kernel parameter and tradeoff factor
 algo3.setTradeoffFactor(tradeoff)
 algo3.setKernelParameter(kernel)

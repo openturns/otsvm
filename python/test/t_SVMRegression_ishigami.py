@@ -10,21 +10,30 @@ a = 7.0
 b = 0.1
 # Reference analytical values
 meanTh = a / 2
-covTh = (b ** 2 * pi ** 8) / 18.0 + \
-    (b * pi ** 4) / 5.0 + (a ** 2) / 8.0 + 1.0 / 2.0
-sob_1 = [(b * pi ** 4 / 5.0 + b ** 2 * pi ** 8 / 50.0 + 1.0 / 2.0)
-         / covTh, (a ** 2 / 8.0) / covTh, 0.0]
+covTh = (b ** 2 * pi ** 8) / 18.0 + (b * pi ** 4) / 5.0 + (a ** 2) / 8.0 + 1.0 / 2.0
+sob_1 = [
+    (b * pi ** 4 / 5.0 + b ** 2 * pi ** 8 / 50.0 + 1.0 / 2.0) / covTh,
+    (a ** 2 / 8.0) / covTh,
+    0.0,
+]
 sob_2 = [0.0, (b ** 2 * pi ** 8 / 18.0 - b ** 2 * pi ** 8 / 50.0) / covTh, 0.0]
 sob_3 = [0.0]
-sob_T1 = [sob_1[0] + sob_2[0] + sob_2[1] + sob_3[0], sob_1[1] + sob_2[0]
-          + sob_2[2] + sob_3[0], sob_1[2] + sob_2[1] + sob_2[2] + sob_3[0]]
-sob_T2 = [sob_2[0] + sob_2[1] + sob_3[0], sob_2[0]
-          + sob_2[2] + sob_3[0], sob_2[1] + sob_2[2] + sob_3[0]]
+sob_T1 = [
+    sob_1[0] + sob_2[0] + sob_2[1] + sob_3[0],
+    sob_1[1] + sob_2[0] + sob_2[2] + sob_3[0],
+    sob_1[2] + sob_2[1] + sob_2[2] + sob_3[0],
+]
+sob_T2 = [
+    sob_2[0] + sob_2[1] + sob_3[0],
+    sob_2[0] + sob_2[2] + sob_3[0],
+    sob_2[1] + sob_2[2] + sob_3[0],
+]
 sob_T3 = [sob_3[0]]
 # Create the Ishigami function
 inputVariables = ["xi1", "xi2", "xi3"]
-formula = "sin(xi1) + (" + str(a) + \
-    ") * (sin(xi2)) ^ 2 + (" + str(b) + ") * xi3^4 * sin(xi1)"
+formula = (
+    "sin(xi1) + (" + str(a) + ") * (sin(xi2)) ^ 2 + (" + str(b) + ") * xi3^4 * sin(xi1)"
+)
 model = ot.SymbolicFunction(inputVariables, [formula])
 
 # Create the input distribution
@@ -50,17 +59,17 @@ algo.run()
 result = algo.getResult()
 residuals = result.getResiduals()
 # Examine the results
-print('######################')
+print("######################")
 # print "residuals=%.4f" % residuals[0]
 if residuals[0] <= 1.2e-3:
-    print('OK')
+    print("OK")
 else:
-    print('FAIL')
+    print("FAIL")
 relativeErrors = result.getRelativeErrors()
 # print "relative errors=%.6f" % relativeErrors[0]
 if relativeErrors[0] <= 2.4e-5:
-    print('OK')
+    print("OK")
 else:
-    print('FAIL')
-print('######################')
-print('')
+    print("FAIL")
+print("######################")
+print("")

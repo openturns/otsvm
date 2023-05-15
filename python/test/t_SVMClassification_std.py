@@ -6,7 +6,7 @@ import os
 
 # we retrieve the sample from the file sample.csv
 path = os.path.abspath(os.path.dirname(__file__))
-dataInOut = ot.Sample().ImportFromCSVFile(path + '/sample.csv', ',')
+dataInOut = ot.Sample().ImportFromCSVFile(path + "/sample.csv", ",")
 
 dataIn = ot.Sample(861, 2)
 dataOut = ot.Indices(861, 0)
@@ -34,6 +34,6 @@ algo.setKernelParameter(gamma)
 
 # compute the classification
 algo.run()
-print('#######################')
-print('Results with Samples I/O')
-print('Accuracy(p.c.)=', algo.getAccuracy())
+print("#######################")
+print("Results with Samples I/O")
+print("Accuracy(p.c.)=", algo.getAccuracy())

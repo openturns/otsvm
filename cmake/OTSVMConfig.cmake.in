@@ -9,7 +9,6 @@
 
 # Use the following variables to compile and link against otsvm:
 #  OTSVM_FOUND          - True if otsvm was found on your system
-#  OTSVM_USE_FILE       - The file making otsvm usable
 #  OTSVM_DEFINITIONS    - Definitions needed to build with otsvm
 #  OTSVM_INCLUDE_DIRS   - List of directories where otsvm' header file are
 #  OTSVM_LIBRARY        - Library name
@@ -22,7 +21,6 @@
 #  OTSVM_VERSION_PATCH  - The patch version of otsvm
 
 set ( OTSVM_FOUND 1 )
-set ( OTSVM_USE_FILE     "@OTSVM_USE_FILE@" )
 
 set ( OTSVM_DEFINITIONS  "@OTSVM_DEFINITIONS@" )
 set ( OTSVM_INCLUDE_DIR  "@OTSVM_INCLUDE_DIR@" )
@@ -37,4 +35,8 @@ set ( OTSVM_VERSION_MAJOR  "@OTSVM_VERSION_MAJOR@" )
 set ( OTSVM_VERSION_MINOR  "@OTSVM_VERSION_MINOR@" )
 set ( OTSVM_VERSION_PATCH  "@OTSVM_VERSION_PATCH@" )
 
-set (OTSVM_PYTHON@PYTHON_VERSION_MAJOR@_MODULE_PATH "@PYTHON_MODULE_PATH@")
+set (OTSVM_PYTHON_MODULE_PATH "@PYTHON_MODULE_PATH@")
+
+# Our library dependencies (contains definitions for IMPORTED targets)
+include (${CMAKE_CURRENT_LIST_DIR}/OTSVM-Targets.cmake)
+

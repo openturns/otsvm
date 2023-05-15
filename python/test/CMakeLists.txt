@@ -8,6 +8,7 @@ endif ()
 
 set ( PYINSTALLCHECK_ENVIRONMENT "OPENTURNS_CONFIG_PATH=${INSTALL_DESTDIR}${SYSCONFIG_PATH}/openturns"
                                  "PYTHONPATH=${OPENTURNS_PYTHON_MODULE_PATH}${PATH_SEP}${INSTALL_DESTDIR}${PYTHON_MODULE_PATH}${PATH_SEP}$ENV{PYTHONPATH}"
+                                 "MPLBACKEND=agg"
     )
 
 
@@ -44,12 +45,12 @@ macro ( ot_pyinstallcheck_test TESTNAME )
   endforeach ( _ARG )
   
   if (_IGNOREOUT)
-    set ( COMMAND "( ${PYTHON_EXECUTABLE} ${TESTNAME_LOC} ${_PARAMS} > /dev/null )" )
-  else (_IGNOREOUT)
+    set ( COMMAND "( ${Python_EXECUTABLE} ${TESTNAME_LOC} ${_PARAMS} > /dev/null )" )
+  else ()
     set ( TESTNAME_OUT ${TESTNAME_TGT}.expout )
     set ( OUTFILE_LOC ${CMAKE_CURRENT_SOURCE_DIR}/${TESTNAME_OUT} ) 
-    set ( COMMAND "( ${PYTHON_EXECUTABLE} ${TESTNAME_LOC} ${_PARAMS} > ${CMAKE_CURRENT_BINARY_DIR}/${TESTNAME_TGT}.out ) && diff -u --strip-trailing-cr ${OUTFILE_LOC} ${CMAKE_CURRENT_BINARY_DIR}/${TESTNAME_TGT}.out" )
-  endif (_IGNOREOUT)
+    set ( COMMAND "( ${Python_EXECUTABLE} ${TESTNAME_LOC} ${_PARAMS} > ${CMAKE_CURRENT_BINARY_DIR}/${TESTNAME_TGT}.out ) && diff -u --strip-trailing-cr ${OUTFILE_LOC} ${CMAKE_CURRENT_BINARY_DIR}/${TESTNAME_TGT}.out" )
+  endif ()
 
   if (_PRE OR _POST)
     set ( COMMAND "${_PRE}${COMMAND}${_POST}" )
