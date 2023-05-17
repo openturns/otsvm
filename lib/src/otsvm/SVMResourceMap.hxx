@@ -32,24 +32,11 @@
 namespace OTSVM
 {
 
-class OTSVM_API SVMResourceMap
-{
-
-public:
-
-  static void Initialize();
-
-protected:
-
-private:
-
-};
-
-
 struct OTSVM_API SVMResourceMap_init
 {
   SVMResourceMap_init();
 };
+
 static SVMResourceMap_init __SVMResourceMap_initializer;
 
 }

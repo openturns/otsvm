@@ -22,50 +22,26 @@
 
 #include "otsvm/SVMResourceMap.hxx"
 #include <openturns/ResourceMap.hxx>
-#include <unistd.h>
-#include <string.h>
-#include <openturns/OTconfig.hxx>
-#include <openturns/OSS.hxx>
-#include <openturns/Exception.hxx>
-#include <openturns/Log.hxx>
-
+#include <mutex>
+ 
 using namespace OT;
 
 namespace OTSVM
 {
 
-static pthread_mutex_t SVMResourceMap_InstanceMutex_;
-
 SVMResourceMap_init::SVMResourceMap_init()
 {
-  static pthread_once_t SVMResourceMap_InstanceMutex_once = PTHREAD_ONCE_INIT;
-  int rc = pthread_once( &SVMResourceMap_InstanceMutex_once, SVMResourceMap::Initialize );
-  if (rc != 0)
+  static std::once_flag flag;
+  std::call_once(flag, [&]()
   {
-    perror("SVMResourceMap_init::SVMResourceMap_init once Initialization failed");
-    exit(1);
-  }
+    ResourceMap::AddAsUnsignedInteger("LibSVM-DegreePolynomialKernel", 3);
+    ResourceMap::AddAsScalar("LibSVM-ConstantPolynomialKernel", 0);
+    ResourceMap::AddAsUnsignedInteger("LibSVM-CacheSize", 100);
+    ResourceMap::AddAsScalar("LibSVM-Epsilon", 1e-3);
+    ResourceMap::AddAsUnsignedInteger("LibSVMRegression-NumberOfFolds", 3);
+    ResourceMap::AddAsUnsignedInteger("LibSVM-Shrinking", 1);
+  });
 }
-
-void SVMResourceMap::Initialize()
-{
-  pthread_mutexattr_t attr;
-  pthread_mutexattr_init( &attr );
-  pthread_mutexattr_settype( &attr, PTHREAD_MUTEX_RECURSIVE );
-  int rc = pthread_mutex_init( &SVMResourceMap_InstanceMutex_, &attr );
-  if (rc != 0)
-  {
-    perror("ResourceMap::Initialize mutex initialization failed");
-    exit(1);
-  }
-  ResourceMap::AddAsUnsignedInteger("LibSVM-DegreePolynomialKernel", 3);
-  ResourceMap::AddAsScalar("LibSVM-ConstantPolynomialKernel", 0);
-  ResourceMap::AddAsUnsignedInteger("LibSVM-CacheSize", 100);
-  ResourceMap::AddAsScalar("LibSVM-Epsilon", 1e-3);
-  ResourceMap::AddAsUnsignedInteger("LibSVMRegression-NumberOfFolds", 3);
-  ResourceMap::AddAsUnsignedInteger("LibSVM-Shrinking", 1);
-}
-
 
 }
 
