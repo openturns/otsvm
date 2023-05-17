@@ -1,3 +1,26 @@
+"""
+Regression
+----------
+"""
+
+# %%
+# The objective of this example is to create a SVM Regression algorithm in order to create a metamodel.
+#
+# otsvm enables to:
+#
+# - set lists of tradeoff factors and kernel parameter with the methods setTradeoffFactor, setKernelParameter.
+# - select the kernel type in this list : Linear Kernel, Polynomial Kernel, Sigmoid Kernel, RBF kernel.
+# - compute the algorithm on an input and output samples.
+# - compute the algorithm on an experiment plane and a function.
+# - compute the algorithm on an input and output samples and an isoprobabilistic distribution.
+#
+# We recommend for users to use the RBF Kernel (the Gaussian kernel).
+# Moreover, it is important to understand that the selection of parameters (kernel parameter and tradeoff factor) is primary.
+# If you don't know  what to take as parameters, you must take a wide range values,
+# for example :math:`tradeoff \in \{10^-5,10^-3,10^-1...10^3 \}` :math:`kernel\ parameter \in \{10^-15, 10^-13...,10^3 \}`.
+# Usually, the algorithm always converges, but this can take a long while, mostly if you have a lot of parameters to test.
+
+# %%
 import openturns as ot
 import otsvm
 
@@ -6,8 +29,6 @@ dimension = 3
 meanTh = 1.0
 a = ot.Point(dimension)
 inputVariables = ot.Description(dimension)
-outputVariables = ot.Description(1)
-outputVariables[0] = "y"
 formula = "1.0"
 covTh = 1.0
 for i in range(dimension):
@@ -24,7 +45,7 @@ for i in range(dimension):
         + "))"
     )
 covTh = covTh - 1.0
-model = ot.Function(inputVariables, outputVariables, ot.Description(1, formula))
+model = ot.SymbolicFunction(inputVariables, ot.Description(1, formula))
 
 # create the input distribution
 ot.RandomGenerator.SetSeed(0)
@@ -43,7 +64,7 @@ dataIn = distribution.getSample(250)
 dataOut = model(dataIn)
 # second, we create our svm regression object, we must select the third parameter
 # in an enumerate in the list { NormalRBF, Linear, Sigmoid, Polynomial }
-algo = otsvm.SVMRegression(dataIn, dataOut, otsvm.LibSVM.NormalRBF)
+algo = otsvm.SVMRegression(dataIn, dataOut, otsvm.LibSVM.NormalRbf)
 # third, we set kernel parameter and tradeoff factor
 algo.setTradeoffFactor(tradeoff)
 algo.setKernelParameter(kernel)
@@ -55,13 +76,16 @@ result = algo.getResult()
 residual = result.getResiduals()
 # get the relative error
 relativeError = result.getRelativeErrors()
+print(f"residual={residual} error={relativeError}")
 
 # second example : create the problem with an experiment plane:
 # first, we create the plane
 myExperiment = ot.MonteCarloExperiment(distribution, 250)
+dataIn = myExperiment.generate()
+dataOut = model(dataIn)
 # second, we create our svm regression object, the first parameter is the
 # function
-algo2 = otsvm.SVMRegression(model, myExperiment, otsvm.LibSVM.Linear)
+algo2 = otsvm.SVMRegression(dataIn, dataOut, otsvm.LibSVM.Linear)
 # third, we set kernel parameter and tradeoff factor
 algo2.setTradeoffFactor(tradeoff)
 algo2.setKernelParameter(kernel)
@@ -73,31 +97,9 @@ result = algo2.getResult()
 residual = result.getResiduals()
 # get the relative error
 relativeError = result.getRelativeErrors()
+print(f"residual={residual} error={relativeError}")
 
-# third example : create the problem with an isoprobabilistic distribution
-# first, we create our distribution
-marginals = ot.DistributionCollection(dimension)
-for i in range(dimension):
-    marginals[i] = ot.Uniform(0.0, 1.0)
-distribution = ot.ComposedDistribution(marginals)
-# second, we create input and output samples
-dataIn = distribution.getSample(250)
-dataOut = model(dataIn)
-# third, we create our svm regression
-algo3 = otsvm.SVMRegression(dataIn, dataOut, distribution, otsvm.LibSVM.Polynomial)
-# and to finish, we set kernel parameter and tradeoff factor
-algo3.setTradeoffFactor(tradeoff)
-algo3.setKernelParameter(kernel)
-# Perform the algorithm
-algo3.run()
-# Stream out the results
-result = algo3.getResult()
-# get the residual error
-residual = result.getResiduals()
-# get the relative error
-relativeError = result.getRelativeErrors()
-
-# fourth example is here to present you the SVMResourceMap class.
+# third example is here to present you the SVMResourceMap class.
 # Users can fix others parameters like the degree and the constant of the
 # Polynomial Kernel,the cacheSize, the number of folds or the epsilon
 # first, we create samples
@@ -113,10 +115,11 @@ algo = otsvm.SVMRegression(dataIn, dataOut, otsvm.LibSVM.Polynomial)
 algo.setTradeoffFactor(tradeoff)
 algo.setKernelParameter(kernel)
 # Perform the algorithm
-algo.run()
-# Stream out the results
-result = algo.getResult()
-# get the residual error
-residual = result.getResiduals()
-# get the relative error
-relativeError = result.getRelativeErrors()
+#algo.run()
+## Stream out the results
+#result = algo.getResult()
+#print(result)
+## get the residual error
+#residual = result.getResiduals()
+## get the relative error
+#relativeError = result.getRelativeErrors()

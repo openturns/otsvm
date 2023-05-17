@@ -6,7 +6,7 @@ import os
 
 # we retrieve the sample from the file sample.csv
 path = os.path.abspath(os.path.dirname(__file__))
-dataInOut = ot.Sample.ImportFromCSVFile(path + "/multiclass.csv", ",")
+dataInOut = ot.Sample.ImportFromCSVFile(os.path.join(path, "multiclass.csv"), ",")
 
 dataIn = ot.Sample(148, 4)
 dataOut = ot.Indices(148, 0)

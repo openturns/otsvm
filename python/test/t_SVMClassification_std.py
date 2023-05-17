@@ -6,7 +6,7 @@ import os
 
 # we retrieve the sample from the file sample.csv
 path = os.path.abspath(os.path.dirname(__file__))
-dataInOut = ot.Sample().ImportFromCSVFile(path + "/sample.csv", ",")
+dataInOut = ot.Sample().ImportFromCSVFile(os.path.join(path, "sample.csv"), ",")
 
 dataIn = ot.Sample(861, 2)
 dataOut = ot.Indices(861, 0)

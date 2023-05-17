@@ -56,11 +56,11 @@ macro ( ot_pyinstallcheck_test TESTNAME )
     set ( COMMAND "${_PRE}${COMMAND}${_POST}" )
   endif (_PRE OR _POST)
 
-  add_test ( pyinstallcheck_${TESTNAME} "sh" "-c" "${COMMAND}" )
+  add_test (pyinstallcheck_${TESTNAME} "sh" "-c" "${COMMAND}")
 
-  set_tests_properties ( pyinstallcheck_${TESTNAME} PROPERTIES ENVIRONMENT "${PYINSTALLCHECK_ENVIRONMENT}" )
-  list ( APPEND PYINSTALLCHECK_TO_BE_RUN ${TESTNAME_SRC} )
-endmacro ( ot_pyinstallcheck_test )
+  set_tests_properties (pyinstallcheck_${TESTNAME} PROPERTIES ENVIRONMENT "${PYINSTALLCHECK_ENVIRONMENT}")
+  list (APPEND PYINSTALLCHECK_TO_BE_RUN ${TESTNAME_SRC})
+endmacro ()
 
 ot_pyinstallcheck_test ( ExponentialRBF_std )
 ot_pyinstallcheck_test ( KMeansClustering )
@@ -75,7 +75,16 @@ ot_pyinstallcheck_test ( SVMRegression_gsobol )
 ot_pyinstallcheck_test ( SVMRegression_ishigami )
 ot_pyinstallcheck_test ( SVMRegression_saveload )
 
-
+if (MATPLOTLIB_FOUND)
+  file (GLOB_RECURSE PYFILES "${PROJECT_SOURCE_DIR}/python/doc/examples/*.py")
+  foreach (PYF ${PYFILES})
+    if (PYF MATCHES plot)
+      get_filename_component (TESTNAME "${PYF}" NAME_WE)
+      add_test (NAME pyinstallcheck_example_${TESTNAME} COMMAND ${Python_EXECUTABLE} ${PYF})
+      set_tests_properties (pyinstallcheck_example_${TESTNAME} PROPERTIES ENVIRONMENT "${PYINSTALLCHECK_ENVIRONMENT}")
+    endif ()
+  endforeach ()
+endif ()
 
 add_custom_target ( pyinstallcheck COMMAND ${CMAKE_CTEST_COMMAND} -R "^pyinstallcheck_"
                     DEPENDS ${PYINSTALLCHECK_TO_BE_RUN}
