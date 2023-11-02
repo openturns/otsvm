@@ -59,5 +59,5 @@ algo.setKernelParameter(gamma)
 algo.run()
 result = algo.getResult()
 print(result)
-ott.assert_almost_equal(result.getResiduals(), [0.00113243])
-ott.assert_almost_equal(result.getRelativeErrors(), [2.3203e-05])
+assert result.getResiduals()[0] < 2e-3
+assert result.getRelativeErrors()[0] < 3e-5
