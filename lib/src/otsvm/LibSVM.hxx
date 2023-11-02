@@ -42,7 +42,7 @@ class OTSVM_API LibSVM : public OT::PersistentObject
 public:
 
   enum KernelType { Linear, Polynomial, NormalRbf, Sigmoid };
-  enum SvmType { CSupportClassification, EpsilonSupportRegression = 3};
+  enum SvmType { CSupportClassification, EpsilonSupportRegression};
 
   /* Constructor */
   LibSVM();
@@ -145,7 +145,7 @@ public:
   OT::Function getInputTransformation() const;
 
 protected:
-
+  // to hide svm.h from public API
   OT::Pointer<LibSVMImplementation> p_implementation_;
   
   /* data normalization */
