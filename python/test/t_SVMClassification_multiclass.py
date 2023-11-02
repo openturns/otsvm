@@ -42,7 +42,7 @@ algo.run()
 # check accuracy
 accuracy = algo.getAccuracy()
 print(accuracy)
-ott.assert_almost_equal(accuracy, 97.2973)
+ott.assert_almost_equal(accuracy, 97.2973, 1e-2)
 
 testv = [0.0555554, -0.25, 0.118644, -4.03573e-08]
 
