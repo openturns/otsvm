@@ -1,6 +1,5 @@
 //                                               -*- C++ -*-
 /**
- *  @file  ExponentialRBF.hxx
  *  @brief Implementation of the Exponential RBF kernel
  *
  *  Copyright 2014-2023 Phimeca
@@ -59,12 +58,9 @@ public:
   virtual void setSigma(OT::Scalar sigma);
 
   /** Accessor to the parameter used for cross-validation */
-  OT::Scalar getParameter() const override;
-  void setParameter(OT::Scalar value) override;
-
-  /** Parameters value and description accessor */
-  OT::PointWithDescription getParameters() const override;
-  void setParameters(const OT::PointWithDescription & parameters) override;
+  OT::Point getParameter() const override;
+  void setParameter(const OT::Point & parameter) override;
+  OT::Description getParameterDescription() const override;
 
   /** Operator () */
   OT::Scalar operator() (const OT::Point & x1, const OT::Point & x2) const override;
@@ -82,7 +78,7 @@ public:
   void load(OT::Advocate & adv) override;
 
 protected:
-  OT::Scalar sigma_;
+  OT::Scalar sigma_ = 0.0;
 
 private:
 

@@ -1,6 +1,5 @@
 //                                               -*- C++ -*-
 /**
- *  @file  LinearKernel.hxx
  *  @brief Implementation of the rational kernel
  *
  *  Copyright 2014-2023 Phimeca
@@ -44,6 +43,11 @@ public:
   /* String converter */
   OT::String __repr__() const override;
 
+  /** Accessor to the parameter used for cross-validation */
+  OT::Point getParameter() const override;
+  void setParameter(const OT::Point & parameter) override;
+  OT::Description getParameterDescription() const override;
+  
   /* Operator () */
   OT::Scalar operator() ( const OT::Point & x1 , const OT::Point & x2 ) const override;
 

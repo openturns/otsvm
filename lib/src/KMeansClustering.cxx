@@ -32,43 +32,37 @@ void KMeansClustering::run()
   UnsignedInteger tempj = 0;
   UnsignedInteger count = 0;
   UnsignedInteger change = 0;
-  Point min;
-  Point max;
-  Point temp;
-  Point temp2;
-  Scalar distance = 0;
-  Scalar distancemin = 0;
-  Indices cluster( size );
-  Sample means( k_ , dimension );
 
-  min = inputSample_.getMin();
-  max = inputSample_.getMax();
+  Indices cluster(size);
+  Sample means(k_ , dimension);
 
-  for( UnsignedInteger i = 0 ; i < dimension ; i++ )
+  const Point min(inputSample_.getMin());
+  const Point max(inputSample_.getMax());
+
+  for (UnsignedInteger i = 0 ; i < dimension ; ++ i)
   {
     Uniform uniform(min[i], max[i]);
-    for( UnsignedInteger j = 0 ; j < k_ ; j++)
+    for (UnsignedInteger j = 0 ; j < k_; ++ j)
     {
-      means( j , i ) = uniform.getRealization()[0];
+      means(j , i) = uniform.getRealization()[0];
     }
   }
 
-  while( change == 0 )
+  while (!change)
   {
-    for( UnsignedInteger i = 0 ; i < size ; i++ )
+    for (UnsignedInteger i = 0 ; i < size; ++ i)
     {
-      distancemin = ( inputSample_[i] - means[0] ).norm();
+      Scalar distancemin = ( inputSample_[i] - means[0] ).norm();
 
-      for( UnsignedInteger j = 1 ; j < k_ ; j++ )
+      for (UnsignedInteger j = 1 ; j < k_; ++j)
       {
-        distance = ( inputSample_[i] - means[j] ).norm();
+        const Scalar distance = ( inputSample_[i] - means[j] ).norm();
 
-        if( distance < distancemin )
+        if (distance < distancemin)
         {
           distancemin = distance;
           tempj = j;
         }
-        distance = 0;
       }
       cluster[i] = tempj;
       tempj = 0;
@@ -76,19 +70,19 @@ void KMeansClustering::run()
 
     change = 0;
 
-    for( UnsignedInteger i = 0 ; i < k_ ; i++ )
+    for (UnsignedInteger i = 0 ; i < k_; ++ i)
     {
-      temp = means[i];
-      means[i] *= 0;
-      for( UnsignedInteger j = 0 ; j < size ; j++ )
+      Point temp(means[i]);
+      means[i] *= 0.0;
+      for (UnsignedInteger j = 0 ; j < size; ++ j)
       {
-        if( cluster[j] == i )
+        if (cluster[j] == i)
         {
           means[i] += inputSample_[j];
-          count ++;
+          ++ count;
         }
       }
-      temp2 = means[i];
+      Point temp2(means[i]);
 
       if( count > 0 )
       {
@@ -102,7 +96,7 @@ void KMeansClustering::run()
       means[i] = temp2;
 
       count = 0;
-      if(temp == means[i])
+      if (temp == means[i])
       {
         change = 1;
       }

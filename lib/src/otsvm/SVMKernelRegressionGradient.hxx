@@ -1,6 +1,5 @@
 //                                               -*- C++ -*-
 /**
- * @file  SVMKernelRegressionGradient.hxx
  * @brief Implementation of SVM regression gradient
  *
  *  Copyright 2014-2023 Phimeca

@@ -57,6 +57,25 @@ String LinearKernel::__repr__() const
 }
 
 
+/* Accessor to the parameter used for cross-validation */
+Point LinearKernel::getParameter() const
+{
+  return {};
+}
+
+void LinearKernel::setParameter(const Point & parameter)
+{
+  if (parameter.getDimension() != 0)
+    throw InvalidArgumentException(HERE) << "Expected empty parameter";
+}
+
+
+/* Parameters value and description accessor */
+Description LinearKernel::getParameterDescription() const
+{
+  return {};
+}
+
 /* Operator */
 Scalar LinearKernel::operator() ( const Point & x1 , const Point & x2 ) const
 {

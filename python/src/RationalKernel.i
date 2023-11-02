@@ -4,5 +4,6 @@
 #include "otsvm/RationalKernel.hxx"
 %}
 
+%copyctor OTSVM::RationalKernel;
+
 %include otsvm/RationalKernel.hxx
-namespace OTSVM { %extend RationalKernel { RationalKernel(const RationalKernel & other) { return new OTSVM::RationalKernel(other); } } }

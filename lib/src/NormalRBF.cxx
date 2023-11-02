@@ -71,32 +71,21 @@ void NormalRBF::setSigma(Scalar sigma)
 
 
 /* Accessor to the parameter used for cross-validation */
-Scalar NormalRBF::getParameter() const
+Point NormalRBF::getParameter() const
 {
-  return sigma_;
+  return {sigma_};
 }
 
-void NormalRBF::setParameter(Scalar value)
+void NormalRBF::setParameter(const Point & parameter)
 {
-  sigma_ = value;
+  sigma_ = parameter[0];
 }
 
 
 /* Parameters value and description accessor */
-PointWithDescription NormalRBF::getParameters() const
+Description NormalRBF::getParameterDescription() const
 {
-  PointWithDescription parameters(0);
-  Description description(0);
-  parameters.add(sigma_);
-  description.add("sigma");
-  parameters.setDescription(description);
-  return parameters;
-}
-
-void NormalRBF::setParameters(const PointWithDescription & parameters)
-{
-  if(parameters.getDimension() > 0)
-    sigma_ = parameters[0];
+  return {"sigma"};
 }
 
 

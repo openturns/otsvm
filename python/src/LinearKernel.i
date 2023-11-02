@@ -1,9 +1,9 @@
-// SWIG file LibSVMDriver.i
+// SWIG file LinearKernel.i
 
 %{
 #include "otsvm/LinearKernel.hxx"
 %}
 
-%include otsvm/LinearKernel.hxx
+%copyctor OTSVM::LinearKernel;
 
-namespace OTSVM { %extend LinearKernel { LinearKernel(const LinearKernel & other) { return new OTSVM::LinearKernel(other); } } }
+%include otsvm/LinearKernel.hxx

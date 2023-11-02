@@ -4,5 +4,8 @@
 #include "otsvm/SVMKernelImplementation.hxx"
 %}
 
+%include SVMKernelImplementation_doc.i
+
+%copyctor OTSVM::SVMKernelImplementation;
+
 %include otsvm/SVMKernelImplementation.hxx
-namespace OTSVM{ %extend SVMKernelImplementation { SVMKernelImplementation(const SVMKernelImplementation & other) { return new OTSVM::SVMKernelImplementation(other); } } }

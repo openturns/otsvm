@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 
 import openturns as ot
+import openturns.testing as ott
 import otsvm
 import os
 
@@ -37,18 +38,26 @@ algo.setKernelParameter(gamma)
 
 # compute the classification
 algo.run()
-print("#######################")
-print("Results with Samples I/O")
-if algo.getAccuracy() < 0.97:
-    raise ValueError("acc<0.97")
-# print('Accuracy(p.c.)= %.12g' % algo.getAccuracy())
 
-test = [0.0555554, -0.25, 0.118644, -4.03573e-08]
-print(
-    "We predict the class for the point [0.0555554,-0.25,0.118644,-4.03573e-08]: ",
-    algo.classify(test),
-)
-print("We grade the previous point for the 3 classes :")
-print("class 1 :", algo.grade(test, 1))
-print("class 2: ", algo.grade(test, 2))
-print("class 3: ", algo.grade(test, 3))
+# check accuracy
+accuracy = algo.getAccuracy()
+print(accuracy)
+ott.assert_almost_equal(accuracy, 97.2973)
+
+testv = [0.0555554, -0.25, 0.118644, -4.03573e-08]
+
+# predict
+classif = algo.classify(testv)
+print(classif)
+ott.assert_almost_equal(classif, 2)
+
+# grade
+grade1 = algo.grade(testv, 1)
+print(grade1)
+ott.assert_almost_equal(grade1, 0.0)
+grade2 = algo.grade(testv, 2)
+print(grade2)
+ott.assert_almost_equal(grade2, 2.0)
+grade3 = algo.grade(testv, 3)
+print(grade3)
+ott.assert_almost_equal(grade3, 1.0)

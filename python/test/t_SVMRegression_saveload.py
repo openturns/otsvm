@@ -25,21 +25,18 @@ fileName = "myStudy.xml"
 
 if ot.PlatformInfo.HasFeature("libxml2"):
     # save
-    myStudy = ot.Study()
-    myStudy.setStorageManager(ot.XMLStorageManager(fileName))
-    myStudy.add("metamodel", metamodel)
-    myStudy.save()
+    study = ot.Study()
+    study.setStorageManager(ot.XMLStorageManager(fileName))
+    study.add("metamodel", metamodel)
+    study.save()
 
     # load
-    myStudy = ot.Study()
-    myStudy.setStorageManager(ot.XMLStorageManager(fileName))
-    myStudy.load()
+    study = ot.Study()
+    study.setStorageManager(ot.XMLStorageManager(fileName))
+    study.load()
     loadedMetamodel = ot.Function()
-    myStudy.fillObject("metamodel", loadedMetamodel)
+    study.fillObject("metamodel", loadedMetamodel)
 
     os.remove(fileName)
 
-    if metamodel(mean) == loadedMetamodel(mean):
-        print("OK")
-else:
-    print("OK")
+    assert metamodel(mean) == loadedMetamodel(mean)

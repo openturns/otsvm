@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 
 import openturns as ot
+import openturns.testing as ott
 import otsvm
 from math import pi
 
@@ -57,19 +58,6 @@ algo.setKernelParameter(gamma)
 # compute the SVMRegression
 algo.run()
 result = algo.getResult()
-residuals = result.getResiduals()
-# Examine the results
-print("######################")
-# print "residuals=%.4f" % residuals[0]
-if residuals[0] <= 1.2e-3:
-    print("OK")
-else:
-    print("FAIL")
-relativeErrors = result.getRelativeErrors()
-# print "relative errors=%.6f" % relativeErrors[0]
-if relativeErrors[0] <= 2.4e-5:
-    print("OK")
-else:
-    print("FAIL")
-print("######################")
-print("")
+print(result)
+ott.assert_almost_equal(result.getResiduals(), [0.00113243])
+ott.assert_almost_equal(result.getRelativeErrors(), [2.3203e-05])

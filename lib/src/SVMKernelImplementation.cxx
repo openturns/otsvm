@@ -56,28 +56,20 @@ String SVMKernelImplementation::__repr__() const
 
 
 /* Parameter accessor */
-Scalar SVMKernelImplementation::getParameter() const
+Point SVMKernelImplementation::getParameter() const
 {
   throw NotYetImplementedException(HERE);
 }
 
-void SVMKernelImplementation::setParameter(Scalar /*value*/)
+void SVMKernelImplementation::setParameter(const Point & /*parameter*/)
 {
   throw NotYetImplementedException(HERE);
 }
 
-
-/* Parameters value and description accessor */
-PointWithDescription SVMKernelImplementation::getParameters() const
+Description SVMKernelImplementation::getParameterDescription() const
 {
   throw NotYetImplementedException(HERE);
 }
-
-void SVMKernelImplementation::setParameters(const PointWithDescription & /*parameters*/)
-{
-  throw NotYetImplementedException(HERE);
-}
-
 
 /* Operator () */
 Scalar SVMKernelImplementation::operator () (const Point & /*x1*/, const Point & /*x2*/) const

@@ -71,32 +71,21 @@ void RationalKernel::setConstant(Scalar constant)
 
 
 /* Accessor to the parameter used for cross-validation */
-Scalar RationalKernel::getParameter() const
+Point RationalKernel::getParameter() const
 {
-  return constant_;
+  return {constant_};
 }
 
-void RationalKernel::setParameter(Scalar value)
+void RationalKernel::setParameter(const Point & parameter)
 {
-  constant_ = value;
+  constant_ = parameter[0];
 }
 
 
 /* Parameters value and description accessor */
-PointWithDescription RationalKernel::getParameters() const
+Description RationalKernel::getParameterDescription() const
 {
-  PointWithDescription parameters(0);
-  Description description(0);
-  parameters.add(constant_);
-  description.add("constant");
-  parameters.setDescription(description);
-  return parameters;
-}
-
-void RationalKernel::setParameters(const PointWithDescription & parameters)
-{
-  if(parameters.getDimension() > 0)
-    constant_ = parameters[0];
+  return {"constant"};
 }
 
 /* Operator () */

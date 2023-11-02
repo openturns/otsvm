@@ -1,6 +1,5 @@
 //                                               -*- C++ -*-
 /**
- * @file  SVMKernelRegressionEvaluation.hxx
  * @brief Abstract top-level class for all numerical math function implementations
  *
  *  Copyright 2014-2023 Phimeca
