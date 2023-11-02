@@ -36,10 +36,10 @@ CLASSNAMEINIT(SigmoidKernel)
 static Factory<SigmoidKernel> RegisteredFactory_SigmoidKernel;
 
 /* Constructor with parameters */
-SigmoidKernel::SigmoidKernel( const Scalar linear , const Scalar constant ):
-  SVMKernelImplementation(),
-  linear_(linear),
-  constant_(constant)
+SigmoidKernel::SigmoidKernel(const Scalar linear , const Scalar constant)
+: SVMKernelImplementation()
+, linear_(linear)
+, constant_(constant)
 {
   //Nothing to do
 }
@@ -84,28 +84,22 @@ void SigmoidKernel::setConstant( Scalar constant )
   constant_ = constant;
 }
 
+void SigmoidKernel::setParameter(const Point & parameter)
+{
+  linear_ = parameter[0];
+  constant_ = parameter[1];
+}
+
+Point SigmoidKernel::getParameter() const
+{
+  return {linear_, constant_};
+}
 
 /* Parameters value and description accessor */
-PointWithDescription SigmoidKernel::getParameters() const
+Description SigmoidKernel::getParameterDescription() const
 {
-  PointWithDescription parameters(0);
-  Description description(0);
-  parameters.add(linear_);
-  description.add("linear term");
-  parameters.add(constant_);
-  description.add("constant term");
-  parameters.setDescription(description);
-  return parameters;
+  return {"linear term", "constant term"};
 }
-
-void SigmoidKernel::setParameters( const PointWithDescription & parameters )
-{
-  if( parameters.getDimension() > 0 )
-    linear_ = parameters[0];
-  if( parameters.getDimension() > 1 )
-    constant_ = parameters[1];
-}
-
 
 /* Operator () */
 Scalar SigmoidKernel::operator() ( const Point & x1 , const Point & x2 ) const
@@ -122,7 +116,7 @@ Point SigmoidKernel::partialGradient( const Point & x1 , const Point & x2 ) cons
   UnsignedInteger dimension = x1.getDimension();
   Scalar dotProduct = x1.dot(x2);
   Point result(dimension , 0.0);
-  for( UnsignedInteger i = 0 ; i < dimension ; i ++ )
+  for(UnsignedInteger i = 0 ; i < dimension ; i ++)
   {
     result[i] = linear_ * x2[i] * ( 1 - std::pow( tanh( linear_ * dotProduct + constant_), 2));
   }

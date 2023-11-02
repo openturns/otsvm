@@ -4,5 +4,6 @@
 #include "otsvm/ExponentialRBF.hxx"
 %}
 
+%copyctor OTSVM::ExponentialRBF;
+
 %include otsvm/ExponentialRBF.hxx
-namespace OTSVM{ %extend ExponentialRBF { ExponentialRBF(const ExponentialRBF & other) { return new OTSVM::ExponentialRBF(other); } } }

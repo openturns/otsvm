@@ -1,7 +1,6 @@
 //                                               -*- C++ -*-
 /**
- *  @file  SVMKernel.hxx
- *  @brief
+ *  @brief SVM kernel
  *
  *  Copyright 2014-2023 Phimeca
  *
@@ -63,12 +62,9 @@ public:
   OT::String __str__(const OT::String & offset = "") const override;
 
   /** Parameter accessor */
-  OT::Scalar getParameter() const;
-  void setParameter(OT::Scalar value);
-
-  /** Parameters value and description accessor */
-  OT::PointWithDescription getParameters() const;
-  void setParameters(const OT::PointWithDescription & parameters);
+  OT::Point getParameter() const;
+  void setParameter(const OT::Point & parameter);
+  OT::Description getParameterDescription() const;
 
   /** Operator () */
   OT::Scalar operator () (const OT::Point & x1, const OT::Point & x2) const;

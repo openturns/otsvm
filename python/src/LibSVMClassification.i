@@ -1,8 +1,9 @@
-// SWIG file LibSVMDriver.i
+// SWIG file LibSVMClassification.i
 
 %{
 #include "otsvm/LibSVMClassification.hxx"
 %}
 
+%copyctor OTSVM::LibSVMClassification;
+
 %include otsvm/LibSVMClassification.hxx
-namespace OTSVM { %extend LibSVMClassification { LibSVMClassification(const LibSVMClassification & other) { return new OTSVM::LibSVMClassification(other); } } }

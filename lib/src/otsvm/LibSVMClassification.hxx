@@ -1,5 +1,4 @@
 /**
- *  @file  LibSVMClassification.hxx
  *  This is the class which makes the link between LibSVM and OpenTURNS for Classification.
  *
  *  Copyright 2014-2023 Phimeca

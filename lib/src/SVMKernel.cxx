@@ -73,31 +73,22 @@ String SVMKernel::__str__(const String & /*offset*/) const
 
 
 /* Parameter accessor */
-Scalar SVMKernel::getParameter() const
+Point SVMKernel::getParameter() const
 {
   return getImplementation()->getParameter();
 }
 
-void SVMKernel::setParameter(Scalar value)
+void SVMKernel::setParameter(const Point & parameter)
 {
   copyOnWrite();
-  getImplementation()->setParameter(value);
+  getImplementation()->setParameter(parameter);
 }
-
-
 
 /* Parameters value and description accessor */
-PointWithDescription SVMKernel::getParameters() const
+Description SVMKernel::getParameterDescription() const
 {
-  return getImplementation()->getParameters();
+  return getImplementation()->getParameterDescription();
 }
-
-void SVMKernel::setParameters(const PointWithDescription & parameters)
-{
-  copyOnWrite();
-  getImplementation()->setParameters(parameters);
-}
-
 
 /* Operator () */
 Scalar SVMKernel::operator() (const Point & x1, const Point & x2) const

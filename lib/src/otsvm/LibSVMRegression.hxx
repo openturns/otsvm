@@ -1,6 +1,5 @@
 //                                               -*- C++ -*-
 /**
- *  @file  LibSVMRegression.hxx
  *  @brief Implementation of the rational kernel
  *
  *  Copyright 2014-2023 Phimeca

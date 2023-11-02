@@ -4,5 +4,6 @@
 #include "otsvm/NormalRBF.hxx"
 %}
 
+%copyctor OTSVM::NormalRBF;
+
 %include otsvm/NormalRBF.hxx
-namespace OTSVM{ %extend NormalRBF { NormalRBF(const NormalRBF & other) { return new OTSVM::NormalRBF(other); } } }

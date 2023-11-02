@@ -77,7 +77,7 @@ endmacro ()
 
 
 ot_add_python_module( otsvm otsvm_module.i
-                      SVMKernelImplementation.i
+                      SVMKernelImplementation.i SVMKernelImplementation_doc.i.in
                       SVMKernel.i
                       NormalRBF.i
                       ExponentialRBF.i

@@ -1,9 +1,9 @@
-// SWIG file LibSVMDriver.i
+// SWIG file LibSVMRegression.i
 
 %{
 #include "otsvm/LibSVMRegression.hxx"
 %}
 
-%include otsvm/LibSVMRegression.hxx
+%copyctor OTSVM::LibSVMRegression;
 
-namespace OTSVM { %extend LibSVMRegression { LibSVMRegression(const LibSVMRegression & other) { return new OTSVM::LibSVMRegression(other); } } }
+%include otsvm/LibSVMRegression.hxx

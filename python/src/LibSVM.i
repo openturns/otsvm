@@ -4,5 +4,6 @@
 #include "otsvm/LibSVM.hxx"
 %}
 
+%copyctor OTSVM::LibSVM;
+
 %include otsvm/LibSVM.hxx
-namespace OTSVM { %extend LibSVM { LibSVM(const LibSVM & other) { return new OTSVM::LibSVM(other); } } }

@@ -54,12 +54,9 @@ public:
   OT::String __repr__() const override;
 
   /** Parameter accessor */
-  virtual OT::Scalar getParameter() const;
-  virtual void setParameter(OT::Scalar value);
-
-  /** Parameters value and description accessor */
-  virtual OT::PointWithDescription getParameters() const;
-  virtual void setParameters(const OT::PointWithDescription & parameters);
+  virtual OT::Point getParameter() const;
+  virtual void setParameter(const OT::Point & parameter);
+  virtual OT::Description getParameterDescription() const;
 
   /** Operator () */
   virtual OT::Scalar operator () (const OT::Point & x1, const OT::Point & x2) const;

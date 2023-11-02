@@ -4,5 +4,6 @@
 #include "otsvm/KMeansClustering.hxx"
 %}
 
+%copyctor OTSVM::KMeansClustering;
+
 %include otsvm/KMeansClustering.hxx
-namespace OTSVM { %extend KMeansClustering { KMeansClustering(const KMeansClustering & other) { return new OTSVM::KMeansClustering(other); } } }

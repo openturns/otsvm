@@ -1,6 +1,5 @@
 //             -*- C++ -*-
 /**
- *  @file  LibSVM.cxx
  *  @brief LibSVM wrapper
  *
  *  Copyright 2014-2023 Phimeca

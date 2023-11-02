@@ -1,6 +1,5 @@
 //                                               -*- C++ -*-
 /**
- *  @file  ExponentialRBF.cxx
  *  @brief Implementation of the Exponential RBF kernel
  *
  *  Copyright 2014-2023 Phimeca
@@ -72,34 +71,22 @@ void ExponentialRBF::setSigma(Scalar sigma)
 
 
 /* Accessor to the parameter used for cross-validation */
-Scalar ExponentialRBF::getParameter() const
+Point ExponentialRBF::getParameter() const
 {
-  return sigma_;
+  return {sigma_};
 }
 
-void ExponentialRBF::setParameter(Scalar value)
+void ExponentialRBF::setParameter(const Point & parameter)
 {
-  sigma_ = value;
+  sigma_ = parameter[0];
 }
 
 
 /* Parameters value and description accessor */
-PointWithDescription ExponentialRBF::getParameters() const
+Description ExponentialRBF::getParameterDescription() const
 {
-  PointWithDescription parameters(0);
-  Description description(0);
-  parameters.add(sigma_);
-  description.add("sigma");
-  parameters.setDescription(description);
-  return parameters;
+  return {"sigma"};
 }
-
-void ExponentialRBF::setParameters(const PointWithDescription & parameters)
-{
-  if(parameters.getDimension() > 0)
-    sigma_ = parameters[0];
-}
-
 
 /* Operator () */
 Scalar ExponentialRBF::operator() (const Point & x1, const Point & x2) const

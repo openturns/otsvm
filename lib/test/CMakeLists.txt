@@ -68,13 +68,8 @@ include_directories ( ${INTERNAL_INCLUDE_DIRS} )
 
 
 
-
-
-ot_check_test ( ExponentialRBF_std )
-ot_check_test ( NormalRBF_std )
-ot_check_test ( PolynomialKernel_std )
-ot_check_test ( RationalKernel_std )
-#ot_check_test ( SVMRegression_std )
+ot_check_test (SVMKernel_std IGNOREOUT)
+ot_check_test (SVMRegression_std IGNOREOUT)
 
 
 add_custom_target ( cppcheck COMMAND ${CMAKE_CTEST_COMMAND} -R "^cppcheck_"

@@ -100,14 +100,15 @@ void PolynomialKernel::setConstant(Scalar constant)
 
 
 /* Accessor to the parameter used for cross-validation */
-Scalar PolynomialKernel::getParameter() const
+Point PolynomialKernel::getParameter() const
 {
-  return degree_;
+  return {degree_};
 }
 
-void PolynomialKernel::setParameter(Scalar value)
+void PolynomialKernel::setParameter(const Point & parameter)
 {
-  degree_ = value;
+  degree_ = parameter[0];
+  constant_ = parameter[1];
 }
 
 
@@ -121,28 +122,10 @@ Scalar PolynomialKernel::operator() (const Point & x1, const Point & x2) const
 
 
 /* Parameters value and description accessor */
-PointWithDescription PolynomialKernel::getParameters() const
+Description PolynomialKernel::getParameterDescription() const
 {
-  PointWithDescription parameters(0);
-  Description description(0);
-  parameters.add(degree_);
-  description.add("degree");
-  parameters.add(linear_);
-  description.add("linear term");
-  parameters.add(constant_);
-  description.add("constant term");
-  parameters.setDescription(description);
-  return parameters;
+  return {"degree", "linear term", "constant term"};
 }
-
-void PolynomialKernel::setParameters(const PointWithDescription & parameters)
-{
-  if(parameters.getDimension() > 0)
-    degree_ = parameters[0];
-  if(parameters.getDimension() > 1)
-    constant_ = parameters[1];
-}
-
 
 /* Partial gradient */
 Point PolynomialKernel::partialGradient(const Point & x1, const Point & x2) const

@@ -1,6 +1,6 @@
 //                                               -*- C++ -*-
 /**
- *  @brief The test file for PolynomialKernel class.
+ *  @brief The test file for NormalRBF class.
  *
  *  Copyright 2014-2023 Phimeca
  *
@@ -23,12 +23,12 @@
 #include <openturns/OT.hxx>
 #include <openturns/OTtestcode.hxx>
 #include <openturns/OStream.hxx>
-#include "otsvm/PolynomialKernel.hxx"
-
+#include "otsvm/OTSVM.hxx"
 
 using namespace OT;
 using namespace OT::Test;
 using namespace OTSVM;
+
 
 int main(void)
 {
@@ -36,30 +36,35 @@ int main(void)
   OStream fullprint(std::cout);
   try
   {
-    PolynomialKernel kernel(3, 2, 1);
-    Point x(2, 2);
-    Point y(2, 1);
+    //instantiate a Gaussian kernel with sigma = 2
+    Collection<SVMKernel> kernels;
+    kernels.add(NormalRBF(2.0));
+    kernels.add(ExponentialRBF(2.0));
+    kernels.add(LinearKernel());
+    kernels.add(PolynomialKernel(3.0, 2.0, 1.0));
+    kernels.add(RationalKernel(2.0));
+    kernels.add(SigmoidKernel(1.0, 0.0));
 
-    fullprint << " kernel ([2 2],[1 1]) = " << kernel(x, y) << std::endl;
-    fullprint << " dkernel/dx_i([2 2],[1 1]) = " << kernel.partialGradient(x, y) << std::endl;
-    fullprint << " d2kernel/(dx_i*dx_j)([2 2],[1 1]) = " << kernel.partialHessian(x, y) << std::endl;;
+    Sample X(0, 2);
+    Sample Y(0, 2);
+    X.add(Point({2.0, 2.0}));
+    Y.add(Point({1.0, 1.0}));
+    X.add(Point({0.0, 5.0}));
+    Y.add(Point({0.0, 3.0}));
 
-    x[0] = 0;
-    x[1] = 5;
-    y[0] = 0;
-    y[1] = 3;
+    for (UnsignedInteger i = 0; i < kernels.getSize(); ++ i)
+    {
+      const SVMKernel kernel(kernels[i]);
+      for (UnsignedInteger j = 0; j < X.getSize(); ++ j)
+      {
+        const Point x(X[j]);
+        const Point y(Y[j]);
 
-    fullprint << " kernel ([0 5],[0 3]) = " << kernel(x, y) << std::endl;
-    fullprint << " dkernel/dx_i([0 5],[0 3]) = " << kernel.partialGradient(x, y) << std::endl;
-    fullprint << " d2kernel/(dx_i*dx_j)([0 5],[0 3]) = " << kernel.partialHessian(x, y) << std::endl;;
-
-    PolynomialKernel kernel2(1, 2, 1);
-
-    fullprint << " kernel2 ([0 5],[0 3]) = " << kernel2(x, y) << std::endl;
-    fullprint << " dkernel2/dx_i([0 5],[0 3]) = " << kernel2.partialGradient(x, y) << std::endl;
-    fullprint << " d2kernel2/(dx_i*dx_j)([0 5],[0 3]) = " << kernel2.partialHessian(x, y) << std::endl;;
-
-
+        fullprint << " kernel (x,y) = " << kernel(x, y) << std::endl;
+        fullprint << " dkernel/dx_i(x,y) = " << kernel.partialGradient(x, y) << std::endl;
+        fullprint << " d2kernel/(dx_i*dx_j)(x,y) = " << kernel.partialHessian(x, y) << std::endl;
+      }
+    }
   }
   catch (TestFailed & ex)
   {

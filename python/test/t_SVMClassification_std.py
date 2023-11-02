@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 
 import openturns as ot
+import openturns.testing as ott
 import otsvm
 import os
 
@@ -34,6 +35,8 @@ algo.setKernelParameter(gamma)
 
 # compute the classification
 algo.run()
-print("#######################")
-print("Results with Samples I/O")
-print("Accuracy(p.c.)=", algo.getAccuracy())
+
+# check accuracy
+accuracy = algo.getAccuracy()
+print(accuracy)
+ott.assert_almost_equal(accuracy, 100.0)

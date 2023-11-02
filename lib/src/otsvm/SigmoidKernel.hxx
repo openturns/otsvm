@@ -38,7 +38,8 @@ class OTSVM_API SigmoidKernel : public SVMKernelImplementation
 public:
 
   /* Constructor with parameters */
-  SigmoidKernel( const OT::Scalar linear = 1.0 , const OT::Scalar constant = 0.0 );
+  explicit SigmoidKernel(const OT::Scalar linear = 1.0,
+		         const OT::Scalar constant = 0.0);
 
   /* Virtual constructor */
   SigmoidKernel * clone() const override;
@@ -48,24 +49,25 @@ public:
 
   /* Linear term accessor */
   virtual OT::Scalar getLinear() const;
-  virtual void setLinear( OT::Scalar linear );
+  virtual void setLinear(OT::Scalar linear);
 
   /* Constant term accessor */
   virtual OT::Scalar getConstant() const;
-  virtual void setConstant( OT::Scalar constant );
+  virtual void setConstant(OT::Scalar constant);
 
   /* Parameters value and description accessor */
-  OT::PointWithDescription getParameters() const override;
-  void setParameters( const OT::PointWithDescription & parameters ) override;
+  OT::Point getParameter() const override;
+  void setParameter(const OT::Point & parameter) override;
+  OT::Description getParameterDescription() const override;
 
   /* Operator () */
-  OT::Scalar operator() ( const OT::Point & x1 , const OT::Point & x2 ) const override;
+  OT::Scalar operator() (const OT::Point & x1 , const OT::Point & x2) const override;
 
   /* Partial gradient */
-  OT::Point partialGradient( const OT::Point & x1 , const OT::Point & x2 ) const override;
+  OT::Point partialGradient(const OT::Point & x1 , const OT::Point & x2) const override;
 
   /* Partial hessian */
-  OT::SymmetricMatrix partialHessian( const OT::Point & x1 , const OT::Point & x2 ) const override;
+  OT::SymmetricMatrix partialHessian(const OT::Point & x1 , const OT::Point & x2) const override;
 
   /** Method save() stores the object through the StorageManager */
   void save(OT::Advocate & adv) const override;
@@ -76,10 +78,10 @@ public:
 protected:
 
   /* Linear term */
-  OT::Scalar linear_;
+  OT::Scalar linear_ = 0.0;
 
   /* Constant term */
-  OT::Scalar constant_;
+  OT::Scalar constant_ = 0.0;
 
 };
 

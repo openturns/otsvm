@@ -4,7 +4,6 @@
 #include "otsvm/SVMKernel.hxx"
 
 namespace OT {
-
   template <>
   struct traitsPythonType<OTSVM::SVMKernel>
   {
@@ -25,20 +24,10 @@ namespace OT {
   }
 
 } /* namespace OT */
-
-
 %}
-
 
 TypedInterfaceObjectImplementationHelper(OTSVM, SVMKernel, SVMKernelImplementation)
 
+%copyctor OTSVM::SVMKernel;
 
 %include otsvm/SVMKernel.hxx
-namespace OTSVM{
-
-%extend SVMKernel {
-
-SVMKernel(const SVMKernel & other) { return new OTSVM::SVMKernel(other); }
-
-}
-}

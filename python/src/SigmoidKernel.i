@@ -4,6 +4,6 @@
 #include "otsvm/SigmoidKernel.hxx"
 %}
 
-%include otsvm/SigmoidKernel.hxx
+%copyctor OTSVM::SigmoidKernel;
 
-namespace OTSVM { %extend SigmoidKernel { SigmoidKernel(const SigmoidKernel & other) { return new OTSVM::SigmoidKernel(other); } } }
+%include otsvm/SigmoidKernel.hxx

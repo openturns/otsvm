@@ -19,22 +19,24 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
  *
  */
-#include <OT.hxx>
+#include <openturns/OT.hxx>
+#include <openturns/OTtestcode.hxx>
 #include <otsvm/LibSVMRegression.hxx>
 #include <otsvm/SVMRegressionImplementation.hxx>
 #include <otsvm/SVMRegression.hxx>
-#include <Point.hxx>
-#include "OSS.hxx"
+#include <openturns/Point.hxx>
+#include <openturns/OSS.hxx>
 #include <openturns/OStream.hxx>
 #include <otsvm/SVMResourceMap.hxx>
-#include "Function.hxx"
-#include "ComposedDistribution.hxx"
+#include <openturns/Function.hxx>
+#include <openturns/ComposedDistribution.hxx>
 
 using namespace OT;
+using namespace OT::Test;
 using namespace OTSVM;
 
 
-int main(int argc, char **argv)
+int main(int /*argc*/, char ** /*argv*/)
 {
 
   Sample dataIn(100, 1);
@@ -73,11 +75,7 @@ int main(int argc, char **argv)
   regression.run();
 
   MetaModelResult result(regression.getResult());
-  Point residu(2);
-  residu = result.getResiduals();
-  Point error(2);
-  residu = result.getRelativeErrors();
-
-  std::cout << std::setprecision(2) << result.getResiduals()[0] << " " << result.getResiduals()[1] << std::endl;
-  std::cout << std::setprecision(2) << result.getRelativeErrors()[0] << " " << result.getRelativeErrors()[1] << std::endl;
+  std::cout << "result=" << result << std::endl; 
+  assert_almost_equal(result.getResiduals(), {0.00619114, 0.00309557});
+  assert_almost_equal(result.getRelativeErrors(), {1.13852e-06, 1.13852e-06});
 }
