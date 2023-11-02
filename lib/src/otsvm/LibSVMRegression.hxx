@@ -82,9 +82,6 @@ protected:
   /* Kernel parameter */
   OT::Point kernelParameter_;
 
-  /* Kernel on OpenTurns format*/
-  SVMKernel kernel_;
-
   /* Results */
   OT::MetaModelResult result_;
 private:

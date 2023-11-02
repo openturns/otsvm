@@ -24,21 +24,25 @@
 #define OTSVM_LIBSVM
 
 
-#include "otsvm/OTSVMprivate.hxx"
-#include "otsvm/svm.h"
+#include "otsvm/SVMKernel.hxx"
 #include <openturns/Function.hxx>
+
+struct svm_model;
+struct svm_node;
 
 namespace OTSVM
 {
+class LibSVMImplementation;
 
+ 
 class OTSVM_API LibSVM : public OT::PersistentObject
 {
   CLASSNAME
 
 public:
 
-  enum KernelType { Linear = LINEAR, Polynomial = POLY, Sigmoid = SIGMOID, NormalRbf = RBF };
-  enum SvmType { CSupportClassification = C_SVC, EpsilonSupportRegression = EPSILON_SVR};
+  enum KernelType { Linear, Polynomial, NormalRbf, Sigmoid };
+  enum SvmType { CSupportClassification, EpsilonSupportRegression = 3};
 
   /* Constructor */
   LibSVM();
@@ -72,9 +76,11 @@ public:
   void setP(const OT::Scalar p);
 
   /* KernelType accessor */
-  KernelType getKernelType();
+  KernelType getKernelType() const;
   void setKernelType(const OT::UnsignedInteger kernelType);
 
+  SVMKernel getKernel() const;
+  
   /* SvmType accessor */
   void setSvmType(const OT::UnsignedInteger svmType);
 
@@ -85,17 +91,17 @@ public:
   svm_node* getNode(const OT::UnsignedInteger index);
 
   /* Constant accessor */
-  OT::Scalar getConstant();
+  OT::Scalar getConstant() const;
 
   /* Gamma accessor */
-  OT::Scalar getGamma();
+  OT::Scalar getGamma() const;
 
   /* Degree accessor */
-  OT::UnsignedInteger getDegree();
+  OT::UnsignedInteger getDegree() const;
   void setDegree(const OT::UnsignedInteger degree);
 
   /* Coefficient accessor */
-  OT::Scalar getPolynomialConstant();
+  OT::Scalar getPolynomialConstant() const;
 
   /* Output component accessor */
   OT::Scalar getOutput(const OT::UnsignedInteger index);
@@ -140,18 +146,8 @@ public:
 
 protected:
 
-  /* Libsvm parameter */
-  svm_parameter parameter_;
-
-  /* Libsvm problem */
-  svm_problem problem_;
-
-  /* Libsvm model */
-  svm_model* p_model_;
-
-  /* Libsvm node */
-  svm_node* p_node_;
-
+  OT::Pointer<LibSVMImplementation> p_implementation_;
+  
   /* data normalization */
   OT::Function inputTransformation_;
 

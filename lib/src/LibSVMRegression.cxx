@@ -136,26 +136,12 @@ void LibSVMRegression::run()
     Sample supportvector( driver_.getNumberSupportVector(), inputDimension );
     supportvector = driver_.getSupportVector( inputDimension );
 
-    switch(driver_.getKernelType())
-    {
-      case POLY:
-        kernel_ = PolynomialKernel( driver_.getDegree(), driver_.getGamma(), driver_.getPolynomialConstant() );
-        break;
-      case RBF:
-        kernel_ = NormalRBF( 1 / ( sqrt( 2 * driver_.getGamma() )));
-        break;
-      case SIGMOID:
-        kernel_ = SigmoidKernel( driver_.getGamma(), driver_.getConstant() );
-        break;
-      case LINEAR:
-        kernel_ = LinearKernel();
-        break;
-    }
+    const SVMKernel kernel(driver_.getKernel());
 
     Function function;
-    function.setEvaluation(new SVMKernelRegressionEvaluation( kernel_, svcoef, supportvector, driver_.getConstant()));
-    function.setGradient(new SVMKernelRegressionGradient( kernel_, svcoef, supportvector, driver_.getConstant()));
-    function.setHessian(new SVMKernelRegressionHessian( kernel_, svcoef, supportvector, driver_.getConstant()));
+    function.setEvaluation(new SVMKernelRegressionEvaluation(kernel, svcoef, supportvector, driver_.getConstant()));
+    function.setGradient(new SVMKernelRegressionGradient(kernel, svcoef, supportvector, driver_.getConstant()));
+    function.setHessian(new SVMKernelRegressionHessian(kernel, svcoef, supportvector, driver_.getConstant()));
 
     marginals.add( function );
     driver_.destroy();
@@ -234,7 +220,6 @@ void LibSVMRegression::save(Advocate & adv) const
   PersistentObject::save(adv);
   adv.saveAttribute( "tradeoffFactor_", tradeoffFactor_ );
   adv.saveAttribute( "kernelParameter_", kernelParameter_ );
-  adv.saveAttribute( "kernel_", kernel_ );
   adv.saveAttribute( "result_", result_ );
   adv.saveAttribute( "inputSample_", inputSample_ );
   adv.saveAttribute( "outputSample_", outputSample_ );
@@ -247,7 +232,6 @@ void LibSVMRegression::load(Advocate & adv)
   PersistentObject::load(adv);
   adv.loadAttribute( "tradeoffFactor_", tradeoffFactor_ );
   adv.loadAttribute( "kernelParameter_", kernelParameter_ );
-  adv.loadAttribute( "kernel_", kernel_ );
   adv.loadAttribute( "result_", result_ );
   adv.loadAttribute( "inputSample_", inputSample_ );
   adv.loadAttribute( "outputSample_", outputSample_ );

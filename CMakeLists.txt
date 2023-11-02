@@ -1,12 +1,12 @@
 cmake_minimum_required (VERSION 3.13)
 
-option ( BUILD_PYTHON                 "Build the python module for the library"                               ON )
-option (USE_SPHINX                    "Use sphinx for documentation"                                          ON)
-option ( BUILD_SHARED_LIBS            "Build shared libraries"                                                ON )
-option ( USE_INTERNAL_LIBSVM          "Use internal LibSVM"                                                   ON )
+option (BUILD_PYTHON                 "Build the python module for the library"                               ON)
+option (USE_SPHINX                   "Use sphinx for documentation"                                          ON)
+option (BUILD_SHARED_LIBS            "Build shared libraries"                                                ON)
+option (USE_EXTERNAL_LIBSVM          "Use internal LibSVM"                                                   OFF)
 
 # By default, build in Release mode. Must appear before project() command
-set( CMAKE_BUILD_TYPE Release CACHE STRING "Build type")
+set(CMAKE_BUILD_TYPE Release CACHE STRING "Build type")
 
 project (OTSVM)
 
@@ -34,10 +34,14 @@ if (NOT DEFINED OPENTURNS_PYTHON_MODULE_PATH)
   set (OPENTURNS_PYTHON_MODULE_PATH ${OPENTURNS_PYTHON3_MODULE_PATH})
 endif ()
 
-if (NOT BUILD_SHARED_LIBS)
-  list ( APPEND OTSVM_DEFINITIONS "-DOTSVM_STATIC" )
+if (USE_EXTERNAL_LIBSVM)
+  find_package (LibSVM 3.24 REQUIRED)
 endif ()
-add_definitions ( ${OTSVM_DEFINITIONS} )
+
+if (NOT BUILD_SHARED_LIBS)
+  list (APPEND OTSVM_DEFINITIONS "-DOTSVM_STATIC")
+endif ()
+add_definitions (${OTSVM_DEFINITIONS})
 
 if (MSVC)
   # Disable some warnings
