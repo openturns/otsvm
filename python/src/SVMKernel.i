@@ -30,4 +30,6 @@ TypedInterfaceObjectImplementationHelper(OTSVM, SVMKernel, SVMKernelImplementati
 
 %copyctor OTSVM::SVMKernel;
 
+%include SVMKernel_doc.i
+
 %include otsvm/SVMKernel.hxx

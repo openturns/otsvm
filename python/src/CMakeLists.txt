@@ -78,17 +78,17 @@ endmacro ()
 
 ot_add_python_module( otsvm otsvm_module.i
                       SVMKernelImplementation.i SVMKernelImplementation_doc.i.in
-                      SVMKernel.i
-                      NormalRBF.i
-                      ExponentialRBF.i
-                      RationalKernel.i
-                      PolynomialKernel.i
-                      SigmoidKernel.i
-                      LinearKernel.i
-                      LibSVM.i
-                      LibSVMRegression.i
-                      LibSVMClassification.i
-                      KMeansClustering.i )
+                      SVMKernel.i SVMKernel_doc.i.in
+                      NormalRBF.i NormalRBF_doc.i.in
+                      ExponentialRBF.i ExponentialRBF_doc.i.in
+                      RationalKernel.i RationalKernel_doc.i.in
+                      PolynomialKernel.i PolynomialKernel_doc.i.in
+                      SigmoidKernel.i SigmoidKernel_doc.i.in
+                      LinearKernel.i LinearKernel_doc.i.in
+                      LibSVM.i LibSVM_doc.i.in
+                      LibSVMRegression.i LibSVMRegression_doc.i.in
+                      LibSVMClassification.i LibSVMClassification_doc.i.in
+                      KMeansClustering.i KMeansClustering_doc.i.in)
 
 
 
