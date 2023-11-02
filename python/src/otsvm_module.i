@@ -27,8 +27,6 @@
 %include SigmoidKernel.i
 %include LinearKernel.i
 %include LibSVM.i
-%include SVMRegressionImplementation.i
-%include SVMRegression.i
 %include LibSVMRegression.i
 %include LibSVMClassification.i
 %include KMeansClustering.i
