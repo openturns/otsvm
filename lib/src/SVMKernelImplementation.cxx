@@ -86,10 +86,9 @@ Point SVMKernelImplementation::partialGradient(const Point & /*x*/, const Point 
 
 
 /* Partial hessian */
-SymmetricMatrix SVMKernelImplementation::partialHessian(const Point & x, const Point & /*y*/) const
+SymmetricMatrix SVMKernelImplementation::partialHessian(const Point & /*x*/, const Point & /*y*/) const
 {
-  return SymmetricMatrix(x.getDimension());
-  //      throw NotYetImplementedException(HERE);
+  throw NotYetImplementedException(HERE) << "SVMKernelImplementation::partialHessian";
 }
 
 /* Method save() stores the object through the StorageManager */

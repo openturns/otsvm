@@ -28,43 +28,29 @@ using namespace OT;
 namespace OTSVM
 {
 
-
-
 CLASSNAMEINIT(SVMKernelRegressionEvaluation)
 
-static Factory<SVMKernelRegressionEvaluation> RegisteredFactory_SVMKernelRegressionEvaluation;
+static Factory<SVMKernelRegressionEvaluation> Factory_SVMKernelRegressionEvaluation;
 
 /* Default constructor */
-SVMKernelRegressionEvaluation::SVMKernelRegressionEvaluation() :
-  EvaluationImplementation()
+SVMKernelRegressionEvaluation::SVMKernelRegressionEvaluation()
+: EvaluationImplementation()
 {
-  // nothing to do
+  // Nothing to do
 }
 
 /* Constructor with parameters */
 SVMKernelRegressionEvaluation::SVMKernelRegressionEvaluation(const SVMKernel & kernel,
     const Point & lagrangeMultiplier,
     const Sample & dataIn,
-    const Scalar constant) :
-  kernel_(kernel),
-  lagrangeMultiplier_(lagrangeMultiplier),
-  dataIn_(dataIn),
-  constant_(constant)
+    const Scalar constant)
+: EvaluationImplementation()
+, kernel_(kernel)
+, lagrangeMultiplier_(lagrangeMultiplier)
+, dataIn_(dataIn)
+, constant_(constant)
 {
-  Description description;
-  for (UnsignedInteger i = 0; i < getInputDimension(); ++i)
-  {
-    OSS oss;
-    oss << "x" << i;
-    description.add(oss);
-  }
-  for (UnsignedInteger i = 0; i < getOutputDimension(); ++i)
-  {
-    OSS oss;
-    oss << "y" << i;
-    description.add(oss);
-  }
-  setDescription(description);
+  // Nothing to do
 }
 
 /* Virtual constructor */
@@ -74,9 +60,10 @@ SVMKernelRegressionEvaluation * SVMKernelRegressionEvaluation::clone() const
 }
 
 /* Comparison operator */
-Bool SVMKernelRegressionEvaluation::operator==(const SVMKernelRegressionEvaluation & /*other*/) const
+Bool SVMKernelRegressionEvaluation::operator==(const SVMKernelRegressionEvaluation & other) const
 {
-  return true;
+  if (this == &other) return true;
+  return (kernel_ == other.kernel_) && (lagrangeMultiplier_ == other.lagrangeMultiplier_) && (constant_ == other.constant_) && (dataIn_ == other.dataIn_);
 }
 
 /* String converter */

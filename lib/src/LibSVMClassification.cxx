@@ -29,7 +29,7 @@
 #include "otsvm/KMeansClustering.hxx"
 #include <openturns/PersistentObjectFactory.hxx>
 #include <openturns/ComposedFunction.hxx>
-
+#include <openturns/SpecFunc.hxx>
 
 using namespace OT;
 
@@ -48,8 +48,10 @@ static Factory<LibSVMClassification> RegisteredFactory_LibSVMClassification;
 LibSVMClassification::LibSVMClassification()
   : ClassifierImplementation()
   , accuracy_(0.)
+  , tradeoffFactor_(1, 10.)
+  , kernelParameter_(1, 1.0)
 {
-  ///Nothing to do
+  // Nothing to do
 }
 
 
@@ -82,53 +84,46 @@ String LibSVMClassification::__repr__() const
 
 void LibSVMClassification::run()
 {
+  const UnsignedInteger size = inputSample_.getSize();
 
-  const UnsignedInteger sizeInput = inputSample_.getSize();
-  const UnsignedInteger sizeOutput = classes_.getSize();
+  Scalar bestTradeoffFactor = tradeoffFactor_[0];
+  Scalar bestKernelParameter = kernelParameter_[0];
 
-  UnsignedInteger tempTradeoff = 0;
-  UnsignedInteger tempKernel = 0;
-
-  Scalar totalerror = 0;
-  Scalar minerror = 0;
-
-  if(sizeOutput != sizeInput) throw InvalidArgumentException(HERE) << "Error: the input sample and the output sample must have the same size ";
+  if (classes_.getSize() != size)
+    throw InvalidArgumentException(HERE) << "LibSVMClassification: the input sample and the output sample must have the same size";
 
   Sample outputSample(inputSample_.getSize(), 1);
   for (UnsignedInteger i = 0; i < classes_.getSize(); ++ i)
-  {
     outputSample[i][0] = classes_[i];
-  }
   driver_.convertData(inputSample_, outputSample);
 
-  if( tradeoffFactor_.getSize() > 1 || kernelParameter_.getSize() > 1 )
+  if (tradeoffFactor_.getSize() > 1 || kernelParameter_.getSize() > 1)
   {
-    for( UnsignedInteger tradeoffIndex = 0 ; tradeoffIndex < tradeoffFactor_.getSize() ; tradeoffIndex ++ )
+    Scalar minerror = SpecFunc::MaxScalar;
+    for (UnsignedInteger tradeoffIndex = 0 ; tradeoffIndex < tradeoffFactor_.getSize(); ++ tradeoffIndex)
     {
-      driver_.setTradeoffFactor( tradeoffFactor_[tradeoffIndex] );
-      for( UnsignedInteger kernelParameterIndex = 0 ; kernelParameterIndex < kernelParameter_.getSize() ; kernelParameterIndex ++)
+      driver_.setTradeoffFactor(tradeoffFactor_[tradeoffIndex]);
+      for (UnsignedInteger kernelParameterIndex = 0 ; kernelParameterIndex < kernelParameter_.getSize(); ++ kernelParameterIndex)
       {
-        driver_.setKernelParameter( kernelParameter_[kernelParameterIndex] );
-        totalerror = driver_.runCrossValidation();
-        if( totalerror < minerror || (tradeoffIndex == 0 && kernelParameterIndex == 0))
+        driver_.setKernelParameter(kernelParameter_[kernelParameterIndex]);
+        const Scalar totalerror = driver_.runCrossValidation();
+        if (totalerror < minerror)
         {
           minerror = totalerror;
-          tempTradeoff = tradeoffIndex;
-          tempKernel = kernelParameterIndex;
+          bestTradeoffFactor = tradeoffFactor_[tradeoffIndex];
+          bestKernelParameter = kernelParameter_[kernelParameterIndex];
         }
         LOGINFO( OSS() << "Cross Validation for C=" << tradeoffFactor_[tradeoffIndex] << " gamma=" << kernelParameter_[kernelParameterIndex] << " error=" << totalerror );
       }
     }
   }
 
-  driver_.setTradeoffFactor(tradeoffFactor_[tempTradeoff]);
-  driver_.setKernelParameter(kernelParameter_[tempKernel]);
-
+  driver_.setTradeoffFactor(bestTradeoffFactor);
+  driver_.setKernelParameter(bestKernelParameter);
   driver_.performTrain();
 
-  totalerror = driver_.computeAccuracy();
-
-  accuracy_ = (1 - (totalerror / sizeInput)) * 100;
+  Scalar totalerror = driver_.computeAccuracy();
+  accuracy_ = (1.0 - (totalerror / size)) * 100.0;
 }
 
 
@@ -143,14 +138,18 @@ void LibSVMClassification::setKernelType(const LibSVM::KernelType & kerneltype)
   driver_.setKernelType(kerneltype);
 }
 
-void LibSVMClassification::setTradeoffFactor(const Point & trade)
+void LibSVMClassification::setTradeoffFactor(const Point & tradeoffFactor)
 {
-  tradeoffFactor_ = trade;
+  if (!tradeoffFactor.getSize())
+    throw InvalidArgumentException(HERE) << "LibSVMClassification: tradeoff factor should be of size>=1";
+  tradeoffFactor_ = tradeoffFactor;
 }
 
-void LibSVMClassification::setKernelParameter(const Point & kernel)
+void LibSVMClassification::setKernelParameter(const Point & kernelParameter)
 {
-  kernelParameter_ = kernel;
+  if (!kernelParameter.getSize())
+    throw InvalidArgumentException(HERE) << "LibSVMClassification: kernel parameter should be of size>=1";
+  kernelParameter_ = kernelParameter;
 }
 
 /* Grade a point as if it were associated to a class */
@@ -190,7 +189,7 @@ void LibSVMClassification::setWeight(const Point & weight)
   driver_.setWeight(weight, label);
 }
 
-void LibSVMClassification::runKMeans( UnsignedInteger k )
+void LibSVMClassification::runKMeans(const UnsignedInteger k)
 {
   Scalar error = 0;
   Indices cluster;
@@ -202,13 +201,13 @@ void LibSVMClassification::runKMeans( UnsignedInteger k )
 
   cluster = kmeans.getCluster();
 
-  for( UnsignedInteger i = 0 ; i < k ; i++)
+  for (UnsignedInteger i = 0 ; i < k ; ++ i)
   {
     Indices partialIndices;
     Sample partialSample(0, inputSample_[0].getDimension());
-    for( UnsignedInteger j = 0 ; j < cluster.getSize() ; j++ )
+    for (UnsignedInteger j = 0; j < cluster.getSize(); ++ j)
     {
-      if( cluster[j] == i )
+      if (cluster[j] == i)
       {
         partialSample.add(inputSample_[j]);
         partialIndices.add(classes_[j]);
@@ -221,22 +220,16 @@ void LibSVMClassification::runKMeans( UnsignedInteger k )
     partial.setKernelParameter(kernelParameter_);
     partial.run();
     finalSample.add(partialSample);
-    for( UnsignedInteger j = 0 ; j < partialSample.getSize() ; j++ )
-    {
+    for (UnsignedInteger j = 0; j < partialSample.getSize(); ++ j)
       finalIndices.add(partial.classify(partialSample[j]));
-    }
   }
 
   inputSample_ = finalSample;
   classes_ = finalIndices;
 
-  for( UnsignedInteger i = 0 ; i < inputSample_.getSize() ; i++ )
-  {
-    if( tempIndices[i] == finalIndices[i] )
-    {
-      error ++;
-    }
-  }
+  for (UnsignedInteger i = 0; i < inputSample_.getSize(); ++ i)
+    if (tempIndices[i] == finalIndices[i])
+      error += 1.0;
 
   accuracy_ = (error / finalSample.getSize()) * 100;
 }

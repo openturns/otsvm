@@ -30,13 +30,13 @@ namespace OTSVM
 
 CLASSNAMEINIT(SVMKernelRegressionHessian)
 
-static Factory<SVMKernelRegressionHessian> RegisteredFactory_SVMKernelRegressionHessian;
+static Factory<SVMKernelRegressionHessian> Factory_SVMKernelRegressionHessian;
 
 /* Default constructor */
-SVMKernelRegressionHessian::SVMKernelRegressionHessian() :
-  HessianImplementation()
+SVMKernelRegressionHessian::SVMKernelRegressionHessian()
+: HessianImplementation()
 {
-  // nothing to do
+  // Nothing to do
 }
 
 
@@ -44,11 +44,12 @@ SVMKernelRegressionHessian::SVMKernelRegressionHessian() :
 SVMKernelRegressionHessian::SVMKernelRegressionHessian(const SVMKernel & kernel,
     const Point & lagrangeMultiplier,
     const Sample & dataIn,
-    const Scalar constant) :
-  kernel_(kernel),
-  lagrangeMultiplier_(lagrangeMultiplier),
-  dataIn_(dataIn),
-  constant_(constant)
+    const Scalar constant)
+: HessianImplementation()
+, kernel_(kernel)
+, lagrangeMultiplier_(lagrangeMultiplier)
+, dataIn_(dataIn)
+, constant_(constant)
 {
   // Nothing to do
 }
@@ -60,9 +61,10 @@ SVMKernelRegressionHessian * SVMKernelRegressionHessian::clone() const
 }
 
 /* Comparison operator */
-Bool SVMKernelRegressionHessian::operator==(const SVMKernelRegressionHessian & /*other*/) const
+Bool SVMKernelRegressionHessian::operator==(const SVMKernelRegressionHessian & other) const
 {
-  return true;
+  if (this == &other) return true;
+  return (kernel_ == other.kernel_) && (lagrangeMultiplier_ == other.lagrangeMultiplier_) && (constant_ == other.constant_) && (dataIn_ == other.dataIn_);
 }
 
 /* String converter */
@@ -88,28 +90,23 @@ SymmetricTensor SVMKernelRegressionHessian::hessian(const Point & inP) const
 {
   callsNumber_.increment();
 
-  UnsignedInteger dimension = inP.getDimension();
+  const UnsignedInteger dimension = inP.getDimension();
   if(dimension != dataIn_.getDimension())
     throw InvalidArgumentException(HERE) << "Invalid input dimension=" << dimension;
 
   // compute the sum of the partial Hessians
-  UnsignedInteger size = dataIn_.getSize();
+  const UnsignedInteger size = dataIn_.getSize();
   SymmetricMatrix partialHessian(dimension);
-  for(UnsignedInteger i = 0; i < size; ++ i)
-  {
-    if(lagrangeMultiplier_[i] != 0.0)
+  for (UnsignedInteger i = 0; i < size; ++ i)
+    if (lagrangeMultiplier_[i] != 0.0)
       partialHessian = partialHessian + lagrangeMultiplier_[i] * kernel_.partialHessian(inP, dataIn_[i]);
-  }
 
   // return the result into a symmetric tensor
   SymmetricTensor result(dimension, 1);
   for(UnsignedInteger i = 0; i < dimension; ++ i)
-  {
     for(UnsignedInteger j = 0; j <= i; ++ j)
-    {
       result(i, j, 0) = partialHessian(i, j);
-    }
-  }
+
   return result;
 }
 

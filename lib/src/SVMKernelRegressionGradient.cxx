@@ -28,17 +28,15 @@ using namespace OT;
 namespace OTSVM
 {
 
-
-
 CLASSNAMEINIT(SVMKernelRegressionGradient)
-static Factory<SVMKernelRegressionGradient> RegisteredFactory_SVMKernelRegressionGradient;
+static Factory<SVMKernelRegressionGradient> Factory_SVMKernelRegressionGradient;
 
 
 /* Default constructor */
-SVMKernelRegressionGradient::SVMKernelRegressionGradient() :
-  GradientImplementation()
+SVMKernelRegressionGradient::SVMKernelRegressionGradient()
+: GradientImplementation()
 {
-  // nothing to do
+  // Nothing to do
 }
 
 
@@ -46,13 +44,14 @@ SVMKernelRegressionGradient::SVMKernelRegressionGradient() :
 SVMKernelRegressionGradient::SVMKernelRegressionGradient(const SVMKernel & kernel,
     const Point & lagrangeMultiplier,
     const Sample & dataIn,
-    const Scalar constant) :
-  kernel_(kernel),
-  lagrangeMultiplier_(lagrangeMultiplier),
-  dataIn_(dataIn),
-  constant_(constant)
+    const Scalar constant)
+: GradientImplementation()
+, kernel_(kernel)
+, lagrangeMultiplier_(lagrangeMultiplier)
+, dataIn_(dataIn)
+, constant_(constant)
 {
-  // nothing to do
+  // Nothing to do
 }
 
 
@@ -63,9 +62,10 @@ SVMKernelRegressionGradient * SVMKernelRegressionGradient::clone() const
 }
 
 /* Comparison operator */
-Bool SVMKernelRegressionGradient::operator==(const SVMKernelRegressionGradient & /*other*/) const
+Bool SVMKernelRegressionGradient::operator==(const SVMKernelRegressionGradient & other) const
 {
-  return true;
+  if (this == &other) return true;
+  return (kernel_ == other.kernel_) && (lagrangeMultiplier_ == other.lagrangeMultiplier_) && (constant_ == other.constant_) && (dataIn_ == other.dataIn_);
 }
 
 /* String converter */
@@ -91,12 +91,12 @@ Matrix SVMKernelRegressionGradient::gradient(const Point & inP) const
 {
   callsNumber_.increment();
 
-  UnsignedInteger dimension = inP.getDimension();
+  const UnsignedInteger dimension = inP.getDimension();
   if(dimension != dataIn_.getDimension())
     throw InvalidArgumentException(HERE) << "Invalid input dimension";
 
   // compute the sum of the partial gradients
-  UnsignedInteger size = dataIn_.getSize();
+  const UnsignedInteger size = dataIn_.getSize();
   Point partialGradient(dimension, 0.0);
   for(UnsignedInteger i = 0; i < size; ++ i)
   {

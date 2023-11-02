@@ -71,8 +71,8 @@ public:
   void runKMeans(const OT::UnsignedInteger k);
 
   void setKernelType(const LibSVM::KernelType & kerneltype);
-  void setTradeoffFactor(const OT::Point & trade);
-  void setKernelParameter( const OT::Point & kernel);
+  void setTradeoffFactor(const OT::Point & tradeofFactor);
+  void setKernelParameter(const OT::Point & kernelParameter);
   void setWeight(const OT::Point & weight);
 
   /** Method run */

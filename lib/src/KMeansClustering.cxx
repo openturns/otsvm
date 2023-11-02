@@ -39,7 +39,7 @@ void KMeansClustering::run()
   const Point min(inputSample_.getMin());
   const Point max(inputSample_.getMax());
 
-  for (UnsignedInteger i = 0 ; i < dimension ; ++ i)
+  for (UnsignedInteger i = 0; i < dimension; ++ i)
   {
     Uniform uniform(min[i], max[i]);
     for (UnsignedInteger j = 0 ; j < k_; ++ j)
@@ -50,11 +50,11 @@ void KMeansClustering::run()
 
   while (!change)
   {
-    for (UnsignedInteger i = 0 ; i < size; ++ i)
+    for (UnsignedInteger i = 0; i < size; ++ i)
     {
       Scalar distancemin = ( inputSample_[i] - means[0] ).norm();
 
-      for (UnsignedInteger j = 1 ; j < k_; ++j)
+      for (UnsignedInteger j = 1; j < k_; ++ j)
       {
         const Scalar distance = ( inputSample_[i] - means[j] ).norm();
 

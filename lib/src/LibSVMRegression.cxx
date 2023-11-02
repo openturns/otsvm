@@ -29,6 +29,7 @@
 #include <openturns/ComposedFunction.hxx>
 #include <openturns/PersistentObjectFactory.hxx>
 #include <openturns/AggregatedFunction.hxx>
+#include <openturns/SpecFunc.hxx>
 
 using namespace OT;
 
@@ -72,19 +73,15 @@ LibSVMRegression * LibSVMRegression::clone() const
 /* Method run */
 void LibSVMRegression::run()
 {
-
   const UnsignedInteger outputDimension = outputSample_.getDimension();
   const UnsignedInteger inputDimension = inputSample_.getDimension();
   const UnsignedInteger size = inputSample_.getSize();
-  const UnsignedInteger sizeOutput = outputSample_.getSize();
 
-  if(sizeOutput != size) throw InvalidArgumentException(HERE) << "Error: the input sample and the output sample must have the same size ";
+  if (outputSample_.getSize() != size)
+    throw InvalidArgumentException(HERE) << "LibSVMRegression: the input sample and the output sample must have the same size";
 
-  UnsignedInteger tempTradeoff = 0;
-  UnsignedInteger tempKernel = 0;
-
-  Scalar totalerror = 0;
-  Scalar minerror = 0;
+  Scalar bestTradeoffFactor = tradeoffFactor_[0];
+  Scalar bestKernelParameter = kernelParameter_[0];
 
   Sample isoProbSample( size, inputDimension );
   Function outputTransformation;
@@ -104,34 +101,34 @@ void LibSVMRegression::run()
   * First, we make a cross validation to determinate the best parameters.
   * Second, we train the problem and retrieve some results (support vectors, support vectors coefficients, kernel parameters).
   * Third, we build the model with OT and save results in the MetaModelResult */
-  for( UnsignedInteger componentIndex = 0 ; componentIndex < outputDimension ; componentIndex ++)
+  for (UnsignedInteger componentIndex = 0 ; componentIndex < outputDimension; ++ componentIndex)
   {
     driver_.convertData(inputSample_, normalizedOutputSample.getMarginal(componentIndex) );
 
-    if( tradeoffFactor_.getSize() > 1 || kernelParameter_.getSize() > 1 )
+    if (tradeoffFactor_.getSize() > 1 || kernelParameter_.getSize() > 1)
     {
-      for( UnsignedInteger tradeoffIndex = 0 ; tradeoffIndex < tradeoffFactor_.getSize() ; tradeoffIndex ++ )
+      Scalar minerror = SpecFunc::MaxScalar;
+      for (UnsignedInteger tradeoffIndex = 0 ; tradeoffIndex < tradeoffFactor_.getSize(); ++ tradeoffIndex)
       {
         driver_.setTradeoffFactor( tradeoffFactor_[tradeoffIndex] );
         for( UnsignedInteger kernelParameterIndex = 0 ; kernelParameterIndex < kernelParameter_.getSize() ; kernelParameterIndex ++)
         {
-          driver_.setKernelParameter( kernelParameter_[kernelParameterIndex] );
+          driver_.setKernelParameter(kernelParameter_[kernelParameterIndex]);
 
-          totalerror = driver_.runCrossValidation();
+          const Scalar totalerror = driver_.runCrossValidation();
 
-          if( totalerror < minerror || (tradeoffIndex == 0 && kernelParameterIndex == 0))
+          if (totalerror < minerror)
           {
             minerror = totalerror;
-            tempTradeoff = tradeoffIndex;
-            tempKernel = kernelParameterIndex;
+            bestTradeoffFactor = tradeoffFactor_[tradeoffIndex];
+            bestKernelParameter = kernelParameter_[kernelParameterIndex];
           }
           LOGINFO( OSS() << "Cross Validation for C=" << tradeoffFactor_[tradeoffIndex] << " and gamma=" << kernelParameter_[kernelParameterIndex] << " error=" << totalerror );
-          totalerror = 0;
         }
       }
     }
-    driver_.setTradeoffFactor( tradeoffFactor_[tempTradeoff] );
-    driver_.setKernelParameter( kernelParameter_[tempKernel] );
+    driver_.setTradeoffFactor(bestTradeoffFactor);
+    driver_.setKernelParameter(bestKernelParameter);
     driver_.performTrain();
 
     Point svcoef(driver_.getSupportVectorCoef());
@@ -175,10 +172,10 @@ void LibSVMRegression::run()
   Sample mY(metaModel(inputSample_));
   Point outputVariance(outputSample_.computeVariance());
 
-  for ( UnsignedInteger outputIndex = 0; outputIndex < outputDimension; ++ outputIndex )
+  for (UnsignedInteger outputIndex = 0; outputIndex < outputDimension; ++ outputIndex)
   {
     Scalar quadraticResidual = 0.;
-    for ( UnsignedInteger i = 0; i < size; ++ i )
+    for (UnsignedInteger i = 0; i < size; ++ i)
     {
       const Scalar slack = outputSample_[i][outputIndex] - mY[i][outputIndex];
       quadraticResidual += slack * slack;
