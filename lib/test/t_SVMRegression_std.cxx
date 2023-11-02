@@ -21,13 +21,7 @@
  */
 #include <openturns/OT.hxx>
 #include <openturns/OTtestcode.hxx>
-#include <otsvm/LibSVMRegression.hxx>
-#include <otsvm/SVMRegressionImplementation.hxx>
-#include <otsvm/SVMRegression.hxx>
-#include <openturns/Point.hxx>
-#include <openturns/OSS.hxx>
-#include <openturns/OStream.hxx>
-#include <otsvm/SVMResourceMap.hxx>
+#include <otsvm/OTSVM.hxx>
 #include <openturns/Function.hxx>
 #include <openturns/ComposedDistribution.hxx>
 

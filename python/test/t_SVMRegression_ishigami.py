@@ -52,7 +52,7 @@ gamma = [0.0001, 0.001, 0.15, 0.25, 0.35, 0.4, 0.5, 0.6, 0.8, 1, 10, 100]
 ot.RandomGenerator.SetSeed(0)
 
 # create the Problem
-algo = otsvm.SVMRegression(dataIn, dataOut, otsvm.LibSVM.NormalRbf)
+algo = otsvm.LibSVMRegression(dataIn, dataOut, otsvm.LibSVM.NormalRbf)
 algo.setTradeoffFactor(cp)
 algo.setKernelParameter(gamma)
 # compute the SVMRegression

@@ -24,21 +24,17 @@
 #define OTSVM_LIBSVMREGRESSION
 
 
-#include "SVMRegressionImplementation.hxx"
 #include <openturns/Distribution.hxx>
-#include <openturns/Function.hxx>
-#include "LibSVM.hxx"
-#include "SVMResourceMap.hxx"
+#include <openturns/MetaModelResult.hxx>
+#include "otsvm/LibSVM.hxx"
+#include "otsvm/OTSVM.hxx"
 #include <openturns/ResourceMap.hxx>
 #include <openturns/Experiment.hxx>
-
-
 
 namespace OTSVM
 {
 
-
-class OTSVM_API LibSVMRegression: public SVMRegressionImplementation
+class OTSVM_API LibSVMRegression: public OT::PersistentObject
 {
   CLASSNAME
 
@@ -56,10 +52,21 @@ public:
   LibSVMRegression * clone() const override;
 
   /* Method run */
-  void run() override;
+  virtual void run();
 
   OT::Sample getInputSample() const;
   OT::Sample getOutputSample() const;
+
+  /** Tradeoff factor accessor */
+  virtual void setTradeoffFactor(const OT::Point & factor);
+  virtual OT::Point getTradeoffFactor();
+
+  /** Kernel parameter accessor */
+  virtual OT::Point getKernelParameter();
+  virtual void setKernelParameter(const OT::Point & kernel);
+
+  /** Results accessor*/
+  virtual OT::MetaModelResult getResult() const;
 
   /** Method save() stores the object through the StorageManager */
   void save(OT::Advocate & adv) const override;
@@ -69,6 +76,17 @@ public:
 
 protected:
 
+  /* Tradeoff factor parameter*/
+  OT::Point tradeoffFactor_;
+
+  /* Kernel parameter */
+  OT::Point kernelParameter_;
+
+  /* Kernel on OpenTurns format*/
+  SVMKernel kernel_;
+
+  /* Results */
+  OT::MetaModelResult result_;
 private:
 
   /* Libsvm model */

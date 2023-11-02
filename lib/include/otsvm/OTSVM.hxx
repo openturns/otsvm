@@ -31,5 +31,6 @@
 #include "otsvm/SVMKernel.hxx"
 #include "otsvm/LibSVMRegression.hxx"
 #include "otsvm/LibSVMClassification.hxx"
+#include "otsvm/KMeansClustering.hxx"
 
-#endif /* OTROBOPT_OTROBOPT_HXX */
+#endif /* OTSVM_OTSVM_HXX */

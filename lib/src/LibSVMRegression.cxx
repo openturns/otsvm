@@ -42,7 +42,7 @@ static Factory<LibSVMRegression> RegisteredFactory_LibSVMRegression;
 CLASSNAMEINIT(LibSVMRegression)
 
 /* Default constructor */
-LibSVMRegression::LibSVMRegression(): SVMRegressionImplementation()
+LibSVMRegression::LibSVMRegression() : PersistentObject()
 {
   //Nothing to do
 }
@@ -51,7 +51,9 @@ LibSVMRegression::LibSVMRegression(): SVMRegressionImplementation()
 LibSVMRegression::LibSVMRegression(const Sample & dataIn,
                                    const Sample & dataOut,
                                    const LibSVM::KernelType kerneltype )
-  : SVMRegressionImplementation()
+  : PersistentObject()
+  , tradeoffFactor_(1, 10.)
+  , kernelParameter_(1, 1.0)
   , inputSample_(dataIn)
   , outputSample_(dataOut)
 {
@@ -201,11 +203,42 @@ OT::Sample LibSVMRegression::getOutputSample() const
   return outputSample_;
 }
 
+/* Tradeoff factor accessor */
+void LibSVMRegression::setTradeoffFactor(const Point & tradeoffFactor)
+{
+  tradeoffFactor_ = tradeoffFactor;
+}
+
+Point LibSVMRegression::getTradeoffFactor()
+{
+  return tradeoffFactor_;
+}
+
+/* Kernel parameter accessor */
+void LibSVMRegression::setKernelParameter(const Point & kernelParameter)
+{
+  kernelParameter_ = kernelParameter;
+}
+
+Point LibSVMRegression::getKernelParameter()
+{
+  return kernelParameter_;
+}
+
+/* Results accessor */
+MetaModelResult LibSVMRegression::getResult() const
+{
+  return result_;
+}
 
 /* Method save() stores the object through the StorageManager */
 void LibSVMRegression::save(Advocate & adv) const
 {
-  SVMRegressionImplementation::save(adv);
+  PersistentObject::save(adv);
+  adv.saveAttribute( "tradeoffFactor_", tradeoffFactor_ );
+  adv.saveAttribute( "kernelParameter_", kernelParameter_ );
+  adv.saveAttribute( "kernel_", kernel_ );
+  adv.saveAttribute( "result_", result_ );
   adv.saveAttribute( "inputSample_", inputSample_ );
   adv.saveAttribute( "outputSample_", outputSample_ );
 }
@@ -214,7 +247,11 @@ void LibSVMRegression::save(Advocate & adv) const
 /* Method load() reloads the object from the StorageManager */
 void LibSVMRegression::load(Advocate & adv)
 {
-  SVMRegressionImplementation::load(adv);
+  PersistentObject::load(adv);
+  adv.loadAttribute( "tradeoffFactor_", tradeoffFactor_ );
+  adv.loadAttribute( "kernelParameter_", kernelParameter_ );
+  adv.loadAttribute( "kernel_", kernel_ );
+  adv.loadAttribute( "result_", result_ );
   adv.loadAttribute( "inputSample_", inputSample_ );
   adv.loadAttribute( "outputSample_", outputSample_ );
 }
