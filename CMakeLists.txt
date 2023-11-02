@@ -8,7 +8,7 @@ option (USE_EXTERNAL_LIBSVM          "Use internal LibSVM"                      
 # By default, build in Release mode. Must appear before project() command
 set(CMAKE_BUILD_TYPE Release CACHE STRING "Build type")
 
-project (OTSVM)
+project (otsvm)
 
 string (TOLOWER ${CMAKE_PROJECT_NAME} PACKAGE_NAME)
 
@@ -48,16 +48,14 @@ if (MSVC)
   set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4197 /wd4244 /wd4251 /wd4267 /wd4996")
 endif ()
 
-if (NOT DEFINED CMAKE_INSTALL_LIBDIR)
-  set (CMAKE_INSTALL_LIBDIR lib${LIB_SUFFIX})
-endif ()
+include (GNUInstallDirs)
 
 set (OTSVM_LIBRARY_PATH ${CMAKE_INSTALL_LIBDIR})
-set (OTSVM_INCLUDE_PATH include)
+set (OTSVM_INCLUDE_PATH ${CMAKE_INSTALL_INCLUDEDIR})
 set (OTSVM_SWIG_INCLUDE_DIRS ${OTSVM_INCLUDE_PATH}/${PACKAGE_NAME}/swig)
-set (OTSVM_DATA_PATH share)
-set (OTSVM_CONFIG_CMAKE_PATH ${CMAKE_INSTALL_LIBDIR}/cmake/otsvm)
-set (OTSVM_DOC_PATH share/${PACKAGE_NAME}/doc)
+set (OTSVM_DATA_PATH ${CMAKE_INSTALL_DATAROOTDIR})
+set (OTSVM_CONFIG_CMAKE_PATH ${CMAKE_INSTALL_LIBDIR}/cmake/ottemplate)
+set (OTSVM_DOC_PATH ${CMAKE_INSTALL_DOCDIR})
 
 set (CMAKE_CXX_STANDARD 11)
 
