@@ -4,19 +4,18 @@
  *
  *  Copyright 2014-2023 Phimeca
  *
- *  This library is free software; you can redistribute it and/or
- *  modify it under the terms of the GNU Lesser General Public
- *  License as published by the Free Software Foundation; either
- *  version 2.1 of the License.
+ *  This library is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
  *
- *  This library is distributed in the hope that it will be useful
+ *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- *  Lesser General Public License for more details.
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
  *
- *  You should have received a copy of the GNU Lesser General Public
- *  License along with this library; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -36,10 +35,10 @@ CLASSNAMEINIT(SigmoidKernel)
 static Factory<SigmoidKernel> RegisteredFactory_SigmoidKernel;
 
 /* Constructor with parameters */
-SigmoidKernel::SigmoidKernel(const Scalar linear , const Scalar constant)
-: SVMKernelImplementation()
-, linear_(linear)
-, constant_(constant)
+SigmoidKernel::SigmoidKernel(const Scalar linear, const Scalar constant)
+  : SVMKernelImplementation()
+  , linear_(linear)
+  , constant_(constant)
 {
   //Nothing to do
 }
@@ -102,7 +101,7 @@ Description SigmoidKernel::getParameterDescription() const
 }
 
 /* Operator () */
-Scalar SigmoidKernel::operator() ( const Point & x1 , const Point & x2 ) const
+Scalar SigmoidKernel::operator() ( const Point & x1, const Point & x2 ) const
 {
   Scalar dotProduct = x1.dot(x2);
   Scalar value = tanh( linear_ * dotProduct + constant_ );
@@ -111,11 +110,11 @@ Scalar SigmoidKernel::operator() ( const Point & x1 , const Point & x2 ) const
 
 
 /* Partial gradient */
-Point SigmoidKernel::partialGradient( const Point & x1 , const Point & x2 ) const
+Point SigmoidKernel::partialGradient( const Point & x1, const Point & x2 ) const
 {
   UnsignedInteger dimension = x1.getDimension();
   Scalar dotProduct = x1.dot(x2);
-  Point result(dimension , 0.0);
+  Point result(dimension, 0.0);
   for(UnsignedInteger i = 0 ; i < dimension ; i ++)
   {
     result[i] = linear_ * x2[i] * ( 1 - std::pow( tanh( linear_ * dotProduct + constant_), 2));
@@ -125,7 +124,7 @@ Point SigmoidKernel::partialGradient( const Point & x1 , const Point & x2 ) cons
 
 
 /* Partial hessian */
-SymmetricMatrix SigmoidKernel::partialHessian( const Point & x1 , const Point & x2 )const
+SymmetricMatrix SigmoidKernel::partialHessian( const Point & x1, const Point & x2 )const
 {
   UnsignedInteger dimension = x1.getDimension();
   Scalar dotProduct = x1.dot(x2);
@@ -134,7 +133,7 @@ SymmetricMatrix SigmoidKernel::partialHessian( const Point & x1 , const Point & 
   {
     for (UnsignedInteger j = 0 ; j <= i ; ++ j)
     {
-      result(i, j) = 2 * linear_ * x2[i] * linear_ * x2[j] * ( 1 - std::pow( tanh(linear_ * dotProduct + constant_) , 2 )) * tanh( linear_ * dotProduct + constant_ );
+      result(i, j) = 2 * linear_ * x2[i] * linear_ * x2[j] * ( 1 - std::pow( tanh(linear_ * dotProduct + constant_), 2 )) * tanh( linear_ * dotProduct + constant_ );
     }
   }
 

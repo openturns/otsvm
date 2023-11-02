@@ -4,19 +4,18 @@
  *
  *  Copyright 2014-2023 Phimeca
  *
- *  This library is free software; you can redistribute it and/or
- *  modify it under the terms of the GNU Lesser General Public
- *  License as published by the Free Software Foundation; either
- *  version 2.1 of the License.
+ *  This library is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
  *
- *  This library is distributed in the hope that it will be useful
+ *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- *  Lesser General Public License for more details.
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
  *
- *  You should have received a copy of the GNU Lesser General Public
- *  License along with this library; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -77,7 +76,7 @@ Description LinearKernel::getParameterDescription() const
 }
 
 /* Operator */
-Scalar LinearKernel::operator() ( const Point & x1 , const Point & x2 ) const
+Scalar LinearKernel::operator() ( const Point & x1, const Point & x2 ) const
 {
   Scalar value = x1.dot(x2);
   return value;
@@ -85,10 +84,10 @@ Scalar LinearKernel::operator() ( const Point & x1 , const Point & x2 ) const
 
 
 /* Partial Gradient */
-Point LinearKernel::partialGradient( const Point & x1 , const Point & x2 ) const
+Point LinearKernel::partialGradient( const Point & x1, const Point & x2 ) const
 {
   UnsignedInteger dimension = x1.getDimension();
-  Point result(dimension , 0.0);
+  Point result(dimension, 0.0);
   for( UnsignedInteger i = 0 ; i < dimension ; i ++ )
   {
     result[i] = x2[i];
@@ -98,7 +97,7 @@ Point LinearKernel::partialGradient( const Point & x1 , const Point & x2 ) const
 
 
 /* Partial Hessian */
-SymmetricMatrix LinearKernel::partialHessian( const Point & x1 , const Point & /*x2*/) const
+SymmetricMatrix LinearKernel::partialHessian( const Point & x1, const Point & /*x2*/) const
 {
   UnsignedInteger dimension = x1.getDimension();
   SymmetricMatrix result(dimension);
@@ -106,7 +105,7 @@ SymmetricMatrix LinearKernel::partialHessian( const Point & x1 , const Point & /
   {
     for( UnsignedInteger j = 0 ; j <= i ; j++ )
     {
-      result(i , j) = 0;
+      result(i, j) = 0;
     }
   }
   return result;

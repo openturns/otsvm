@@ -4,19 +4,18 @@
  *
  *  Copyright 2014-2023 Phimeca
  *
- *  This library is free software; you can redistribute it and/or
- *  modify it under the terms of the GNU Lesser General Public
- *  License as published by the Free Software Foundation; either
- *  version 2.1 of the License.
+ *  This library is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
  *
- *  This library is distributed in the hope that it will be useful
+ *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- *  Lesser General Public License for more details.
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
  *
- *  You should have received a copy of the GNU Lesser General Public
- *  License along with this library; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -28,17 +27,15 @@ using namespace OT;
 namespace OTSVM
 {
 
-
-
 CLASSNAMEINIT(SVMKernelRegressionGradient)
-static Factory<SVMKernelRegressionGradient> RegisteredFactory_SVMKernelRegressionGradient;
+static Factory<SVMKernelRegressionGradient> Factory_SVMKernelRegressionGradient;
 
 
 /* Default constructor */
-SVMKernelRegressionGradient::SVMKernelRegressionGradient() :
-  GradientImplementation()
+SVMKernelRegressionGradient::SVMKernelRegressionGradient()
+: GradientImplementation()
 {
-  // nothing to do
+  // Nothing to do
 }
 
 
@@ -46,13 +43,14 @@ SVMKernelRegressionGradient::SVMKernelRegressionGradient() :
 SVMKernelRegressionGradient::SVMKernelRegressionGradient(const SVMKernel & kernel,
     const Point & lagrangeMultiplier,
     const Sample & dataIn,
-    const Scalar constant) :
-  kernel_(kernel),
-  lagrangeMultiplier_(lagrangeMultiplier),
-  dataIn_(dataIn),
-  constant_(constant)
+    const Scalar constant)
+: GradientImplementation()
+, kernel_(kernel)
+, lagrangeMultiplier_(lagrangeMultiplier)
+, dataIn_(dataIn)
+, constant_(constant)
 {
-  // nothing to do
+  // Nothing to do
 }
 
 
@@ -63,9 +61,10 @@ SVMKernelRegressionGradient * SVMKernelRegressionGradient::clone() const
 }
 
 /* Comparison operator */
-Bool SVMKernelRegressionGradient::operator==(const SVMKernelRegressionGradient & /*other*/) const
+Bool SVMKernelRegressionGradient::operator==(const SVMKernelRegressionGradient & other) const
 {
-  return true;
+  if (this == &other) return true;
+  return (kernel_ == other.kernel_) && (lagrangeMultiplier_ == other.lagrangeMultiplier_) && (constant_ == other.constant_) && (dataIn_ == other.dataIn_);
 }
 
 /* String converter */
@@ -91,12 +90,12 @@ Matrix SVMKernelRegressionGradient::gradient(const Point & inP) const
 {
   callsNumber_.increment();
 
-  UnsignedInteger dimension = inP.getDimension();
+  const UnsignedInteger dimension = inP.getDimension();
   if(dimension != dataIn_.getDimension())
     throw InvalidArgumentException(HERE) << "Invalid input dimension";
 
   // compute the sum of the partial gradients
-  UnsignedInteger size = dataIn_.getSize();
+  const UnsignedInteger size = dataIn_.getSize();
   Point partialGradient(dimension, 0.0);
   for(UnsignedInteger i = 0; i < size; ++ i)
   {

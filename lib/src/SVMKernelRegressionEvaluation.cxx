@@ -4,19 +4,18 @@
  *
  *  Copyright 2014-2023 Phimeca
  *
- *  This library is free software; you can redistribute it and/or
- *  modify it under the terms of the GNU Lesser General Public
- *  License as published by the Free Software Foundation; either
- *  version 2.1 of the License.
+ *  This library is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
  *
- *  This library is distributed in the hope that it will be useful
+ *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- *  Lesser General Public License for more details.
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
  *
- *  You should have received a copy of the GNU Lesser General Public
- *  License along with this library; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -28,43 +27,29 @@ using namespace OT;
 namespace OTSVM
 {
 
-
-
 CLASSNAMEINIT(SVMKernelRegressionEvaluation)
 
-static Factory<SVMKernelRegressionEvaluation> RegisteredFactory_SVMKernelRegressionEvaluation;
+static Factory<SVMKernelRegressionEvaluation> Factory_SVMKernelRegressionEvaluation;
 
 /* Default constructor */
-SVMKernelRegressionEvaluation::SVMKernelRegressionEvaluation() :
-  EvaluationImplementation()
+SVMKernelRegressionEvaluation::SVMKernelRegressionEvaluation()
+: EvaluationImplementation()
 {
-  // nothing to do
+  // Nothing to do
 }
 
 /* Constructor with parameters */
 SVMKernelRegressionEvaluation::SVMKernelRegressionEvaluation(const SVMKernel & kernel,
     const Point & lagrangeMultiplier,
     const Sample & dataIn,
-    const Scalar constant) :
-  kernel_(kernel),
-  lagrangeMultiplier_(lagrangeMultiplier),
-  dataIn_(dataIn),
-  constant_(constant)
+    const Scalar constant)
+: EvaluationImplementation()
+, kernel_(kernel)
+, lagrangeMultiplier_(lagrangeMultiplier)
+, dataIn_(dataIn)
+, constant_(constant)
 {
-  Description description;
-  for (UnsignedInteger i = 0; i < getInputDimension(); ++i)
-  {
-    OSS oss;
-    oss << "x" << i;
-    description.add(oss);
-  }
-  for (UnsignedInteger i = 0; i < getOutputDimension(); ++i)
-  {
-    OSS oss;
-    oss << "y" << i;
-    description.add(oss);
-  }
-  setDescription(description);
+  // Nothing to do
 }
 
 /* Virtual constructor */
@@ -74,9 +59,10 @@ SVMKernelRegressionEvaluation * SVMKernelRegressionEvaluation::clone() const
 }
 
 /* Comparison operator */
-Bool SVMKernelRegressionEvaluation::operator==(const SVMKernelRegressionEvaluation & /*other*/) const
+Bool SVMKernelRegressionEvaluation::operator==(const SVMKernelRegressionEvaluation & other) const
 {
-  return true;
+  if (this == &other) return true;
+  return (kernel_ == other.kernel_) && (lagrangeMultiplier_ == other.lagrangeMultiplier_) && (constant_ == other.constant_) && (dataIn_ == other.dataIn_);
 }
 
 /* String converter */

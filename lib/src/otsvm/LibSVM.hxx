@@ -4,19 +4,18 @@
  *
  *  Copyright 2014-2023 Phimeca
  *
- *  This library is free software; you can redistribute it and/or
- *  modify it under the terms of the GNU Lesser General Public
- *  License as published by the Free Software Foundation; either
- *  version 2.1 of the License.
+ *  This library is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
  *
- *  This library is distributed in the hope that it will be useful
+ *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- *  Lesser General Public License for more details.
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
  *
- *  You should have received a copy of the GNU Lesser General Public
- *  License along with this library; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -24,21 +23,25 @@
 #define OTSVM_LIBSVM
 
 
-#include "otsvm/OTSVMprivate.hxx"
-#include "otsvm/svm.h"
+#include "otsvm/SVMKernel.hxx"
 #include <openturns/Function.hxx>
+
+struct svm_model;
+struct svm_node;
 
 namespace OTSVM
 {
+class LibSVMImplementation;
 
+ 
 class OTSVM_API LibSVM : public OT::PersistentObject
 {
   CLASSNAME
 
 public:
 
-  enum KernelType { Linear = LINEAR, Polynomial = POLY, Sigmoid = SIGMOID, NormalRbf = RBF };
-  enum SvmType { CSupportClassification = C_SVC, EpsilonSupportRegression = EPSILON_SVR};
+  enum KernelType { Linear, Polynomial, NormalRbf, Sigmoid };
+  enum SvmType { CSupportClassification, EpsilonSupportRegression};
 
   /* Constructor */
   LibSVM();
@@ -72,9 +75,11 @@ public:
   void setP(const OT::Scalar p);
 
   /* KernelType accessor */
-  KernelType getKernelType();
+  KernelType getKernelType() const;
   void setKernelType(const OT::UnsignedInteger kernelType);
 
+  SVMKernel getKernel() const;
+  
   /* SvmType accessor */
   void setSvmType(const OT::UnsignedInteger svmType);
 
@@ -85,17 +90,17 @@ public:
   svm_node* getNode(const OT::UnsignedInteger index);
 
   /* Constant accessor */
-  OT::Scalar getConstant();
+  OT::Scalar getConstant() const;
 
   /* Gamma accessor */
-  OT::Scalar getGamma();
+  OT::Scalar getGamma() const;
 
   /* Degree accessor */
-  OT::UnsignedInteger getDegree();
+  OT::UnsignedInteger getDegree() const;
   void setDegree(const OT::UnsignedInteger degree);
 
   /* Coefficient accessor */
-  OT::Scalar getPolynomialConstant();
+  OT::Scalar getPolynomialConstant() const;
 
   /* Output component accessor */
   OT::Scalar getOutput(const OT::UnsignedInteger index);
@@ -139,19 +144,9 @@ public:
   OT::Function getInputTransformation() const;
 
 protected:
-
-  /* Libsvm parameter */
-  svm_parameter parameter_;
-
-  /* Libsvm problem */
-  svm_problem problem_;
-
-  /* Libsvm model */
-  svm_model* p_model_;
-
-  /* Libsvm node */
-  svm_node* p_node_;
-
+  // to hide svm.h from public API
+  OT::Pointer<LibSVMImplementation> p_implementation_;
+  
   /* data normalization */
   OT::Function inputTransformation_;
 

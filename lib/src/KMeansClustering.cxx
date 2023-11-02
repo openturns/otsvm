@@ -34,27 +34,27 @@ void KMeansClustering::run()
   UnsignedInteger change = 0;
 
   Indices cluster(size);
-  Sample means(k_ , dimension);
+  Sample means(k_, dimension);
 
   const Point min(inputSample_.getMin());
   const Point max(inputSample_.getMax());
 
-  for (UnsignedInteger i = 0 ; i < dimension ; ++ i)
+  for (UnsignedInteger i = 0; i < dimension; ++ i)
   {
     Uniform uniform(min[i], max[i]);
     for (UnsignedInteger j = 0 ; j < k_; ++ j)
     {
-      means(j , i) = uniform.getRealization()[0];
+      means(j, i) = uniform.getRealization()[0];
     }
   }
 
   while (!change)
   {
-    for (UnsignedInteger i = 0 ; i < size; ++ i)
+    for (UnsignedInteger i = 0; i < size; ++ i)
     {
       Scalar distancemin = ( inputSample_[i] - means[0] ).norm();
 
-      for (UnsignedInteger j = 1 ; j < k_; ++j)
+      for (UnsignedInteger j = 1; j < k_; ++ j)
       {
         const Scalar distance = ( inputSample_[i] - means[j] ).norm();
 

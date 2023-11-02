@@ -4,19 +4,18 @@
  *
  *  Copyright 2014-2023 Phimeca
  *
- *  This library is free software; you can redistribute it and/or
- *  modify it under the terms of the GNU Lesser General Public
- *  License as published by the Free Software Foundation; either
- *  version 2.1 of the License.
+ *  This library is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
  *
- *  This library is distributed in the hope that it will be useful
+ *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- *  Lesser General Public License for more details.
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
  *
- *  You should have received a copy of the GNU Lesser General Public
- *  License along with this library; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -30,13 +29,13 @@ namespace OTSVM
 
 CLASSNAMEINIT(SVMKernelRegressionHessian)
 
-static Factory<SVMKernelRegressionHessian> RegisteredFactory_SVMKernelRegressionHessian;
+static Factory<SVMKernelRegressionHessian> Factory_SVMKernelRegressionHessian;
 
 /* Default constructor */
-SVMKernelRegressionHessian::SVMKernelRegressionHessian() :
-  HessianImplementation()
+SVMKernelRegressionHessian::SVMKernelRegressionHessian()
+: HessianImplementation()
 {
-  // nothing to do
+  // Nothing to do
 }
 
 
@@ -44,11 +43,12 @@ SVMKernelRegressionHessian::SVMKernelRegressionHessian() :
 SVMKernelRegressionHessian::SVMKernelRegressionHessian(const SVMKernel & kernel,
     const Point & lagrangeMultiplier,
     const Sample & dataIn,
-    const Scalar constant) :
-  kernel_(kernel),
-  lagrangeMultiplier_(lagrangeMultiplier),
-  dataIn_(dataIn),
-  constant_(constant)
+    const Scalar constant)
+: HessianImplementation()
+, kernel_(kernel)
+, lagrangeMultiplier_(lagrangeMultiplier)
+, dataIn_(dataIn)
+, constant_(constant)
 {
   // Nothing to do
 }
@@ -60,9 +60,10 @@ SVMKernelRegressionHessian * SVMKernelRegressionHessian::clone() const
 }
 
 /* Comparison operator */
-Bool SVMKernelRegressionHessian::operator==(const SVMKernelRegressionHessian & /*other*/) const
+Bool SVMKernelRegressionHessian::operator==(const SVMKernelRegressionHessian & other) const
 {
-  return true;
+  if (this == &other) return true;
+  return (kernel_ == other.kernel_) && (lagrangeMultiplier_ == other.lagrangeMultiplier_) && (constant_ == other.constant_) && (dataIn_ == other.dataIn_);
 }
 
 /* String converter */
@@ -88,28 +89,23 @@ SymmetricTensor SVMKernelRegressionHessian::hessian(const Point & inP) const
 {
   callsNumber_.increment();
 
-  UnsignedInteger dimension = inP.getDimension();
+  const UnsignedInteger dimension = inP.getDimension();
   if(dimension != dataIn_.getDimension())
     throw InvalidArgumentException(HERE) << "Invalid input dimension=" << dimension;
 
   // compute the sum of the partial Hessians
-  UnsignedInteger size = dataIn_.getSize();
+  const UnsignedInteger size = dataIn_.getSize();
   SymmetricMatrix partialHessian(dimension);
-  for(UnsignedInteger i = 0; i < size; ++ i)
-  {
-    if(lagrangeMultiplier_[i] != 0.0)
+  for (UnsignedInteger i = 0; i < size; ++ i)
+    if (lagrangeMultiplier_[i] != 0.0)
       partialHessian = partialHessian + lagrangeMultiplier_[i] * kernel_.partialHessian(inP, dataIn_[i]);
-  }
 
   // return the result into a symmetric tensor
   SymmetricTensor result(dimension, 1);
   for(UnsignedInteger i = 0; i < dimension; ++ i)
-  {
     for(UnsignedInteger j = 0; j <= i; ++ j)
-    {
       result(i, j, 0) = partialHessian(i, j);
-    }
-  }
+
   return result;
 }
 

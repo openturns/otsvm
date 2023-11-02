@@ -5,7 +5,7 @@ Classification
 
 # %%
 # The objective of this Use Case is to create a SVM Classification algorithm in order to build a metamodel that separates data in 2 classes.
-# 
+#
 # otsvm enables to:
 #
 # - set lists of tradeoff factors and kernel parameter with the methods setTradeoffFactor, setKernelParameter.

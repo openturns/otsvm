@@ -4,19 +4,18 @@
  *
  *  Copyright 2014-2023 Phimeca
  *
- *  This library is free software; you can redistribute it and/or
- *  modify it under the terms of the GNU Lesser General Public
- *  License as published by the Free Software Foundation; either
- *  version 2.1 of the License.
+ *  This library is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
  *
- *  This library is distributed in the hope that it will be useful
+ *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- *  Lesser General Public License for more details.
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
  *
- *  You should have received a copy of the GNU Lesser General Public
- *  License along with this library; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -29,6 +28,7 @@
 #include <openturns/ComposedFunction.hxx>
 #include <openturns/PersistentObjectFactory.hxx>
 #include <openturns/AggregatedFunction.hxx>
+#include <openturns/SpecFunc.hxx>
 
 using namespace OT;
 
@@ -72,21 +72,17 @@ LibSVMRegression * LibSVMRegression::clone() const
 /* Method run */
 void LibSVMRegression::run()
 {
-
   const UnsignedInteger outputDimension = outputSample_.getDimension();
   const UnsignedInteger inputDimension = inputSample_.getDimension();
   const UnsignedInteger size = inputSample_.getSize();
-  const UnsignedInteger sizeOutput = outputSample_.getSize();
 
-  if(sizeOutput != size) throw InvalidArgumentException(HERE) << "Error: the input sample and the output sample must have the same size ";
+  if (outputSample_.getSize() != size)
+    throw InvalidArgumentException(HERE) << "LibSVMRegression: the input sample and the output sample must have the same size";
 
-  UnsignedInteger tempTradeoff = 0;
-  UnsignedInteger tempKernel = 0;
+  Scalar bestTradeoffFactor = tradeoffFactor_[0];
+  Scalar bestKernelParameter = kernelParameter_[0];
 
-  Scalar totalerror = 0;
-  Scalar minerror = 0;
-
-  Sample isoProbSample( size , inputDimension );
+  Sample isoProbSample( size, inputDimension );
   Function outputTransformation;
   Function outputInverseTransformation;
 
@@ -104,61 +100,47 @@ void LibSVMRegression::run()
   * First, we make a cross validation to determinate the best parameters.
   * Second, we train the problem and retrieve some results (support vectors, support vectors coefficients, kernel parameters).
   * Third, we build the model with OT and save results in the MetaModelResult */
-  for( UnsignedInteger componentIndex = 0 ; componentIndex < outputDimension ; componentIndex ++)
+  for (UnsignedInteger componentIndex = 0 ; componentIndex < outputDimension; ++ componentIndex)
   {
     driver_.convertData(inputSample_, normalizedOutputSample.getMarginal(componentIndex) );
 
-    if( tradeoffFactor_.getSize() > 1 || kernelParameter_.getSize() > 1 )
+    if (tradeoffFactor_.getSize() > 1 || kernelParameter_.getSize() > 1)
     {
-      for( UnsignedInteger tradeoffIndex = 0 ; tradeoffIndex < tradeoffFactor_.getSize() ; tradeoffIndex ++ )
+      Scalar minerror = SpecFunc::MaxScalar;
+      for (UnsignedInteger tradeoffIndex = 0 ; tradeoffIndex < tradeoffFactor_.getSize(); ++ tradeoffIndex)
       {
         driver_.setTradeoffFactor( tradeoffFactor_[tradeoffIndex] );
         for( UnsignedInteger kernelParameterIndex = 0 ; kernelParameterIndex < kernelParameter_.getSize() ; kernelParameterIndex ++)
         {
-          driver_.setKernelParameter( kernelParameter_[kernelParameterIndex] );
+          driver_.setKernelParameter(kernelParameter_[kernelParameterIndex]);
 
-          totalerror = driver_.runCrossValidation();
+          const Scalar totalerror = driver_.runCrossValidation();
 
-          if( totalerror < minerror || (tradeoffIndex == 0 && kernelParameterIndex == 0))
+          if (totalerror < minerror)
           {
             minerror = totalerror;
-            tempTradeoff = tradeoffIndex;
-            tempKernel = kernelParameterIndex;
+            bestTradeoffFactor = tradeoffFactor_[tradeoffIndex];
+            bestKernelParameter = kernelParameter_[kernelParameterIndex];
           }
           LOGINFO( OSS() << "Cross Validation for C=" << tradeoffFactor_[tradeoffIndex] << " and gamma=" << kernelParameter_[kernelParameterIndex] << " error=" << totalerror );
-          totalerror = 0;
         }
       }
     }
-    driver_.setTradeoffFactor( tradeoffFactor_[tempTradeoff] );
-    driver_.setKernelParameter( kernelParameter_[tempKernel] );
+    driver_.setTradeoffFactor(bestTradeoffFactor);
+    driver_.setKernelParameter(bestKernelParameter);
     driver_.performTrain();
 
     Point svcoef(driver_.getSupportVectorCoef());
 
-    Sample supportvector( driver_.getNumberSupportVector() , inputDimension );
+    Sample supportvector( driver_.getNumberSupportVector(), inputDimension );
     supportvector = driver_.getSupportVector( inputDimension );
 
-    switch(driver_.getKernelType())
-    {
-      case POLY:
-        kernel_ = PolynomialKernel( driver_.getDegree() , driver_.getGamma() , driver_.getPolynomialConstant() );
-        break;
-      case RBF:
-        kernel_ = NormalRBF( 1 / ( sqrt( 2 * driver_.getGamma() )));
-        break;
-      case SIGMOID:
-        kernel_ = SigmoidKernel( driver_.getGamma() , driver_.getConstant() );
-        break;
-      case LINEAR:
-        kernel_ = LinearKernel();
-        break;
-    }
+    const SVMKernel kernel(driver_.getKernel());
 
     Function function;
-    function.setEvaluation(new SVMKernelRegressionEvaluation( kernel_ , svcoef , supportvector , driver_.getConstant()));
-    function.setGradient(new SVMKernelRegressionGradient( kernel_ , svcoef , supportvector , driver_.getConstant()));
-    function.setHessian(new SVMKernelRegressionHessian( kernel_ , svcoef , supportvector , driver_.getConstant()));
+    function.setEvaluation(new SVMKernelRegressionEvaluation(kernel, svcoef, supportvector, driver_.getConstant()));
+    function.setGradient(new SVMKernelRegressionGradient(kernel, svcoef, supportvector, driver_.getConstant()));
+    function.setHessian(new SVMKernelRegressionHessian(kernel, svcoef, supportvector, driver_.getConstant()));
 
     marginals.add( function );
     driver_.destroy();
@@ -175,10 +157,10 @@ void LibSVMRegression::run()
   Sample mY(metaModel(inputSample_));
   Point outputVariance(outputSample_.computeVariance());
 
-  for ( UnsignedInteger outputIndex = 0; outputIndex < outputDimension; ++ outputIndex )
+  for (UnsignedInteger outputIndex = 0; outputIndex < outputDimension; ++ outputIndex)
   {
     Scalar quadraticResidual = 0.;
-    for ( UnsignedInteger i = 0; i < size; ++ i )
+    for (UnsignedInteger i = 0; i < size; ++ i)
     {
       const Scalar slack = outputSample_[i][outputIndex] - mY[i][outputIndex];
       quadraticResidual += slack * slack;
@@ -237,7 +219,6 @@ void LibSVMRegression::save(Advocate & adv) const
   PersistentObject::save(adv);
   adv.saveAttribute( "tradeoffFactor_", tradeoffFactor_ );
   adv.saveAttribute( "kernelParameter_", kernelParameter_ );
-  adv.saveAttribute( "kernel_", kernel_ );
   adv.saveAttribute( "result_", result_ );
   adv.saveAttribute( "inputSample_", inputSample_ );
   adv.saveAttribute( "outputSample_", outputSample_ );
@@ -250,7 +231,6 @@ void LibSVMRegression::load(Advocate & adv)
   PersistentObject::load(adv);
   adv.loadAttribute( "tradeoffFactor_", tradeoffFactor_ );
   adv.loadAttribute( "kernelParameter_", kernelParameter_ );
-  adv.loadAttribute( "kernel_", kernel_ );
   adv.loadAttribute( "result_", result_ );
   adv.loadAttribute( "inputSample_", inputSample_ );
   adv.loadAttribute( "outputSample_", outputSample_ );

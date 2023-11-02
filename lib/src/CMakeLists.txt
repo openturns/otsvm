@@ -1,6 +1,6 @@
-
-if ( NOT LIBSVM_FOUND )
-  add_subdirectory ( LibSVM )
+if (NOT LIBSVM_FOUND)
+  add_subdirectory (LibSVM)
+  include_directories (${CMAKE_CURRENT_SOURCE_DIR}/LibSVM/otsvm)
 endif ()
 
 ot_add_current_dir_to_include_dirs ()
@@ -54,9 +54,14 @@ endif ()
 if ( NOT DEFINED LIB_SOVERSION ) 
   set ( LIB_SOVERSION 0 )
 endif ()
-set_target_properties ( otsvm PROPERTIES VERSION ${LIB_VERSION} )
-set_target_properties ( otsvm PROPERTIES SOVERSION ${LIB_SOVERSION} )
-target_link_libraries (otsvm ${OPENTURNS_LIBRARY})
+set_target_properties (otsvm PROPERTIES VERSION ${LIB_VERSION})
+set_target_properties (otsvm PROPERTIES SOVERSION ${LIB_SOVERSION})
+target_link_libraries (otsvm PUBLIC ${OPENTURNS_LIBRARY})
+
+if (LIBSVM_FOUND)
+  target_link_libraries (otsvm PRIVATE ${LIBSVM_LIBRARIES})
+  target_include_directories (otsvm PRIVATE ${LIBSVM_INCLUDE_DIRS})
+endif ()
 
 # Add targets to the build-tree export set
 export (TARGETS otsvm FILE ${PROJECT_BINARY_DIR}/OTSVM-Targets.cmake)
@@ -72,4 +77,5 @@ install(TARGETS otsvm
         LIBRARY DESTINATION ${OTSVM_LIBRARY_PATH}
         ARCHIVE DESTINATION ${OTSVM_LIBRARY_PATH}
 )
+
 
