@@ -137,14 +137,16 @@ SVMKernel LibSVM::getKernel() const
       return PolynomialKernel(getDegree(), getGamma(), getPolynomialConstant());
       break;
     case NormalRbf:
-      return NormalRBF(1.0 / ( sqrt(2.0 * getGamma())));
+      return NormalRBF(1.0 / (sqrt(2.0 * getGamma())));
       break;
     case Sigmoid:
-      return SigmoidKernel(getGamma(), getConstant() );
+      return SigmoidKernel(getGamma(), getConstant());
       break;
     case Linear:
       return LinearKernel();
       break;
+    default:
+      throw InvalidArgumentException(HERE) << "LibSVM: unknown kernel type";
   }
 }
 
