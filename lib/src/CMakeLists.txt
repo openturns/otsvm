@@ -1,6 +1,7 @@
 
-if ( NOT LIBSVM_FOUND )
-  add_subdirectory ( LibSVM )
+if (NOT LIBSVM_FOUND)
+  add_subdirectory (LibSVM)
+  include_directories (${CMAKE_CURRENT_SOURCE_DIR}/LibSVM/otsvm)
 endif ()
 
 ot_add_current_dir_to_include_dirs ()
