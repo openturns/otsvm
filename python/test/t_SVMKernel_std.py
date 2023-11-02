@@ -4,20 +4,22 @@ import openturns as ot
 import openturns.testing as ott
 import otsvm
 
-kernels = [otsvm.NormalRBF(2.0),
-           otsvm.ExponentialRBF(2.0),
-           otsvm.LinearKernel(),
-           otsvm.PolynomialKernel(3.0, 2.0, 1.0),
-           otsvm.RationalKernel(2.0),
-           otsvm.SigmoidKernel(1.0, 0.0)]
+kernels = [
+    otsvm.NormalRBF(2.0),
+    otsvm.ExponentialRBF(2.0),
+    otsvm.LinearKernel(),
+    otsvm.PolynomialKernel(3.0, 2.0, 1.0),
+    otsvm.RationalKernel(2.0),
+    otsvm.SigmoidKernel(1.0, 0.0),
+]
 
 V = []
 x = [2.0] * 2
 y = [1.0] * 2
-V.append([x,y])
+V.append([x, y])
 x = [0.0, 5.0]
 y = [0.0, 3.0]
-V.append([x,y])
+V.append([x, y])
 
 for kernel in kernels:
     for v in V:
@@ -30,7 +32,7 @@ for kernel in kernels:
         print("dkernel/dx_i(x,y)=", repr(kxydx))
 
         # check gradient by finite diff
-        kxydxfd=[0.0]*2
+        kxydxfd = [0.0] * 2
         h = 1e-7
         for j in range(2):
             xh = list(x)

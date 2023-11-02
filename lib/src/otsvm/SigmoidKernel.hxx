@@ -39,7 +39,7 @@ public:
 
   /* Constructor with parameters */
   explicit SigmoidKernel(const OT::Scalar linear = 1.0,
-		         const OT::Scalar constant = 0.0);
+                         const OT::Scalar constant = 0.0);
 
   /* Virtual constructor */
   SigmoidKernel * clone() const override;
@@ -61,13 +61,13 @@ public:
   OT::Description getParameterDescription() const override;
 
   /* Operator () */
-  OT::Scalar operator() (const OT::Point & x1 , const OT::Point & x2) const override;
+  OT::Scalar operator() (const OT::Point & x1, const OT::Point & x2) const override;
 
   /* Partial gradient */
-  OT::Point partialGradient(const OT::Point & x1 , const OT::Point & x2) const override;
+  OT::Point partialGradient(const OT::Point & x1, const OT::Point & x2) const override;
 
   /* Partial hessian */
-  OT::SymmetricMatrix partialHessian(const OT::Point & x1 , const OT::Point & x2) const override;
+  OT::SymmetricMatrix partialHessian(const OT::Point & x1, const OT::Point & x2) const override;
 
   /** Method save() stores the object through the StorageManager */
   void save(OT::Advocate & adv) const override;

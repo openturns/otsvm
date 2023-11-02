@@ -115,11 +115,11 @@ algo = otsvm.LibSVMRegression(dataIn, dataOut, otsvm.LibSVM.Polynomial)
 algo.setTradeoffFactor(tradeoff)
 algo.setKernelParameter(kernel)
 # Perform the algorithm
-#algo.run()
+# algo.run()
 ## Stream out the results
-#result = algo.getResult()
-#print(result)
+# result = algo.getResult()
+# print(result)
 ## get the residual error
-#residual = result.getResiduals()
+# residual = result.getResiduals()
 ## get the relative error
-#relativeError = result.getRelativeErrors()
+# relativeError = result.getRelativeErrors()

@@ -86,7 +86,7 @@ void LibSVMRegression::run()
   Scalar totalerror = 0;
   Scalar minerror = 0;
 
-  Sample isoProbSample( size , inputDimension );
+  Sample isoProbSample( size, inputDimension );
   Function outputTransformation;
   Function outputInverseTransformation;
 
@@ -136,19 +136,19 @@ void LibSVMRegression::run()
 
     Point svcoef(driver_.getSupportVectorCoef());
 
-    Sample supportvector( driver_.getNumberSupportVector() , inputDimension );
+    Sample supportvector( driver_.getNumberSupportVector(), inputDimension );
     supportvector = driver_.getSupportVector( inputDimension );
 
     switch(driver_.getKernelType())
     {
       case POLY:
-        kernel_ = PolynomialKernel( driver_.getDegree() , driver_.getGamma() , driver_.getPolynomialConstant() );
+        kernel_ = PolynomialKernel( driver_.getDegree(), driver_.getGamma(), driver_.getPolynomialConstant() );
         break;
       case RBF:
         kernel_ = NormalRBF( 1 / ( sqrt( 2 * driver_.getGamma() )));
         break;
       case SIGMOID:
-        kernel_ = SigmoidKernel( driver_.getGamma() , driver_.getConstant() );
+        kernel_ = SigmoidKernel( driver_.getGamma(), driver_.getConstant() );
         break;
       case LINEAR:
         kernel_ = LinearKernel();
@@ -156,9 +156,9 @@ void LibSVMRegression::run()
     }
 
     Function function;
-    function.setEvaluation(new SVMKernelRegressionEvaluation( kernel_ , svcoef , supportvector , driver_.getConstant()));
-    function.setGradient(new SVMKernelRegressionGradient( kernel_ , svcoef , supportvector , driver_.getConstant()));
-    function.setHessian(new SVMKernelRegressionHessian( kernel_ , svcoef , supportvector , driver_.getConstant()));
+    function.setEvaluation(new SVMKernelRegressionEvaluation( kernel_, svcoef, supportvector, driver_.getConstant()));
+    function.setGradient(new SVMKernelRegressionGradient( kernel_, svcoef, supportvector, driver_.getConstant()));
+    function.setHessian(new SVMKernelRegressionHessian( kernel_, svcoef, supportvector, driver_.getConstant()));
 
     marginals.add( function );
     driver_.destroy();

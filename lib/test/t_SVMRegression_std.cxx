@@ -69,7 +69,7 @@ int main(int /*argc*/, char ** /*argv*/)
   regression.run();
 
   MetaModelResult result(regression.getResult());
-  std::cout << "result=" << result << std::endl; 
+  std::cout << "result=" << result << std::endl;
   assert_almost_equal(result.getResiduals(), {0.00619114, 0.00309557});
   assert_almost_equal(result.getRelativeErrors(), {1.13852e-06, 1.13852e-06});
 }

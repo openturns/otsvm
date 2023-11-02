@@ -61,7 +61,7 @@ LibSVMClassification* LibSVMClassification::clone() const
 
 LibSVMClassification::LibSVMClassification(const Sample & dataIn,
     const Indices & outClasses)
-: ClassifierImplementation(dataIn, outClasses)
+  : ClassifierImplementation(dataIn, outClasses)
 //   inputSample_(dataIn),
 {
   driver_.setSvmType(LibSVM::CSupportClassification);
@@ -197,7 +197,7 @@ void LibSVMClassification::runKMeans( UnsignedInteger k )
   Sample finalSample(0, inputSample_[0].getDimension());
   Indices finalIndices;
   Indices tempIndices;
-  KMeansClustering kmeans(inputSample_ , k);
+  KMeansClustering kmeans(inputSample_, k);
   kmeans.run();
 
   cluster = kmeans.getCluster();

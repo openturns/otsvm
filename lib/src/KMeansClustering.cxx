@@ -34,7 +34,7 @@ void KMeansClustering::run()
   UnsignedInteger change = 0;
 
   Indices cluster(size);
-  Sample means(k_ , dimension);
+  Sample means(k_, dimension);
 
   const Point min(inputSample_.getMin());
   const Point max(inputSample_.getMax());
@@ -44,7 +44,7 @@ void KMeansClustering::run()
     Uniform uniform(min[i], max[i]);
     for (UnsignedInteger j = 0 ; j < k_; ++ j)
     {
-      means(j , i) = uniform.getRealization()[0];
+      means(j, i) = uniform.getRealization()[0];
     }
   }
 

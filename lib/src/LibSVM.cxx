@@ -107,7 +107,7 @@ void LibSVM::setModel(svm_model* model)
 /* Support vectors accessor */
 Sample LibSVM::getSupportVector(const UnsignedInteger dim)
 {
-  Sample res( getNumberSupportVector() , dim );
+  Sample res( getNumberSupportVector(), dim );
 
 
   for ( UnsignedInteger l = 0 ; l < getNumberSupportVector() ; l++ )
@@ -226,7 +226,7 @@ Scalar LibSVM::getOutput(const UnsignedInteger index)
 /* Perform train  */
 void LibSVM::performTrain()
 {
-  setModel(svm_train( &problem_ , &parameter_ ));
+  setModel(svm_train( &problem_, &parameter_ ));
 }
 
 
@@ -257,7 +257,7 @@ Scalar LibSVM::computeError()
 
   for ( UnsignedInteger k = 0 ; k < (UnsignedInteger)problem_.l ; k++ )
   {
-    totalerror += ( problem_.y[k] - svm_predict( p_model_, problem_.x[k] )) * (problem_.y[k] - svm_predict( p_model_ , problem_.x[k] ) );
+    totalerror += ( problem_.y[k] - svm_predict( p_model_, problem_.x[k] )) * (problem_.y[k] - svm_predict( p_model_, problem_.x[k] ) );
 
   }
   totalerror = sqrt( totalerror ) / problem_.l;

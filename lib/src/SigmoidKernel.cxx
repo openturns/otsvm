@@ -36,10 +36,10 @@ CLASSNAMEINIT(SigmoidKernel)
 static Factory<SigmoidKernel> RegisteredFactory_SigmoidKernel;
 
 /* Constructor with parameters */
-SigmoidKernel::SigmoidKernel(const Scalar linear , const Scalar constant)
-: SVMKernelImplementation()
-, linear_(linear)
-, constant_(constant)
+SigmoidKernel::SigmoidKernel(const Scalar linear, const Scalar constant)
+  : SVMKernelImplementation()
+  , linear_(linear)
+  , constant_(constant)
 {
   //Nothing to do
 }
@@ -102,7 +102,7 @@ Description SigmoidKernel::getParameterDescription() const
 }
 
 /* Operator () */
-Scalar SigmoidKernel::operator() ( const Point & x1 , const Point & x2 ) const
+Scalar SigmoidKernel::operator() ( const Point & x1, const Point & x2 ) const
 {
   Scalar dotProduct = x1.dot(x2);
   Scalar value = tanh( linear_ * dotProduct + constant_ );
@@ -111,11 +111,11 @@ Scalar SigmoidKernel::operator() ( const Point & x1 , const Point & x2 ) const
 
 
 /* Partial gradient */
-Point SigmoidKernel::partialGradient( const Point & x1 , const Point & x2 ) const
+Point SigmoidKernel::partialGradient( const Point & x1, const Point & x2 ) const
 {
   UnsignedInteger dimension = x1.getDimension();
   Scalar dotProduct = x1.dot(x2);
-  Point result(dimension , 0.0);
+  Point result(dimension, 0.0);
   for(UnsignedInteger i = 0 ; i < dimension ; i ++)
   {
     result[i] = linear_ * x2[i] * ( 1 - std::pow( tanh( linear_ * dotProduct + constant_), 2));
@@ -125,7 +125,7 @@ Point SigmoidKernel::partialGradient( const Point & x1 , const Point & x2 ) cons
 
 
 /* Partial hessian */
-SymmetricMatrix SigmoidKernel::partialHessian( const Point & x1 , const Point & x2 )const
+SymmetricMatrix SigmoidKernel::partialHessian( const Point & x1, const Point & x2 )const
 {
   UnsignedInteger dimension = x1.getDimension();
   Scalar dotProduct = x1.dot(x2);
@@ -134,7 +134,7 @@ SymmetricMatrix SigmoidKernel::partialHessian( const Point & x1 , const Point & 
   {
     for (UnsignedInteger j = 0 ; j <= i ; ++ j)
     {
-      result(i, j) = 2 * linear_ * x2[i] * linear_ * x2[j] * ( 1 - std::pow( tanh(linear_ * dotProduct + constant_) , 2 )) * tanh( linear_ * dotProduct + constant_ );
+      result(i, j) = 2 * linear_ * x2[i] * linear_ * x2[j] * ( 1 - std::pow( tanh(linear_ * dotProduct + constant_), 2 )) * tanh( linear_ * dotProduct + constant_ );
     }
   }
 

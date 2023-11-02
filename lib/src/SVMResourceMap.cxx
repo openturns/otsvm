@@ -23,7 +23,7 @@
 #include "otsvm/SVMResourceMap.hxx"
 #include <openturns/ResourceMap.hxx>
 #include <mutex>
- 
+
 using namespace OT;
 
 namespace OTSVM

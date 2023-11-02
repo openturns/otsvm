@@ -47,15 +47,15 @@ public:
   OT::Point getParameter() const override;
   void setParameter(const OT::Point & parameter) override;
   OT::Description getParameterDescription() const override;
-  
+
   /* Operator () */
-  OT::Scalar operator() ( const OT::Point & x1 , const OT::Point & x2 ) const override;
+  OT::Scalar operator() ( const OT::Point & x1, const OT::Point & x2 ) const override;
 
   /* Partial gradient */
-  OT::Point partialGradient( const OT::Point & x1 , const OT::Point & x2 ) const override;
+  OT::Point partialGradient( const OT::Point & x1, const OT::Point & x2 ) const override;
 
   /* Partial hessian */
-  OT::SymmetricMatrix partialHessian( const OT::Point & x1 , const OT::Point & x2 ) const override;
+  OT::SymmetricMatrix partialHessian( const OT::Point & x1, const OT::Point & x2 ) const override;
 
   /** Method save() stores the object through the StorageManager */
   void save(OT::Advocate & adv) const override;

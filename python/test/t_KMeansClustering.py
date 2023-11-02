@@ -71,9 +71,11 @@ kmeans.run()
 result = kmeans.getCluster()
 print("result=", result)
 
-sample_split_result = [ot.Sample(0, dimension),
-                       ot.Sample(0, dimension),
-                       ot.Sample(0, dimension)]
+sample_split_result = [
+    ot.Sample(0, dimension),
+    ot.Sample(0, dimension),
+    ot.Sample(0, dimension),
+]
 
 accuracy = 0.0
 for i in range(len(sample)):
