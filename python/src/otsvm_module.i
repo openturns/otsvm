@@ -27,8 +27,8 @@
 %include SigmoidKernel.i
 %include LinearKernel.i
 %include LibSVM.i
-%include LibSVMRegression.i
-%include LibSVMClassification.i
+%include SVMRegression.i
+%include SVMClassification.i
 %include KMeansClustering.i
 
 %template(SVMKernelCollection) OT::Collection<OTSVM::SVMKernel>;

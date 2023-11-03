@@ -1,6 +1,6 @@
 //                                               -*- C++ -*-
 /**
- *  @brief The test file for LibSVMRegression class.
+ *  @brief The test file for SVMRegression class.
  *
  *  Copyright 2014-2023 Phimeca
  *
@@ -58,7 +58,7 @@ int main(int /*argc*/, char ** /*argv*/)
 
 
   LibSVM::KernelType kernel = LibSVM::NormalRbf;
-  OTSVM::LibSVMRegression regression(dataIn, dataOut, kernel);
+  OTSVM::SVMRegression regression(dataIn, dataOut, kernel);
 
   regression.setTradeoffFactor(cp);
   regression.setKernelParameter(gamma);

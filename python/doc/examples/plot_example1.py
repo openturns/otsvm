@@ -64,7 +64,7 @@ dataIn = distribution.getSample(250)
 dataOut = model(dataIn)
 # second, we create our svm regression object, we must select the third parameter
 # in an enumerate in the list { NormalRBF, Linear, Sigmoid, Polynomial }
-algo = otsvm.LibSVMRegression(dataIn, dataOut, otsvm.LibSVM.NormalRbf)
+algo = otsvm.SVMRegression(dataIn, dataOut, otsvm.LibSVM.NormalRbf)
 # third, we set kernel parameter and tradeoff factor
 algo.setTradeoffFactor(tradeoff)
 algo.setKernelParameter(kernel)
@@ -85,7 +85,7 @@ dataIn = myExperiment.generate()
 dataOut = model(dataIn)
 # second, we create our svm regression object, the first parameter is the
 # function
-algo2 = otsvm.LibSVMRegression(dataIn, dataOut, otsvm.LibSVM.Linear)
+algo2 = otsvm.SVMRegression(dataIn, dataOut, otsvm.LibSVM.Linear)
 # third, we set kernel parameter and tradeoff factor
 algo2.setTradeoffFactor(tradeoff)
 algo2.setKernelParameter(kernel)
@@ -110,7 +110,7 @@ dataOut = model(dataIn)
 # degree of 2
 ot.ResourceMap.Set("LibSVM-DegreePolynomialKernel", "2")
 # now the degree of the Polynomial kernel is 2
-algo = otsvm.LibSVMRegression(dataIn, dataOut, otsvm.LibSVM.Polynomial)
+algo = otsvm.SVMRegression(dataIn, dataOut, otsvm.LibSVM.Polynomial)
 # third, we set kernel parameter and tradeoff factor
 algo.setTradeoffFactor(tradeoff)
 algo.setKernelParameter(kernel)

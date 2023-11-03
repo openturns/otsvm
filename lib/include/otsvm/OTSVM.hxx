@@ -29,8 +29,8 @@
 #include "otsvm/PolynomialKernel.hxx"
 #include "otsvm/RationalKernel.hxx"
 #include "otsvm/SVMKernel.hxx"
-#include "otsvm/LibSVMRegression.hxx"
-#include "otsvm/LibSVMClassification.hxx"
+#include "otsvm/SVMRegression.hxx"
+#include "otsvm/SVMClassification.hxx"
 #include "otsvm/KMeansClustering.hxx"
 
 #endif /* OTSVM_OTSVM_HXX */

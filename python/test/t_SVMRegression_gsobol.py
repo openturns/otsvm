@@ -43,7 +43,7 @@ cp = [5.0, 10.0, 100.0, 200.0, 500.0, 1000.0, 10000.0]
 gamma = [0.001, 0.01, 0.1, 0.5, 1, 5, 10, 20, 30, 40, 50, 100]
 ot.RandomGenerator.SetSeed(0)
 # create the Problem
-algo = otsvm.LibSVMRegression(dataIn, dataOut, otsvm.LibSVM.NormalRbf)
+algo = otsvm.SVMRegression(dataIn, dataOut, otsvm.LibSVM.NormalRbf)
 algo.setTradeoffFactor(cp)
 algo.setKernelParameter(gamma)
 # compute the SVMRegression

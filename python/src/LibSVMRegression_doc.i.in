@@ -1,2 +1,0 @@
-%feature("docstring") OTSVM::LibSVMRegression
-"Regression algorithm using LibSVM."

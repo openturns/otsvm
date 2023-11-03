@@ -1,16 +1,17 @@
 """
-    otsvm --- An OpenTURNS module
-    ===================================================
+    otsvm
+    =====
 
     Documentation is available online at http://www.openturns.org.
 
     Contents
     --------
-    'otsvm' is python module for Open TURNS, which enables to realize support vector regression and classification with    Libsvm and to manipualte results with OpenTURNS.
+    'otsvm' is python module for Open TURNS, which enables to perform support vector regression
+    and classification using LibSVM and to manipulate results with OpenTURNS.
 
     Classes
     --------
-    LibSVMRegression                                The class that supports the regression.
+    SVMRegression                                The class that supports the regression.
 
 """
 

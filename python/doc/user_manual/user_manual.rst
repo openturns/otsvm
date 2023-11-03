@@ -301,7 +301,7 @@ Classification
     :toctree: _generated/
     :template: class.rst_t
 
-    LibSVMClassification
+    SVMClassification
 
 Regression
 ----------
@@ -310,4 +310,4 @@ Regression
     :toctree: _generated/
     :template: class.rst_t
 
-    LibSVMRegression
+    SVMRegression

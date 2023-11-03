@@ -19,7 +19,7 @@
  *
  */
 
-#include "otsvm/LibSVMClassification.hxx"
+#include "otsvm/SVMClassification.hxx"
 #include "otsvm/NormalRBF.hxx"
 #include "otsvm/PolynomialKernel.hxx"
 #include "otsvm/SVMKernelRegressionEvaluation.hxx"
@@ -38,13 +38,13 @@ namespace OTSVM
 
 
 
-CLASSNAMEINIT(LibSVMClassification)
+CLASSNAMEINIT(SVMClassification)
 
 
-static Factory<LibSVMClassification> RegisteredFactory_LibSVMClassification;
+static Factory<SVMClassification> RegisteredFactory_SVMClassification;
 
 
-LibSVMClassification::LibSVMClassification()
+SVMClassification::SVMClassification()
   : ClassifierImplementation()
   , accuracy_(0.)
   , tradeoffFactor_(1, 10.)
@@ -54,13 +54,13 @@ LibSVMClassification::LibSVMClassification()
 }
 
 
-LibSVMClassification* LibSVMClassification::clone() const
+SVMClassification* SVMClassification::clone() const
 {
-  return new LibSVMClassification(*this);
+  return new SVMClassification(*this);
 }
 
 
-LibSVMClassification::LibSVMClassification(const Sample & dataIn,
+SVMClassification::SVMClassification(const Sample & dataIn,
     const Indices & outClasses)
   : ClassifierImplementation(dataIn, outClasses)
 //   inputSample_(dataIn),
@@ -69,19 +69,19 @@ LibSVMClassification::LibSVMClassification(const Sample & dataIn,
   driver_.setNu(0.);
 }
 
-Scalar LibSVMClassification::getAccuracy()
+Scalar SVMClassification::getAccuracy()
 {
   return accuracy_;
 }
 
 /** String converter */
-String LibSVMClassification::__repr__() const
+String SVMClassification::__repr__() const
 {
   return OSS()  << "class=" << getClassName()
          << "accuracy=" << accuracy_;
 }
 
-void LibSVMClassification::run()
+void SVMClassification::run()
 {
   const UnsignedInteger size = inputSample_.getSize();
 
@@ -89,7 +89,7 @@ void LibSVMClassification::run()
   Scalar bestKernelParameter = kernelParameter_[0];
 
   if (classes_.getSize() != size)
-    throw InvalidArgumentException(HERE) << "LibSVMClassification: the input sample and the output sample must have the same size";
+    throw InvalidArgumentException(HERE) << "SVMClassification: the input sample and the output sample must have the same size";
 
   Sample outputSample(inputSample_.getSize(), 1);
   for (UnsignedInteger i = 0; i < classes_.getSize(); ++ i)
@@ -126,43 +126,43 @@ void LibSVMClassification::run()
 }
 
 
-UnsignedInteger LibSVMClassification::classify(const Point & vector) const
+UnsignedInteger SVMClassification::classify(const Point & vector) const
 {
   return driver_.getLabel(vector);
 }
 
 
-void LibSVMClassification::setKernelType(const LibSVM::KernelType & kerneltype)
+void SVMClassification::setKernelType(const LibSVM::KernelType & kerneltype)
 {
   driver_.setKernelType(kerneltype);
 }
 
-void LibSVMClassification::setTradeoffFactor(const Point & tradeoffFactor)
+void SVMClassification::setTradeoffFactor(const Point & tradeoffFactor)
 {
   if (!tradeoffFactor.getSize())
-    throw InvalidArgumentException(HERE) << "LibSVMClassification: tradeoff factor should be of size>=1";
+    throw InvalidArgumentException(HERE) << "SVMClassification: tradeoff factor should be of size>=1";
   tradeoffFactor_ = tradeoffFactor;
 }
 
-void LibSVMClassification::setKernelParameter(const Point & kernelParameter)
+void SVMClassification::setKernelParameter(const Point & kernelParameter)
 {
   if (!kernelParameter.getSize())
-    throw InvalidArgumentException(HERE) << "LibSVMClassification: kernel parameter should be of size>=1";
+    throw InvalidArgumentException(HERE) << "SVMClassification: kernel parameter should be of size>=1";
   kernelParameter_ = kernelParameter;
 }
 
 /* Grade a point as if it were associated to a class */
-Scalar LibSVMClassification::grade(const Point & inP, const UnsignedInteger outC) const
+Scalar SVMClassification::grade(const Point & inP, const UnsignedInteger outC) const
 {
   return driver_.getLabelValues(inP, outC);
 }
 
-OT::Scalar LibSVMClassification::predict(const OT::Point& inP) const
+OT::Scalar SVMClassification::predict(const OT::Point& inP) const
 {
   return driver_.predict(inP);
 }
 
-void LibSVMClassification::setWeight(const Point & weight)
+void SVMClassification::setWeight(const Point & weight)
 {
   Point label(weight.getSize());
   UnsignedInteger j = 1;
@@ -188,7 +188,7 @@ void LibSVMClassification::setWeight(const Point & weight)
   driver_.setWeight(weight, label);
 }
 
-void LibSVMClassification::runKMeans(const UnsignedInteger k)
+void SVMClassification::runKMeans(const UnsignedInteger k)
 {
   Scalar error = 0;
   Indices cluster;
@@ -213,7 +213,7 @@ void LibSVMClassification::runKMeans(const UnsignedInteger k)
         tempIndices.add(classes_[j]);
       }
     }
-    LibSVMClassification partial(partialSample, partialIndices);
+    SVMClassification partial(partialSample, partialIndices);
     partial.setKernelType(driver_.getKernelType());
     partial.setTradeoffFactor(tradeoffFactor_);
     partial.setKernelParameter(kernelParameter_);
@@ -234,7 +234,7 @@ void LibSVMClassification::runKMeans(const UnsignedInteger k)
 }
 
 
-void LibSVMClassification::save(Advocate & adv) const
+void SVMClassification::save(Advocate & adv) const
 {
   ClassifierImplementation::save(adv);
   adv.saveAttribute( "tradeoffFactor_", tradeoffFactor_ );
@@ -244,7 +244,7 @@ void LibSVMClassification::save(Advocate & adv) const
 
 
 /* Method load() reloads the object from the StorageManager */
-void LibSVMClassification::load(Advocate & adv)
+void SVMClassification::load(Advocate & adv)
 {
   ClassifierImplementation::load(adv);
   adv.saveAttribute( "tradeoffFactor_", tradeoffFactor_ );

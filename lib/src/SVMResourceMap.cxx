@@ -37,7 +37,7 @@ SVMResourceMap_init::SVMResourceMap_init()
     ResourceMap::AddAsScalar("LibSVM-ConstantPolynomialKernel", 0);
     ResourceMap::AddAsUnsignedInteger("LibSVM-CacheSize", 100);
     ResourceMap::AddAsScalar("LibSVM-Epsilon", 1e-3);
-    ResourceMap::AddAsUnsignedInteger("LibSVMRegression-NumberOfFolds", 3);
+    ResourceMap::AddAsUnsignedInteger("SVMRegression-NumberOfFolds", 3);
     ResourceMap::AddAsUnsignedInteger("LibSVM-Shrinking", 1);
   });
 }

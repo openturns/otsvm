@@ -86,8 +86,8 @@ ot_add_python_module( otsvm otsvm_module.i
                       SigmoidKernel.i SigmoidKernel_doc.i.in
                       LinearKernel.i LinearKernel_doc.i.in
                       LibSVM.i LibSVM_doc.i.in
-                      LibSVMRegression.i LibSVMRegression_doc.i.in
-                      LibSVMClassification.i LibSVMClassification_doc.i.in
+                      SVMRegression.i SVMRegression_doc.i.in
+                      SVMClassification.i SVMClassification_doc.i.in
                       KMeansClustering.i KMeansClustering_doc.i.in)
 
 

@@ -15,7 +15,7 @@ distribution = ot.Normal(mean, [1.0] * dim, R)
 dataIn = distribution.getSample(250)
 dataOut = model(dataIn)
 
-algo = otsvm.LibSVMRegression(dataIn, dataOut, otsvm.LibSVM.NormalRbf)
+algo = otsvm.SVMRegression(dataIn, dataOut, otsvm.LibSVM.NormalRbf)
 algo.run()
 result = algo.getResult()
 

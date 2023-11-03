@@ -18,8 +18,8 @@
  *
  */
 
-#ifndef OTSVM_LIBSVMCLASSIFICATION_HXX
-#define OTSVM_LIBSVMCLASSIFICATION_HXX
+#ifndef OTSVM_SVMCLASSIFICATION_HXX
+#define OTSVM_SVMCLASSIFICATION_HXX
 
 #include "LibSVM.hxx"
 #include <openturns/ClassifierImplementation.hxx>
@@ -27,7 +27,7 @@
 namespace OTSVM
 {
 
-class OTSVM_API LibSVMClassification: public OT::ClassifierImplementation
+class OTSVM_API SVMClassification: public OT::ClassifierImplementation
 {
   CLASSNAME
 
@@ -36,20 +36,20 @@ public:
   /**
   *Default constructor
   */
-  LibSVMClassification();
+  SVMClassification();
 
   /**
   *Constructor with parameters.
   * @param  dataIn a Sample, an OpenTURNS object which is the input Sample.
   * @param  outClasses an Indices, an OpenTURNS object which is the label for each vector.
   */
-  LibSVMClassification(const OT::Sample & dataIn,
+  SVMClassification(const OT::Sample & dataIn,
                        const OT::Indices & outClasses);
 
   /**
   *Virtual constructor
   */
-  LibSVMClassification * clone() const override;
+  SVMClassification * clone() const override;
 
   /* Accuracy accessor */
   OT::Scalar getAccuracy();

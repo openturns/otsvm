@@ -19,7 +19,7 @@
  *
  */
 
-#include "otsvm/LibSVMRegression.hxx"
+#include "otsvm/SVMRegression.hxx"
 #include "otsvm/NormalRBF.hxx"
 #include "otsvm/PolynomialKernel.hxx"
 #include "otsvm/SVMKernelRegressionEvaluation.hxx"
@@ -36,19 +36,19 @@ using namespace OT;
 namespace OTSVM
 {
 
-static Factory<LibSVMRegression> RegisteredFactory_LibSVMRegression;
+static Factory<SVMRegression> RegisteredFactory_SVMRegression;
 
 
-CLASSNAMEINIT(LibSVMRegression)
+CLASSNAMEINIT(SVMRegression)
 
 /* Default constructor */
-LibSVMRegression::LibSVMRegression() : PersistentObject()
+SVMRegression::SVMRegression() : PersistentObject()
 {
   //Nothing to do
 }
 
 /* Constructor with parameters */
-LibSVMRegression::LibSVMRegression(const Sample & dataIn,
+SVMRegression::SVMRegression(const Sample & dataIn,
                                    const Sample & dataOut,
                                    const LibSVM::KernelType kerneltype )
   : PersistentObject()
@@ -64,20 +64,20 @@ LibSVMRegression::LibSVMRegression(const Sample & dataIn,
 
 
 /* Virtual constructor */
-LibSVMRegression * LibSVMRegression::clone() const
+SVMRegression * SVMRegression::clone() const
 {
-  return new LibSVMRegression(*this);
+  return new SVMRegression(*this);
 }
 
 /* Method run */
-void LibSVMRegression::run()
+void SVMRegression::run()
 {
   const UnsignedInteger outputDimension = outputSample_.getDimension();
   const UnsignedInteger inputDimension = inputSample_.getDimension();
   const UnsignedInteger size = inputSample_.getSize();
 
   if (outputSample_.getSize() != size)
-    throw InvalidArgumentException(HERE) << "LibSVMRegression: the input sample and the output sample must have the same size";
+    throw InvalidArgumentException(HERE) << "SVMRegression: the input sample and the output sample must have the same size";
 
   Scalar bestTradeoffFactor = tradeoffFactor_[0];
   Scalar bestKernelParameter = kernelParameter_[0];
@@ -174,47 +174,47 @@ void LibSVMRegression::run()
 }
 
 
-OT::Sample LibSVMRegression::getInputSample() const
+OT::Sample SVMRegression::getInputSample() const
 {
   return inputSample_;
 }
 
 
-OT::Sample LibSVMRegression::getOutputSample() const
+OT::Sample SVMRegression::getOutputSample() const
 {
   return outputSample_;
 }
 
 /* Tradeoff factor accessor */
-void LibSVMRegression::setTradeoffFactor(const Point & tradeoffFactor)
+void SVMRegression::setTradeoffFactor(const Point & tradeoffFactor)
 {
   tradeoffFactor_ = tradeoffFactor;
 }
 
-Point LibSVMRegression::getTradeoffFactor()
+Point SVMRegression::getTradeoffFactor()
 {
   return tradeoffFactor_;
 }
 
 /* Kernel parameter accessor */
-void LibSVMRegression::setKernelParameter(const Point & kernelParameter)
+void SVMRegression::setKernelParameter(const Point & kernelParameter)
 {
   kernelParameter_ = kernelParameter;
 }
 
-Point LibSVMRegression::getKernelParameter()
+Point SVMRegression::getKernelParameter()
 {
   return kernelParameter_;
 }
 
 /* Results accessor */
-MetaModelResult LibSVMRegression::getResult() const
+MetaModelResult SVMRegression::getResult() const
 {
   return result_;
 }
 
 /* Method save() stores the object through the StorageManager */
-void LibSVMRegression::save(Advocate & adv) const
+void SVMRegression::save(Advocate & adv) const
 {
   PersistentObject::save(adv);
   adv.saveAttribute( "tradeoffFactor_", tradeoffFactor_ );
@@ -226,7 +226,7 @@ void LibSVMRegression::save(Advocate & adv) const
 
 
 /* Method load() reloads the object from the StorageManager */
-void LibSVMRegression::load(Advocate & adv)
+void SVMRegression::load(Advocate & adv)
 {
   PersistentObject::load(adv);
   adv.loadAttribute( "tradeoffFactor_", tradeoffFactor_ );

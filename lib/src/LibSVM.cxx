@@ -136,7 +136,7 @@ SVMKernel LibSVM::getKernel() const
       return PolynomialKernel(getDegree(), getGamma(), getPolynomialConstant());
       break;
     case NormalRbf:
-      return NormalRBF(1.0 / (sqrt(2.0 * getGamma())));
+      return NormalRBF(1.0 / (std::sqrt(2.0 * getGamma())));
       break;
     case Sigmoid:
       return SigmoidKernel(getGamma(), getConstant());
@@ -330,7 +330,8 @@ Scalar LibSVM::runCrossValidation()
 
   // launch validation
   srand (1);
-  svm_cross_validation(&p_implementation_->problem_, &p_implementation_->parameter_, ResourceMap::GetAsUnsignedInteger("LibSVMRegression-NumberOfFolds"), &target[0]);
+  const UnsignedInteger nFolds = ResourceMap::GetAsUnsignedInteger("SVMRegression-NumberOfFolds");
+  svm_cross_validation(&p_implementation_->problem_, &p_implementation_->parameter_, nFolds, const_cast<double *>(target.data()));
 
   Scalar totalError = 0.0;
   for (UnsignedInteger i = 0; i < size; ++ i)
@@ -338,7 +339,7 @@ Scalar LibSVM::runCrossValidation()
     totalError += (p_implementation_->problem_.y[i] - target[i]) * (p_implementation_->problem_.y[i] - target[i]) / size;
   }
 
-  Log::Info(OSS() << "LibSVM::runCrossValidation gamma=" << p_implementation_->parameter_.gamma << " C=" << p_implementation_->parameter_.C << " err=" << totalError);
+  LOGTRACE(OSS() << "LibSVM::runCrossValidation gamma=" << p_implementation_->parameter_.gamma << " C=" << p_implementation_->parameter_.C << " err=" << totalError);
 
   return totalError;
 }
@@ -350,10 +351,10 @@ Scalar LibSVM::computeError()
 
   for ( UnsignedInteger k = 0 ; k < (UnsignedInteger)p_implementation_->problem_.l ; k++ )
   {
-    totalerror += ( p_implementation_->problem_.y[k] - svm_predict( p_implementation_->p_model_, p_implementation_->problem_.x[k] )) * (p_implementation_->problem_.y[k] - svm_predict( p_implementation_->p_model_, p_implementation_->problem_.x[k] ) );
-
+    const Scalar slack = p_implementation_->problem_.y[k] - svm_predict(p_implementation_->p_model_, p_implementation_->problem_.x[k]);
+    totalerror += slack * slack;
   }
-  totalerror = sqrt( totalerror ) / p_implementation_->problem_.l;
+  totalerror = std::sqrt(totalerror) / p_implementation_->problem_.l;
 
   return totalerror;
 }

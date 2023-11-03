@@ -28,7 +28,7 @@ cp = [0.000001, 0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100]
 gamma = [0.000001, 0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100]
 
 # create the Problem
-algo = otsvm.LibSVMClassification(dataIn, dataOut)
+algo = otsvm.SVMClassification(dataIn, dataOut)
 algo.setKernelType(otsvm.LibSVM.NormalRbf)
 algo.setTradeoffFactor(cp)
 algo.setKernelParameter(gamma)

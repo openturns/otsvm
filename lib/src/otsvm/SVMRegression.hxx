@@ -33,22 +33,22 @@
 namespace OTSVM
 {
 
-class OTSVM_API LibSVMRegression: public OT::PersistentObject
+class OTSVM_API SVMRegression: public OT::PersistentObject
 {
   CLASSNAME
 
 public:
 
   /* default constructor */
-  LibSVMRegression();
+  SVMRegression();
 
   /* constructor with parameters */
-  LibSVMRegression(const OT::Sample & dataIn,
+  SVMRegression(const OT::Sample & dataIn,
                    const OT::Sample & dataOut,
                    const LibSVM::KernelType kerneltype = LibSVM::NormalRbf);
 
   /* Virtual constructor*/
-  LibSVMRegression * clone() const override;
+  SVMRegression * clone() const override;
 
   /* Method run */
   virtual void run();
