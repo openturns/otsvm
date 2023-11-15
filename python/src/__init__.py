@@ -22,4 +22,4 @@ import openturns as _ot
 
 from .otsvm import *
 
-__version__ = "0.11"
+__version__ = '0.13'
