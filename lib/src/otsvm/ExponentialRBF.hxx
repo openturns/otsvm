@@ -2,7 +2,7 @@
 /**
  *  @brief Implementation of the Exponential RBF kernel
  *
- *  Copyright 2014-2023 Phimeca
+ *  Copyright 2014-2024 Phimeca
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by

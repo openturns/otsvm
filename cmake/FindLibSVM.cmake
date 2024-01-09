@@ -14,7 +14,7 @@
 #  LIBSVM_ROOT_DIR - root dir (ex. /usr/local)
 
 #=============================================================================
-# Copyright 2010-2023, Julien Schueller
+# Copyright 2010-2024, Julien Schueller
 # All rights reserved.
 # 
 # Redistribution and use in source and binary forms, with or without
