@@ -79,12 +79,6 @@ String SVMKernelRegressionGradient::__repr__() const
   return oss;
 }
 
-/* Test for actual implementation */
-Bool SVMKernelRegressionGradient::isActualImplementation() const
-{
-  return true;
-}
-
 /* Gradient method */
 Matrix SVMKernelRegressionGradient::gradient(const Point & inP) const
 {

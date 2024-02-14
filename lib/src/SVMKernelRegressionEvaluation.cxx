@@ -78,12 +78,6 @@ String SVMKernelRegressionEvaluation::__repr__() const
   return oss;
 }
 
-/* Test for actual implementation */
-Bool SVMKernelRegressionEvaluation::isActualImplementation() const
-{
-  return true;
-}
-
 /* Operator () */
 Point SVMKernelRegressionEvaluation::operator() (const Point & inP) const
 {

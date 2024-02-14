@@ -65,9 +65,6 @@ public:
   /** String converter */
   OT::String __repr__() const override;
 
-  /** Test for actual implementation */
-  OT::Bool isActualImplementation() const override;
-
   /** Gradient method */
   OT::Matrix gradient(const OT::Point & inP) const override;
 

@@ -78,12 +78,6 @@ String SVMKernelRegressionHessian::__repr__() const
   return oss;
 }
 
-/* Test for actual implementation */
-Bool SVMKernelRegressionHessian::isActualImplementation() const
-{
-  return true;
-}
-
 /* Hessian method */
 SymmetricTensor SVMKernelRegressionHessian::hessian(const Point & inP) const
 {

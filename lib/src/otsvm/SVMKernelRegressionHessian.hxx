@@ -64,9 +64,6 @@ public:
   /** String converter */
   OT::String __repr__() const override;
 
-  /** Test for actual implementation */
-  OT::Bool isActualImplementation() const override;
-
   /** Hessian method */
   OT::SymmetricTensor hessian(const OT::Point & inP) const override;
 

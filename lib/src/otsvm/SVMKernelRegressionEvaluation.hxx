@@ -63,9 +63,6 @@ public:
   /** String converter */
   OT::String __repr__() const override;
 
-  /** Test for actual implementation */
-  OT::Bool isActualImplementation() const override;
-
   /** Operator () */
   OT::Point operator() (const OT::Point & inP) const override;
 
