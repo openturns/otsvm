@@ -1,6 +1,5 @@
 #! /usr/bin/env python
 
-import openturns as ot
 import openturns.testing as ott
 import otsvm
 

@@ -15,10 +15,13 @@ Regression
 # - compute the algorithm on an input and output samples and an isoprobabilistic distribution.
 #
 # We recommend for users to use the RBF Kernel (the Gaussian kernel).
-# Moreover, it is important to understand that the selection of parameters (kernel parameter and tradeoff factor) is primary.
+# Moreover, it is important to understand that the selection of
+# parameters (kernel parameter and tradeoff factor) is primary.
 # If you don't know  what to take as parameters, you must take a wide range values,
-# for example :math:`tradeoff \in \{10^-5,10^-3,10^-1...10^3 \}` :math:`kernel\ parameter \in \{10^-15, 10^-13...,10^3 \}`.
-# Usually, the algorithm always converges, but this can take a long while, mostly if you have a lot of parameters to test.
+# for example :math:`tradeoff \in \{10^-5,10^-3,10^-1...10^3 \}`
+# :math:`kernel\ parameter \in \{10^-15, 10^-13...,10^3 \}`.
+# Usually, the algorithm always converges, but this can take a long while,
+# especially if you have a lot of parameters to test.
 
 # %%
 import openturns as ot
@@ -116,10 +119,10 @@ algo.setTradeoffFactor(tradeoff)
 algo.setKernelParameter(kernel)
 # Perform the algorithm
 # algo.run()
-## Stream out the results
+# Stream out the results
 # result = algo.getResult()
 # print(result)
-## get the residual error
+# get the residual error
 # residual = result.getResiduals()
-## get the relative error
+# get the relative error
 # relativeError = result.getRelativeErrors()

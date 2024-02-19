@@ -4,7 +4,8 @@ Classification
 """
 
 # %%
-# The objective of this Use Case is to create a SVM Classification algorithm in order to build a metamodel that separates data in 2 classes.
+# The objective of this Use Case is to create a SVM Classification algorithm
+# in order to build a metamodel that separates data in 2 classes.
 #
 # otsvm enables to:
 #
