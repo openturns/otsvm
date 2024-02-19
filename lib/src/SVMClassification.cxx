@@ -247,9 +247,9 @@ void SVMClassification::save(Advocate & adv) const
 void SVMClassification::load(Advocate & adv)
 {
   ClassifierImplementation::load(adv);
-  adv.saveAttribute( "tradeoffFactor_", tradeoffFactor_ );
-  adv.saveAttribute( "kernelParameter_", kernelParameter_ );
-  adv.saveAttribute( "accuracy_", accuracy_ );
+  adv.loadAttribute( "tradeoffFactor_", tradeoffFactor_ );
+  adv.loadAttribute( "kernelParameter_", kernelParameter_ );
+  adv.loadAttribute( "accuracy_", accuracy_ );
 }
 
 

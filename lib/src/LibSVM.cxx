@@ -339,7 +339,7 @@ Scalar LibSVM::runCrossValidation()
     totalError += (p_implementation_->problem_.y[i] - target[i]) * (p_implementation_->problem_.y[i] - target[i]) / size;
   }
 
-  LOGTRACE(OSS() << "LibSVM::runCrossValidation gamma=" << p_implementation_->parameter_.gamma << " C=" << p_implementation_->parameter_.C << " err=" << totalError);
+  LOGDEBUG(OSS() << "LibSVM::runCrossValidation gamma=" << p_implementation_->parameter_.gamma << " C=" << p_implementation_->parameter_.C << " err=" << totalError);
 
   return totalError;
 }

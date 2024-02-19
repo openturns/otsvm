@@ -7,20 +7,10 @@ import os
 
 # we retrieve the sample from the file sample.csv
 path = os.path.abspath(os.path.dirname(__file__))
-dataInOut = ot.Sample().ImportFromCSVFile(os.path.join(path, "sample.csv"), ",")
-
-dataIn = ot.Sample(861, 2)
-dataOut = ot.Indices(861, 0)
-
-# we build the input Sample and the output Sample because we must separate
-# dataInOut
-for i in range(861):
-    a = dataInOut[i]
-    b = ot.Point(2)
-    b[0] = a[1]
-    b[1] = a[2]
-    dataIn[i] = b
-    dataOut[i] = int(a[0])
+dataInOut = ot.Sample.ImportFromCSVFile(os.path.join(path, "sample.csv"), ",")
+size = len(dataInOut)
+dataIn = dataInOut.getMarginal([1, 2])
+dataOut = [int(dataInOut[i, 0]) for i in range(size)]
 
 # list of C parameter
 cp = [0.000001, 0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100]
@@ -40,3 +30,22 @@ algo.run()
 accuracy = algo.getAccuracy()
 print(accuracy)
 ott.assert_almost_equal(accuracy, 100.0)
+
+for i in range(size):
+    x = dataIn[i]
+    c = dataOut[i]
+    print(f"x={x} c={c} classify={algo.classify(x)} grade={algo.grade(x, c)} predict={algo.predict(x)}")
+
+if ot.PlatformInfo.HasFeature("libxml2"):
+    study = ot.Study()
+    fname = "study_classif.xml"
+    study.setStorageManager(ot.XMLStorageManager(fname))
+    study.add("algo", algo)
+    study.save()
+    study = ot.Study()
+    study.setStorageManager(ot.XMLStorageManager(fname))
+    study.load()
+    algo = otsvm.SVMClassification()
+    study.fillObject("algo", algo)
+    accuracy = algo.getAccuracy()
+    os.remove(fname)

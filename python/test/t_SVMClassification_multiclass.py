@@ -9,21 +9,9 @@ import os
 path = os.path.abspath(os.path.dirname(__file__))
 dataInOut = ot.Sample.ImportFromCSVFile(os.path.join(path, "multiclass.csv"), ",")
 
-dataIn = ot.Sample(148, 4)
-dataOut = ot.Indices(148, 0)
-
-# we build the input Sample and the output Sample because we must separate
-# dataInOut
-for i in range(148):
-    a = dataInOut[i]
-    b = ot.Point(4)
-    b[0] = a[1]
-    b[1] = a[2]
-    b[2] = a[3]
-    b[3] = a[4]
-    dataIn[i] = b
-    dataOut[i] = int(a[0])
-
+size = len(dataInOut)
+dataIn = dataInOut.getMarginal([1, 2, 3, 4])
+dataOut = [int(dataInOut[i, 0]) for i in range(size)]
 
 # list of C parameter
 cp = [0.000001, 0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100]
