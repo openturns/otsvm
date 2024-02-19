@@ -27,22 +27,16 @@ namespace OTSVM
 {
 
 
-
 /**
  * @class ExponentialRBF
  *
  * Implementation of the Exponential RBF kernel
  */
-
-
-
 class OTSVM_API ExponentialRBF
   : public SVMKernelImplementation
 {
   CLASSNAME
 public:
-
-
   /** Constructor with parameters */
   explicit ExponentialRBF(const OT::Scalar sigma = 1.0);
 
@@ -54,7 +48,7 @@ public:
 
   /** Sigma parameter accessor */
   virtual OT::Scalar getSigma() const;
-  virtual void setSigma(OT::Scalar sigma);
+  virtual void setSigma(const OT::Scalar sigma);
 
   /** Accessor to the parameter used for cross-validation */
   OT::Point getParameter() const override;

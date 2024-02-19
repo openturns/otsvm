@@ -77,6 +77,8 @@ Point RationalKernel::getParameter() const
 
 void RationalKernel::setParameter(const Point & parameter)
 {
+  if (parameter.getDimension() != 1)
+    throw InvalidArgumentException(HERE) << "RationalKernel expected a parameter of dimension 1";
   constant_ = parameter[0];
 }
 

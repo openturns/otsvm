@@ -63,7 +63,7 @@ Scalar ExponentialRBF::getSigma() const
   return sigma_;
 }
 
-void ExponentialRBF::setSigma(Scalar sigma)
+void ExponentialRBF::setSigma(const Scalar sigma)
 {
   sigma_ = sigma;
 }
@@ -77,6 +77,8 @@ Point ExponentialRBF::getParameter() const
 
 void ExponentialRBF::setParameter(const Point & parameter)
 {
+  if (parameter.getDimension() != 1)
+    throw InvalidArgumentException(HERE) << "ExponentialRBF expected a parameter of dimension 1";
   sigma_ = parameter[0];
 }
 

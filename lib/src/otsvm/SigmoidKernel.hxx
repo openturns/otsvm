@@ -48,11 +48,11 @@ public:
 
   /* Linear term accessor */
   virtual OT::Scalar getLinear() const;
-  virtual void setLinear(OT::Scalar linear);
+  virtual void setLinear(const OT::Scalar linear);
 
   /* Constant term accessor */
   virtual OT::Scalar getConstant() const;
-  virtual void setConstant(OT::Scalar constant);
+  virtual void setConstant(const OT::Scalar constant);
 
   /* Parameters value and description accessor */
   OT::Point getParameter() const override;

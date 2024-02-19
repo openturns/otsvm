@@ -1,7 +1,9 @@
 #! /usr/bin/env python
 
+import openturns as ot
 import openturns.testing as ott
 import otsvm
+import os
 
 kernels = [
     otsvm.NormalRBF(2.0),
@@ -21,6 +23,7 @@ y = [0.0, 3.0]
 V.append([x, y])
 
 for kernel in kernels:
+    print(kernel)
     for v in V:
         x, y = v
         print("x,y=", x, y)
@@ -43,3 +46,22 @@ for kernel in kernels:
 
         kxydx2 = kernel.partialHessian(x, y)
         print("d2kernel/(dx_i*dx_j)(x,y)=", repr(kxydx2))
+
+    # parameter accessor
+    param = kernel.getParameter()
+    kernel.setParameter(param)
+
+    # serialization
+    if ot.PlatformInfo.HasFeature("libxml2"):
+        study = ot.Study()
+        fname = "study_kernel.xml"
+        study.setStorageManager(ot.XMLStorageManager(fname))
+        study.add("kernel", kernel)
+        study.save()
+        study = ot.Study()
+        study.setStorageManager(ot.XMLStorageManager(fname))
+        study.load()
+        kernel = otsvm.SVMKernel()
+        study.fillObject("kernel", kernel)
+        print(kernel)
+        os.remove(fname)

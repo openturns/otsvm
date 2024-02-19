@@ -101,13 +101,16 @@ void PolynomialKernel::setConstant(Scalar constant)
 /* Accessor to the parameter used for cross-validation */
 Point PolynomialKernel::getParameter() const
 {
-  return {degree_};
+  return {degree_, linear_, constant_};
 }
 
 void PolynomialKernel::setParameter(const Point & parameter)
 {
+  if (parameter.getDimension() != 3)
+    throw InvalidArgumentException(HERE) << "PolynomialKernel expected a parameter of dimension 3";
   degree_ = parameter[0];
-  constant_ = parameter[1];
+  linear_ = parameter[1];
+  constant_ = parameter[2];
 }
 
 

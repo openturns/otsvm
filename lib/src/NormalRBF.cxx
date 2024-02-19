@@ -63,7 +63,7 @@ Scalar NormalRBF::getSigma() const
   return sigma_;
 }
 
-void NormalRBF::setSigma(Scalar sigma)
+void NormalRBF::setSigma(const Scalar sigma)
 {
   sigma_ = sigma;
 }
@@ -77,6 +77,8 @@ Point NormalRBF::getParameter() const
 
 void NormalRBF::setParameter(const Point & parameter)
 {
+  if (parameter.getDimension() != 1)
+    throw InvalidArgumentException(HERE) << "NormalRBF expected a parameter of dimension 1";
   sigma_ = parameter[0];
 }
 
@@ -91,8 +93,8 @@ Description NormalRBF::getParameterDescription() const
 /* Operator () */
 Scalar NormalRBF::operator() (const Point & x1, const Point & x2) const
 {
-  Point difference(x1 - x2);
-  Scalar value = exp(- difference.normSquare() / (2.0 * sigma_ * sigma_));
+  const Point difference(x1 - x2);
+  const Scalar value = exp(- difference.normSquare() / (2.0 * sigma_ * sigma_));
   return value;
 }
 

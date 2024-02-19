@@ -55,8 +55,8 @@ SigmoidKernel * SigmoidKernel::clone() const
 String SigmoidKernel::__repr__() const
 {
   return OSS()  << "class=" << getClassName()
-         << "constant=" << constant_
-         << "linear=" << linear_;
+         << " constant=" << constant_
+         << " linear=" << linear_;
 }
 
 
@@ -66,7 +66,7 @@ Scalar SigmoidKernel::getLinear() const
   return linear_;
 }
 
-void SigmoidKernel::setLinear( Scalar linear )
+void SigmoidKernel::setLinear(const Scalar linear)
 {
   linear_ = linear;
 }
@@ -78,13 +78,15 @@ Scalar SigmoidKernel::getConstant() const
   return constant_;
 }
 
-void SigmoidKernel::setConstant( Scalar constant )
+void SigmoidKernel::setConstant(const Scalar constant)
 {
   constant_ = constant;
 }
 
 void SigmoidKernel::setParameter(const Point & parameter)
 {
+  if (parameter.getDimension() != 2)
+    throw InvalidArgumentException(HERE) << "SigmoidKernel expected a parameter of dimension 2";
   linear_ = parameter[0];
   constant_ = parameter[1];
 }
@@ -101,10 +103,10 @@ Description SigmoidKernel::getParameterDescription() const
 }
 
 /* Operator () */
-Scalar SigmoidKernel::operator() ( const Point & x1, const Point & x2 ) const
+Scalar SigmoidKernel::operator() (const Point & x1, const Point & x2) const
 {
-  Scalar dotProduct = x1.dot(x2);
-  Scalar value = tanh( linear_ * dotProduct + constant_ );
+  const Scalar dotProduct = x1.dot(x2);
+  const Scalar value = tanh( linear_ * dotProduct + constant_ );
   return value;
 }
 
