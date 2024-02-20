@@ -49,6 +49,8 @@ for kernel in kernels:
 
     # parameter accessor
     param = kernel.getParameter()
+    desc = kernel.getParameterDescription()
+    assert len(param) == len(desc), "mismatched param/desc"
     kernel.setParameter(param)
 
     # serialization

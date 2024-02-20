@@ -22,6 +22,7 @@ algo = otsvm.SVMClassification(dataIn, dataOut)
 algo.setKernelType(otsvm.LibSVM.NormalRbf)
 algo.setTradeoffFactor(cp)
 algo.setKernelParameter(gamma)
+print(algo)
 
 # compute the classification
 algo.run()
@@ -35,6 +36,8 @@ for i in range(size):
     x = dataIn[i]
     c = dataOut[i]
     print(f"x={x} c={c} classify={algo.classify(x)} grade={algo.grade(x, c)} predict={algo.predict(x)}")
+
+algo.setWeight([1.0] * size)
 
 if ot.PlatformInfo.HasFeature("libxml2"):
     study = ot.Study()

@@ -39,4 +39,7 @@ if ot.PlatformInfo.HasFeature("libxml2"):
 
     os.remove(fileName)
 
-    assert metamodel(mean) == loadedMetamodel(mean)
+    x = mean
+    assert metamodel(x) == loadedMetamodel(x)
+    assert metamodel.gradient(x) == loadedMetamodel.gradient(x)
+    assert metamodel.hessian(x) == loadedMetamodel.hessian(x)
