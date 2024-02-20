@@ -32,12 +32,17 @@ accuracy = algo.getAccuracy()
 print(accuracy)
 ott.assert_almost_equal(accuracy, 100.0)
 
-for i in range(size):
+for i in range(10):
     x = dataIn[i]
     c = dataOut[i]
     print(f"x={x} c={c} classify={algo.classify(x)} grade={algo.grade(x, c)} predict={algo.predict(x)}")
 
 algo.setWeight([1.0] * size)
+
+algo.runKMeans(2)
+accuracy = algo.getAccuracy()
+print(accuracy)
+assert accuracy > 99.8, "accuracy"
 
 if ot.PlatformInfo.HasFeature("libxml2"):
     study = ot.Study()

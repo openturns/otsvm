@@ -43,3 +43,17 @@ if ot.PlatformInfo.HasFeature("libxml2"):
     assert metamodel(x) == loadedMetamodel(x)
     assert metamodel.gradient(x) == loadedMetamodel.gradient(x)
     assert metamodel.hessian(x) == loadedMetamodel.hessian(x)
+
+    # save
+    study = ot.Study()
+    study.setStorageManager(ot.XMLStorageManager(fileName))
+    study.add("algo", algo)
+    study.save()
+
+    # load
+    study = ot.Study()
+    study.setStorageManager(ot.XMLStorageManager(fileName))
+    study.load()
+    loadedAlgo = otsvm.SVMRegression()
+    study.fillObject("algo", loadedAlgo)
+    assert algo.getKernelParameter() == loadedAlgo.getKernelParameter()
