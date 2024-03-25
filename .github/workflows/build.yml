@@ -9,7 +9,7 @@ jobs:
         run: |
           docker pull openturns/archlinux-module
           docker run -e MAKEFLAGS='-j2' -v `pwd`:/io openturns/archlinux-module /io/.ci_support/run_docker_linux.sh `id -u` `id -g`
-      - name: Upload
+      - name: Upload documentation
         if: ${{ github.ref == 'refs/heads/master' }}
         run: |
           git clone --depth 1 https://${{ secrets.GH_TOKEN }}@github.com/openturns/openturns.github.io.git /tmp/io
