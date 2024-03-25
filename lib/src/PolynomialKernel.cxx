@@ -126,7 +126,7 @@ Scalar PolynomialKernel::operator() (const Point & x1, const Point & x2) const
 /* Parameters value and description accessor */
 Description PolynomialKernel::getParameterDescription() const
 {
-  return {"degree", "linear term", "constant term"};
+  return { "degree", "linear term", "constant term"};
 }
 
 /* Partial gradient */
