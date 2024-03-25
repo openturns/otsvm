@@ -22,6 +22,13 @@ jobs:
           git add -A .
           git commit -a -m "GitHub Actions build ${GITHUB_REPOSITORY} ${GITHUB_RUN_ID}" || exit 0
           git push --quiet origin master > /dev/null 2>&1
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: openturns/otsvm
+          file: ./html/coverage/coverage.info
+          verbose: true
 
   mingw:
     runs-on: ubuntu-latest

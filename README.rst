@@ -1,6 +1,9 @@
 .. image:: https://github.com/openturns/otsvm/actions/workflows/build.yml/badge.svg?branch=master
     :target: https://github.com/openturns/otsvm/actions/workflows/build.yml
 
+.. image:: https://codecov.io/gh/openturns/otsvm/graph/badge.svg?token=A7L8E5O0W2
+    :target: https://codecov.io/gh/openturns/otsvm
+
 OTSVM Module
 ============
 
