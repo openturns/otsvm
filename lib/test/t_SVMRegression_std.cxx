@@ -34,28 +34,13 @@ int main(int /*argc*/, char ** /*argv*/)
 
   for(int i = 0; i < 100; i++)
   {
-    Point a(1);
-    a[0] = i + 1;
-    Point b(2);
-    b[0] = 2 * (i + 1);
-    b[1] = i + 4;
-    dataIn[i] = a;
-    dataOut[i] = b;
+    dataIn(i, 0) = i + 1.0;
+    dataOut[i] = Point({2.0 * (i + 1.0), i + 4.0});
   }
 
 
-  Point cp(2);
-  cp[0] = 5;
-  cp[1] = 10;
-
-  Point gamma(5);
-  gamma[1] = 0.1;
-  gamma[0] = 0.001;
-  gamma[2] = 10;
-  gamma[3] = 100;
-  gamma[4] = 1;
-
-
+  const Point cp = {5.0, 10.0};
+  const Point gamma = {0.001, 0.1, 10.0, 100.0, 1.0};
 
   LibSVM::KernelType kernel = LibSVM::NormalRbf;
   OTSVM::SVMRegression regression(dataIn, dataOut, kernel);
