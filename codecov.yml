@@ -4,3 +4,5 @@ coverage:
     project:
       default:
         threshold: 0.5%
+comment:
+  behavior: default
