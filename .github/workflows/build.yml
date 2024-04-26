@@ -30,8 +30,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: openturns/otsvm
-          file: ./html/coverage/coverage.info
-          verbose: true
+          file: ./coverage/coverage.info
 
   mingw:
     runs-on: ubuntu-latest
