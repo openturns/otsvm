@@ -95,7 +95,6 @@ Point SVMKernelRegressionEvaluation::operator() (const Point & inP) const
     if (lagrangeMultiplier_[i] != 0.0)
       output += lagrangeMultiplier_[i] * kernel_(dataIn_[i], inP);
   }
-  const Point result(1, output);
   return Point(1, output);
 }
 

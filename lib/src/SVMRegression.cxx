@@ -82,16 +82,10 @@ void SVMRegression::run()
   Scalar bestTradeoffFactor = tradeoffFactor_[0];
   Scalar bestKernelParameter = kernelParameter_[0];
 
-  Sample isoProbSample( size, inputDimension );
   Function outputTransformation;
   Function outputInverseTransformation;
 
   Collection<Function> marginals;
-  Collection<Function> outputTransformationMarginals;
-
-  Point relativeError( outputDimension );
-  Point residu( outputDimension );
-  Point variance( outputDimension );
 
   driver_.normalize(outputSample_, outputTransformation, outputInverseTransformation);
   Sample normalizedOutputSample(outputTransformation(outputSample_));
