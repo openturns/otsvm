@@ -16,15 +16,14 @@ ctest --output-on-failure --timeout 100 ${MAKEFLAGS}
 
 # coverage
 gcov `find lib/src/ -name "*.gcno"`
-lcov --capture --directory ./lib/src/ -o coverage.info
-lcov --remove coverage.info "/usr/include/*" -o coverage.info
-genhtml coverage.info --output-directory ~/.local/share/doc/*/html/coverage
-cp -v coverage.info ~/.local/share/doc/*/html/coverage
+lcov --capture --directory . --output-file coverage.info --include "*.cxx"
+genhtml --output-directory coverage coverage.info
+cp -v coverage.info coverage
 
 uid=$1
 gid=$2
 if test -n "${uid}" -a -n "${gid}"
 then
-  sudo cp -r ~/.local/share/doc/*/html /io
+  sudo cp -r ~/.local/share/doc/*/html coverage /io
   sudo chown -R ${uid}:${gid} /io/html
 fi
