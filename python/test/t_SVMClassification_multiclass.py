@@ -3,7 +3,6 @@
 import openturns as ot
 import openturns.testing as ott
 import otsvm
-import os
 
 # we retrieve the sample from the file sample.csv
 dataInOut = ot.Sample.ImportFromCSVFile("multiclass.csv", ",")
