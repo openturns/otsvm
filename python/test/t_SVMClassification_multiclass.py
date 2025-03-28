@@ -6,8 +6,7 @@ import otsvm
 import os
 
 # we retrieve the sample from the file sample.csv
-path = os.path.abspath(os.path.dirname(__file__))
-dataInOut = ot.Sample.ImportFromCSVFile(os.path.join(path, "multiclass.csv"), ",")
+dataInOut = ot.Sample.ImportFromCSVFile("multiclass.csv", ",")
 
 size = len(dataInOut)
 dataIn = dataInOut.getMarginal([1, 2, 3, 4])

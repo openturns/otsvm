@@ -59,4 +59,6 @@ endif ()
 add_custom_target ( pyinstallcheck COMMAND ${CMAKE_CTEST_COMMAND} -R "^pyinstallcheck_"
                     COMMENT "Run Python post-installation tests" )
 
-
+if (NOT CMAKE_SOURCE_DIR STREQUAL CMAKE_BINARY_DIR)
+  execute_process (COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/multiclass.csv ${CMAKE_CURRENT_BINARY_DIR})
+endif ()
