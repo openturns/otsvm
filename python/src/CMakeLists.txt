@@ -16,37 +16,14 @@ macro (ot_add_python_module MODULENAME SOURCEFILE)
   endif ()
 
   set (swig_other_sources)
-  set (docstring_sources)
   foreach (it ${ARGN})
     if (${it} MATCHES ".*\\.i$")
       ot_install_swig_file (${it})
-    elseif (${it} MATCHES ".*_doc\\.i\\.in$")
-      list (APPEND docstring_sources ${it})
-
-      get_filename_component (DOCSTRING_FILE_BASENAME ${it} NAME_WE)
-      ot_install_swig_file (${CMAKE_CURRENT_BINARY_DIR}/${DOCSTRING_FILE_BASENAME}.i)
     else ()
       list (APPEND swig_other_sources "${it}")
     endif ()
   endforeach ()
 
-  # https://github.com/swig/swig/issues/1273
-  option (SWIG_FORCE_DOUBLE_ESCAPE_BACKSLASH "Force double escaping of backslashes" OFF)
-  mark_as_advanced (SWIG_FORCE_DOUBLE_ESCAPE_BACKSLASH)
-  set (TIMES x1)
-  if ((SWIG_VERSION VERSION_LESS 4) OR SWIG_FORCE_DOUBLE_ESCAPE_BACKSLASH)
-    set (TIMES x2)
-  endif ()
-
-  # handle docstring generation
-  add_custom_target (generate_${MODULENAME}_docstrings
-                      COMMAND ${CMAKE_COMMAND} -DDOCSTRING_SOURCES="${docstring_sources}"
-                      -DCURRENT_SOURCE_DIR=${CMAKE_CURRENT_SOURCE_DIR} -DTIMES=${TIMES}
-                      -P ${CMAKE_SOURCE_DIR}/cmake/escape_backslash.cmake
-                      DEPENDS ${docstring_sources})
-  list (APPEND SWIG_MODULE_${MODULENAME}_python_EXTRA_DEPS generate_${MODULENAME}_docstrings)
-
-  # swig_add_module is deprecated
   swig_add_library (${MODULENAME}_python LANGUAGE python SOURCES ${SOURCEFILE} ${swig_other_sources})
 
   # UseSWIG generates now standard target names
@@ -77,18 +54,18 @@ endmacro ()
 
 
 ot_add_python_module( otsvm otsvm_module.i
-                      SVMKernelImplementation.i SVMKernelImplementation_doc.i.in
-                      SVMKernel.i SVMKernel_doc.i.in
-                      NormalRBF.i NormalRBF_doc.i.in
-                      ExponentialRBF.i ExponentialRBF_doc.i.in
-                      RationalKernel.i RationalKernel_doc.i.in
-                      PolynomialKernel.i PolynomialKernel_doc.i.in
-                      SigmoidKernel.i SigmoidKernel_doc.i.in
-                      LinearKernel.i LinearKernel_doc.i.in
-                      LibSVM.i LibSVM_doc.i.in
-                      SVMRegression.i SVMRegression_doc.i.in
-                      SVMClassification.i SVMClassification_doc.i.in
-                      KMeansClustering.i KMeansClustering_doc.i.in)
+                      SVMKernelImplementation.i SVMKernelImplementation_doc.i
+                      SVMKernel.i SVMKernel_doc.i
+                      NormalRBF.i NormalRBF_doc.i
+                      ExponentialRBF.i ExponentialRBF_doc.i
+                      RationalKernel.i RationalKernel_doc.i
+                      PolynomialKernel.i PolynomialKernel_doc.i
+                      SigmoidKernel.i SigmoidKernel_doc.i
+                      LinearKernel.i LinearKernel_doc.i
+                      LibSVM.i LibSVM_doc.i
+                      SVMRegression.i SVMRegression_doc.i
+                      SVMClassification.i SVMClassification_doc.i
+                      KMeansClustering.i KMeansClustering_doc.i)
 
 
 
