@@ -58,5 +58,7 @@ algo.setKernelParameter(gamma)
 algo.run()
 result = algo.getResult()
 print(result)
-assert result.getResiduals()[0] < 2e-3
-assert result.getRelativeErrors()[0] < 3e-5
+
+validation = ot.MetaModelValidation(dataOut, result.getMetaModel()(dataIn))
+mse = validation.computeMeanSquaredError()[0]
+assert mse < 2e-3
