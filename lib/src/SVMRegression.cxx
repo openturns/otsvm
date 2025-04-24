@@ -145,6 +145,9 @@ void SVMRegression::run()
   ComposedFunction composed(aggregated, driver_.getInputTransformation());
   ComposedFunction metaModel(outputInverseTransformation, composed);
 
+#if OPENTURNS_VERSION >= 102500
+  result_ = MetaModelResult(inputSample_, outputSample_, metaModel);
+#else
   // compute residual, relative error
   Point residuals(outputDimension);
   Point relativeErrors(outputDimension);
@@ -163,8 +166,8 @@ void SVMRegression::run()
     const Scalar empiricalError = quadraticResidual / size;
     relativeErrors[outputIndex] = empiricalError / outputVariance[outputIndex];
   }
-
   result_ = MetaModelResult(inputSample_, outputSample_, metaModel, residuals, relativeErrors);
+#endif
 }
 
 

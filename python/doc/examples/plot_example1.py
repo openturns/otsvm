@@ -75,11 +75,11 @@ algo.setKernelParameter(kernel)
 algo.run()
 # Stream out the results
 result = algo.getResult()
-# get the residual error
-residual = result.getResiduals()
-# get the relative error
-relativeError = result.getRelativeErrors()
-print(f"residual={residual} error={relativeError}")
+# Get the errors
+validation = ot.MetaModelValidation(dataOut, result.getMetaModel()(dataIn))
+mse = validation.computeMeanSquaredError()
+r2 = validation.computeR2Score()
+print(f"mse={mse} r2={r2}")
 
 # second example : create the problem with an experiment plane:
 # first, we create the plane
@@ -96,11 +96,11 @@ algo2.setKernelParameter(kernel)
 algo2.run()
 # Stream out the results
 result = algo2.getResult()
-# get the residual error
-residual = result.getResiduals()
-# get the relative error
-relativeError = result.getRelativeErrors()
-print(f"residual={residual} error={relativeError}")
+# Get the errors
+validation = ot.MetaModelValidation(dataOut, result.getMetaModel()(dataIn))
+mse = validation.computeMeanSquaredError()
+r2 = validation.computeR2Score()
+print(f"mse={mse} r2={r2}")
 
 # third example is here to present you the SVMResourceMap class.
 # Users can fix others parameters like the degree and the constant of the
@@ -122,7 +122,3 @@ algo.setKernelParameter(kernel)
 # Stream out the results
 # result = algo.getResult()
 # print(result)
-# get the residual error
-# residual = result.getResiduals()
-# get the relative error
-# relativeError = result.getRelativeErrors()
