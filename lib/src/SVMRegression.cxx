@@ -145,29 +145,7 @@ void SVMRegression::run()
   ComposedFunction composed(aggregated, driver_.getInputTransformation());
   ComposedFunction metaModel(outputInverseTransformation, composed);
 
-#if OPENTURNS_VERSION >= 102500
   result_ = MetaModelResult(inputSample_, outputSample_, metaModel);
-#else
-  // compute residual, relative error
-  Point residuals(outputDimension);
-  Point relativeErrors(outputDimension);
-  Sample mY(metaModel(inputSample_));
-  Point outputVariance(outputSample_.computeVariance());
-
-  for (UnsignedInteger outputIndex = 0; outputIndex < outputDimension; ++ outputIndex)
-  {
-    Scalar quadraticResidual = 0.;
-    for (UnsignedInteger i = 0; i < size; ++ i)
-    {
-      const Scalar slack = outputSample_[i][outputIndex] - mY[i][outputIndex];
-      quadraticResidual += slack * slack;
-    }
-    residuals[outputIndex] = sqrt( quadraticResidual ) / size;
-    const Scalar empiricalError = quadraticResidual / size;
-    relativeErrors[outputIndex] = empiricalError / outputVariance[outputIndex];
-  }
-  result_ = MetaModelResult(inputSample_, outputSample_, metaModel, residuals, relativeErrors);
-#endif
 }
 
 
