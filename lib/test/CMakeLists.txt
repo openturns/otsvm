@@ -1,6 +1,4 @@
 
-set (CHECK_ENVIRONMENT)
-
 set (CHECK_TO_BE_RUN)
 macro (ot_check_test TESTNAME)
   set (TEST_TARGET t_${TESTNAME})
@@ -26,7 +24,6 @@ macro (ot_check_test TESTNAME)
     endif ()
     add_test (NAME cppcheck_${TESTNAME} COMMAND "sh" "-c" "(${CMAKE_CROSSCOMPILING_EMULATOR} $<TARGET_FILE:${TEST_TARGET}> > ${CMAKE_CURRENT_BINARY_DIR}/${TEST_TARGET}.out) && diff -u --strip-trailing-cr ${OUTFILE_LOC} ${CMAKE_CURRENT_BINARY_DIR}/${TEST_TARGET}.out")
   endif ()
-  set_tests_properties (cppcheck_${TESTNAME} PROPERTIES ENVIRONMENT "${CHECK_ENVIRONMENT}")
   list (APPEND CHECK_TO_BE_RUN ${TEST_TARGET})
 endmacro ()
 
