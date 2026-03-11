@@ -30,16 +30,12 @@ namespace OTSVM
 
 SVMResourceMap_init::SVMResourceMap_init()
 {
-  static std::once_flag flag;
-  std::call_once(flag, [&]()
-  {
-    ResourceMap::AddAsUnsignedInteger("LibSVM-DegreePolynomialKernel", 3);
-    ResourceMap::AddAsScalar("LibSVM-ConstantPolynomialKernel", 0);
-    ResourceMap::AddAsUnsignedInteger("LibSVM-CacheSize", 100);
-    ResourceMap::AddAsScalar("LibSVM-Epsilon", 1e-3);
-    ResourceMap::AddAsUnsignedInteger("SVMRegression-NumberOfFolds", 3);
-    ResourceMap::AddAsUnsignedInteger("LibSVM-Shrinking", 1);
-  });
+  ResourceMap::AddAsUnsignedInteger("LibSVM-DegreePolynomialKernel", 3);
+  ResourceMap::AddAsScalar("LibSVM-ConstantPolynomialKernel", 0);
+  ResourceMap::AddAsUnsignedInteger("LibSVM-CacheSize", 100);
+  ResourceMap::AddAsScalar("LibSVM-Epsilon", 1e-3);
+  ResourceMap::AddAsUnsignedInteger("SVMRegression-NumberOfFolds", 3);
+  ResourceMap::AddAsUnsignedInteger("LibSVM-Shrinking", 1);
 }
 
 }

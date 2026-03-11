@@ -38,7 +38,7 @@ model = ot.SymbolicFunction(inputVariables, [formula])
 
 # Create the input distribution
 marginals = [ot.Uniform(-pi, pi)] * 3
-distribution = ot.ComposedDistribution(marginals)
+distribution = ot.JointDistribution(marginals)
 dataIn = distribution.getSample(250)
 dataOut = model(dataIn)
 

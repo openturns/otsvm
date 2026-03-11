@@ -19,7 +19,7 @@
 #include <openturns/OTtestcode.hxx>
 #include <otsvm/OTSVM.hxx>
 #include <openturns/Function.hxx>
-#include <openturns/ComposedDistribution.hxx>
+#include <openturns/JointDistribution.hxx>
 
 using namespace OT;
 using namespace OT::Test;

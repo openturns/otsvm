@@ -55,7 +55,7 @@ ot.RandomGenerator.SetSeed(0)
 marginals = ot.DistributionCollection(dimension)
 for i in range(dimension):
     marginals[i] = ot.Uniform(0.0, 1.0)
-distribution = ot.ComposedDistribution(marginals)
+distribution = ot.JointDistribution(marginals)
 
 # create lists of kernel parameters and tradeoff factors
 tradeoff = [0.01, 0.1, 1, 10, 100, 1000]
