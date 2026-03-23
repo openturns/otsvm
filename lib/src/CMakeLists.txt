@@ -24,7 +24,6 @@ ot_add_source_file ( SVMKernelRegressionHessian.cxx )
 ot_add_source_file ( SVMRegression.cxx )
 ot_add_source_file ( SVMClassification.cxx )
 ot_add_source_file ( KMeansClustering.cxx )
-ot_add_source_file ( SVMResourceMap.cxx )
 
 ot_install_header_file ( SVMKernel.hxx )
 ot_install_header_file ( SVMKernelImplementation.hxx )
@@ -41,7 +40,6 @@ ot_install_header_file ( SVMKernelRegressionHessian.hxx )
 ot_install_header_file ( SVMRegression.hxx )
 ot_install_header_file ( SVMClassification.hxx )
 ot_install_header_file ( KMeansClustering.hxx )
-ot_install_header_file ( SVMResourceMap.hxx )
 
 
 include_directories (${INTERNAL_INCLUDE_DIRS})
