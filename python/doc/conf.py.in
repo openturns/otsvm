@@ -36,6 +36,7 @@ extensions = ['sphinx.ext.autodoc']
 extensions.append('sphinx.ext.autodoc')
 
 autodoc_default_options = {'members': None, 'inherited-members': None, 'exclude-members': 'thisown'}
+autodoc_use_legacy_class_based = True
 
 extensions.append('sphinx.ext.autosummary')
 autosummary_generate = True
@@ -54,7 +55,7 @@ extensions.append('sphinx.ext.coverage')
 extensions.append('sphinx.ext.intersphinx')
 # try to download inventory else fallback to local inventory
 inventory = (None, 'openturns-objects.inv')
-intersphinx_mapping = {'openturns': ('http://openturns.github.io/openturns/latest', inventory)}
+intersphinx_mapping = {'openturns': ('https://openturns.github.io/openturns/latest', inventory)}
 
 extensions.append('sphinx.ext.imgmath')
 imgmath_latex_preamble = r'\usepackage{{{0}math_notations}}'.format(
@@ -62,10 +63,13 @@ imgmath_latex_preamble = r'\usepackage{{{0}math_notations}}'.format(
 imgmath_use_preview = True
 if subprocess.run(['dvisvgm', '-V'], shell=True, capture_output=True).returncode == 0:
     imgmath_image_format = 'svg'
-# embed images inside html
+# embed image files inside html
 imgmath_embed = True
 
-extensions.append('matplotlib.sphinxext.plot_directive')
+extensions.append("matplotlib.sphinxext.plot_directive")
+plot_formats = ["svg"]
+plot_rcparams = {"svg.hashsalt": "nacl"}
+plot_pre_code = "import openturns as ot; ot.ResourceMap.Reset(); ot.RandomGenerator.Reset()"
 
 extensions.append('sphinx_copybutton')
 copybutton_prompt_text = ">>> "
