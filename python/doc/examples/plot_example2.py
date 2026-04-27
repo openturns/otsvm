@@ -19,6 +19,7 @@ import openturns as ot
 import otsvm
 import os
 
+# %%
 # this example uses a csv file with the datas for the classification
 # we retrieve the sample from the file sample.csv
 try:
@@ -28,22 +29,26 @@ except NameError:
     path = os.getcwd()
 dataInOut = ot.Sample.ImportFromCSVFile(os.path.join(path, "sample.csv"), ",")
 
+# %%
 # we create dataIn and dataOut
 size = dataInOut.getSize()
 dataIn = dataInOut.getMarginal([1, 2])
 dataOut = [int(dataInOut[i, 0]) for i in range(size)]
 
+# %%
 # list of C parameter
 cp = [0.000001, 0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100]
 # list of gamma parameter in kernel function
 gamma = [0.000001, 0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100]
 
+# %%
 # create the Classification Problem
 algo = otsvm.SVMClassification(dataIn, dataOut)
 algo.setKernelType(otsvm.LibSVM.NormalRbf)
 algo.setTradeoffFactor(cp)
 algo.setKernelParameter(gamma)
 
+# %%
 # compute the classification
 algo.run()
 print("#######################")

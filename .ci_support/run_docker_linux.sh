@@ -3,13 +3,13 @@
 set -xe
 
 cd /tmp
-mkdir build && cd build
-cmake -DCMAKE_INSTALL_PREFIX=~/.local \
-      -DCMAKE_UNITY_BUILD=ON -DCMAKE_UNITY_BUILD_BATCH_SIZE=32 \
-      -DCMAKE_CXX_FLAGS="-Wall -Wextra -Wpedantic -Werror -D_GLIBCXX_ASSERTIONS --coverage" \
-      -DSWIG_COMPILE_FLAGS="-O1 -Wno-unused-parameter" \
+cmake -DCMAKE_INSTALL_PREFIX=${HOME}/.local \
+      -DCMAKE_UNITY_BUILD=ON \
+      -DCMAKE_CXX_FLAGS="-Wall -Wextra -Wpedantic -Wno-shadow -Wno-suggest-override -Werror -D_GLIBCXX_ASSERTIONS --coverage" \
+      -DSWIG_COMPILE_FLAGS="-O1 -Wno-unused-parameter -Wno-shadow" \
       -DUSE_SPHINX=ON -DSPHINX_FLAGS="-W -T -j4" \
-      /io
+      -B build /io
+cd build
 make install
 make tests
 ctest --output-on-failure --timeout 100 ${MAKEFLAGS}
@@ -20,10 +20,9 @@ lcov --capture --directory lib --output-file coverage.info --include "*.cxx" -j 
 genhtml --output-directory coverage coverage.info
 cp -v coverage.info coverage
 
-uid=$1
-gid=$2
-if test -n "${uid}" -a -n "${gid}"
+UID_GID=$1
+if test -n "${UID_GID}"
 then
-  sudo cp -r ~/.local/share/doc/*/html coverage /io
-  sudo chown -R ${uid}:${gid} /io/html
+  sudo chown -R ${UID_GID} ~/.local/share/doc/*/html
+  sudo cp -pr ~/.local/share/doc/*/html /io
 fi

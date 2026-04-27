@@ -27,11 +27,12 @@ Regression
 import openturns as ot
 import otsvm
 
+# %%
 # create a function, here we create the Sobol function
 dimension = 3
 meanTh = 1.0
-a = ot.Point(dimension)
-inputVariables = ot.Description(dimension)
+a = [0.0] * dimension
+inputVariables = [""] * dimension
 formula = "1.0"
 covTh = 1.0
 for i in range(dimension):
@@ -48,19 +49,22 @@ for i in range(dimension):
         + "))"
     )
 covTh = covTh - 1.0
-model = ot.SymbolicFunction(inputVariables, ot.Description(1, formula))
+model = ot.SymbolicFunction(inputVariables, [formula])
 
+# %%
 # create the input distribution
 ot.RandomGenerator.SetSeed(0)
-marginals = ot.DistributionCollection(dimension)
+marginals = [None] * dimension
 for i in range(dimension):
     marginals[i] = ot.Uniform(0.0, 1.0)
 distribution = ot.JointDistribution(marginals)
 
+# %%
 # create lists of kernel parameters and tradeoff factors
 tradeoff = [0.01, 0.1, 1, 10, 100, 1000]
 kernel = [0.001, 0.01, 0.1, 1, 10, 100]
 
+# %%
 # first example : create the problem with an input and output samples:
 # first, we create samples
 dataIn = distribution.getSample(250)
@@ -81,6 +85,7 @@ mse = validation.computeMeanSquaredError()
 r2 = validation.computeR2Score()
 print(f"mse={mse} r2={r2}")
 
+# %%
 # second example : create the problem with an experiment plane:
 # first, we create the plane
 myExperiment = ot.MonteCarloExperiment(distribution, 250)
@@ -102,6 +107,7 @@ mse = validation.computeMeanSquaredError()
 r2 = validation.computeR2Score()
 print(f"mse={mse} r2={r2}")
 
+# %%
 # third example is here to present you the SVMResourceMap class.
 # Users can fix others parameters like the degree and the constant of the
 # Polynomial Kernel,the cacheSize, the number of folds or the epsilon
