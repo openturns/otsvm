@@ -28,6 +28,8 @@
 #include <openturns/SpecFunc.hxx>
 #include <openturns/LinearFunction.hxx>
 
+#include <limits>
+
 #include "svm.h"
 
 
@@ -50,6 +52,31 @@ public:
 
   /* Libsvm node */
   svm_node* p_node_ = nullptr;
+
+  ~LibSVMImplementation()
+  {
+    if (p_model_)
+    {
+      svm_free_and_destroy_model(&p_model_);
+    }
+    if (p_node_)
+    {
+      free(p_node_);
+      p_node_ = nullptr;
+    }
+    if (problem_.x)
+    {
+      free(problem_.x);
+      problem_.x = nullptr;
+    }
+    if (problem_.y)
+    {
+      free(problem_.y);
+      problem_.y = nullptr;
+    }
+    free(parameter_.weight);
+    free(parameter_.weight_label);
+  }
 };
 
 
@@ -119,6 +146,8 @@ void LibSVM::setTradeoffFactor(const Scalar tradeoffFactor)
 /* Number of support vectors accessor */
 UnsignedInteger LibSVM::getNumberSupportVector()
 {
+  if (!p_implementation_->p_model_)
+    throw InternalException(HERE) << "LibSVM: model is not trained";
   return p_implementation_->p_model_->l;
 }
 
@@ -152,6 +181,8 @@ SVMKernel LibSVM::getKernel() const
 /* Support vectors accessor */
 Sample LibSVM::getSupportVector(const UnsignedInteger dim)
 {
+  if (!p_implementation_->p_model_)
+    throw InternalException(HERE) << "LibSVM: model is not trained";
   Sample res( getNumberSupportVector(), dim );
 
 
@@ -162,6 +193,7 @@ Sample LibSVM::getSupportVector(const UnsignedInteger dim)
     svm_node* i = getNode(l);
     while(i -> index != -1)
     {
+      if (j >= dim) break;
       node[j] = i -> value;
       ++ i;
       j ++;
@@ -175,6 +207,8 @@ Sample LibSVM::getSupportVector(const UnsignedInteger dim)
 /* Constant accessor */
 Scalar LibSVM:: getConstant() const
 {
+  if (!p_implementation_->p_model_)
+    throw InternalException(HERE) << "LibSVM: model is not trained";
   return -p_implementation_->p_model_->rho[0];
 }
 
@@ -198,6 +232,8 @@ void LibSVM::setP(const OT::Scalar p)
 /* Coefficient support vector accessor */
 Point LibSVM::getSupportVectorCoef( )
 {
+  if (!p_implementation_->p_model_)
+    throw InternalException(HERE) << "LibSVM: model is not trained";
   Point res(getNumberSupportVector());
   for(UnsignedInteger j = 0 ; j < getNumberSupportVector(); ++ j)
     res[j] = p_implementation_->p_model_->sv_coef[0][j];
@@ -254,6 +290,8 @@ void LibSVM::setKernelType(const UnsignedInteger kernelType)
 /* Node accessor */
 svm_node* LibSVM::getNode(const UnsignedInteger index)
 {
+  if (!p_implementation_->p_model_)
+    throw InternalException(HERE) << "LibSVM: model is not trained";
   return p_implementation_->p_model_ -> SV[index];
 }
 
@@ -347,6 +385,8 @@ Scalar LibSVM::runCrossValidation()
 
 Scalar LibSVM::computeError()
 {
+  if (!p_implementation_->p_model_)
+    throw InternalException(HERE) << "LibSVM: model is not trained";
   Scalar totalerror = 0;
 
   for ( UnsignedInteger k = 0 ; k < (UnsignedInteger)p_implementation_->problem_.l ; k++ )
@@ -361,6 +401,8 @@ Scalar LibSVM::computeError()
 
 Scalar LibSVM::computeAccuracy()
 {
+  if (!p_implementation_->p_model_)
+    throw InternalException(HERE) << "LibSVM: model is not trained";
   UnsignedInteger totalerror = 0;
   for (UnsignedInteger k = 0 ; k < (UnsignedInteger)p_implementation_->problem_.l ; ++ k)
     if (p_implementation_->problem_.y[k] != svm_predict(p_implementation_->p_model_, p_implementation_->problem_.x[k]))
@@ -415,7 +457,11 @@ void LibSVM::convertData(const Sample & inputSample, const Sample & outputSample
   normalize(inputSample, inputTransformation_, inputInverseTransformation);
 
   // write in/out into problem data
-  p_implementation_->problem_.l = size;
+  if (size > std::numeric_limits<int>::max())
+    throw InternalException(HERE) << "LibSVM: size too large (" << size << ")";
+  if (inputDimension > std::numeric_limits<UnsignedInteger>::max() / (size + 1))
+    throw InternalException(HERE) << "LibSVM: allocation too large";
+  p_implementation_->problem_.l = static_cast<int>(size);
   p_implementation_->problem_.y = Allocation<double>(size);
   p_implementation_->problem_.x = Allocation<struct svm_node *>(size);
   p_implementation_->p_node_ = Allocation<struct svm_node>(size * (inputDimension + 1));
@@ -450,8 +496,7 @@ void LibSVM::destroyModel()
 {
   if (p_implementation_->p_model_)
   {
-    svm_free_model_content(p_implementation_->p_model_);
-    p_implementation_->p_model_ = 0;
+    svm_free_and_destroy_model(&p_implementation_->p_model_);
   }
   if (p_implementation_->p_node_)
   {
@@ -462,7 +507,12 @@ void LibSVM::destroyModel()
 
 UnsignedInteger LibSVM::getLabel(const Point & vector) const
 {
+  if (!p_implementation_->p_model_)
+    throw InternalException(HERE) << "LibSVM: model is not trained";
   const UnsignedInteger size = vector.getSize();
+  const Point transformed(inputTransformation_(vector));
+  if (transformed.getDimension() != size)
+    throw InternalException(HERE) << "LibSVM: input transformation changed dimension";
   svm_problem prob;
   svm_node* node;
 
@@ -473,7 +523,7 @@ UnsignedInteger LibSVM::getLabel(const Point & vector) const
   for(UnsignedInteger j = 0; j < size; j++)
   {
     node[j].index = j + 1;
-    node[j].value = inputTransformation_(vector)[j];
+    node[j].value = transformed[j];
   }
   node[size].index = -1;
 
@@ -488,7 +538,12 @@ UnsignedInteger LibSVM::getLabel(const Point & vector) const
 
 UnsignedInteger LibSVM::getLabelValues(const Point & vector, const SignedInteger outC) const
 {
+  if (!p_implementation_->p_model_)
+    throw InternalException(HERE) << "LibSVM: model is not trained";
   const UnsignedInteger size = vector.getSize();
+  const Point transformed(inputTransformation_(vector));
+  if (transformed.getDimension() != size)
+    throw InternalException(HERE) << "LibSVM: input transformation changed dimension";
   svm_problem prob;
   svm_node* node;
 
@@ -499,7 +554,7 @@ UnsignedInteger LibSVM::getLabelValues(const Point & vector, const SignedInteger
   for(UnsignedInteger j = 0; j < size; j++)
   {
     node[j].index = j + 1;
-    node[j].value = inputTransformation_(vector)[j];
+    node[j].value = transformed[j];
   }
   node[size].index = -1;
 
@@ -533,6 +588,8 @@ UnsignedInteger LibSVM::getLabelValues(const Point & vector, const SignedInteger
 
 Scalar LibSVM::predict(const Point & inP) const
 {
+  if (!p_implementation_->p_model_)
+    throw InternalException(HERE) << "LibSVM: model is not trained";
   UnsignedInteger inputDimension = inP.getDimension();
   struct svm_node *x = Allocation<struct svm_node>(inputDimension + 1);
   for (UnsignedInteger i = 0; i < inputDimension; ++ i)
@@ -555,16 +612,15 @@ Scalar LibSVM::predict(const Point & inP) const
   else
   {
     // multiclass
-    int i;
     int nr_class = svm_get_nr_class(p_implementation_->p_model_);
     std::vector<double>dec_values(nr_class * (nr_class - 1) / 2);
     svm_predict_values(p_implementation_->p_model_, x, dec_values.data());
 
     std::vector<int> vote(nr_class);
-    for (i = 0; i < nr_class; i++)
+    for (int i = 0; i < nr_class; i++)
       vote[i] = 0;
     int pos = 0;
-    for (i = 0; i < nr_class; i++)
+    for (int i = 0; i < nr_class; i++)
       for (int j = i + 1; j < nr_class; j++)
       {
         if (dec_values[pos++] > 0)
@@ -574,7 +630,7 @@ Scalar LibSVM::predict(const Point & inP) const
       }
 
     int vote_max_idx = 0;
-    for (i = 1; i < nr_class; i++)
+    for (int i = 1; i < nr_class; i++)
       if (vote[i] > vote[vote_max_idx])
         vote_max_idx = i;
 
@@ -583,7 +639,6 @@ Scalar LibSVM::predict(const Point & inP) const
     int label = labels[vote_max_idx];
 
     res = (double)label;
-    res = dec_values[0] * labels[0];
   }
   free(x);
   return res;
@@ -594,7 +649,11 @@ void LibSVM::setWeight(const Point & weight, const Point & label)
 {
   const UnsignedInteger size = weight.getSize();
 
-  p_implementation_->parameter_.nr_weight = size;
+  free(p_implementation_->parameter_.weight);
+  free(p_implementation_->parameter_.weight_label);
+  if (size > static_cast<UnsignedInteger>(std::numeric_limits<int>::max()))
+    throw InternalException(HERE) << "LibSVM: weight size too large";
+  p_implementation_->parameter_.nr_weight = static_cast<int>(size);
   p_implementation_->parameter_.weight = Allocation < double > ( size );
   p_implementation_->parameter_.weight_label = Allocation < int > ( size );
 

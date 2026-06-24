@@ -85,11 +85,13 @@ void SVMClassification::run()
 {
   const UnsignedInteger size = inputSample_.getSize();
 
-  Scalar bestTradeoffFactor = tradeoffFactor_[0];
-  Scalar bestKernelParameter = kernelParameter_[0];
-
+  if (size == 0)
+    throw InvalidArgumentException(HERE) << "SVMClassification: input sample is empty";
   if (classes_.getSize() != size)
     throw InvalidArgumentException(HERE) << "SVMClassification: the input sample and the output sample must have the same size";
+
+  Scalar bestTradeoffFactor = tradeoffFactor_[0];
+  Scalar bestKernelParameter = kernelParameter_[0];
 
   Sample outputSample(inputSample_.getSize(), 1);
   for (UnsignedInteger i = 0; i < classes_.getSize(); ++ i)
@@ -164,7 +166,7 @@ OT::Scalar SVMClassification::predict(const OT::Point& inP) const
 
 void SVMClassification::setWeight(const Point & weight)
 {
-  Point label(weight.getSize());
+  Point label(classes_.getSize());
   UnsignedInteger j = 1;
   UnsignedInteger change = 0;
 

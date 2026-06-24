@@ -1,5 +1,6 @@
 #include "otsvm/KMeansClustering.hxx"
 #include <openturns/Uniform.hxx>
+#include <openturns/SpecFunc.hxx>
 
 
 using namespace OT;
@@ -30,7 +31,6 @@ void KMeansClustering::run()
   const UnsignedInteger dimension = inputSample_.getDimension();
   const UnsignedInteger size = inputSample_.getSize();
   UnsignedInteger tempj = 0;
-  UnsignedInteger count = 0;
   UnsignedInteger change = 0;
 
   Indices cluster(size);
@@ -68,10 +68,11 @@ void KMeansClustering::run()
       tempj = 0;
     }
 
-    change = 0;
+    change = 1;
 
     for (UnsignedInteger i = 0 ; i < k_; ++ i)
     {
+      UnsignedInteger count = 0;
       Point temp(means[i]);
       means[i] *= 0.0;
       for (UnsignedInteger j = 0 ; j < size; ++ j)
@@ -82,23 +83,18 @@ void KMeansClustering::run()
           ++ count;
         }
       }
-      Point temp2(means[i]);
-
       if( count > 0 )
       {
-        temp2 /= count ;
+        means[i] /= count ;
       }
       else
       {
         means[i] = temp;
       }
 
-      means[i] = temp2;
-
-      count = 0;
-      if (temp == means[i])
+      if ((temp - means[i]).norm() > SpecFunc::Precision)
       {
-        change = 1;
+        change = 0;
       }
     }
   }

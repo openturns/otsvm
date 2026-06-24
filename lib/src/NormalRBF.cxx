@@ -21,6 +21,7 @@
 #include "otsvm/NormalRBF.hxx"
 #include <openturns/OSS.hxx>
 #include <openturns/PersistentObjectFactory.hxx>
+#include <cmath>
 
 using namespace OT;
 
@@ -38,7 +39,7 @@ NormalRBF::NormalRBF(const Scalar sigma)
   : SVMKernelImplementation(),
     sigma_(sigma)
 {
-  // Nothing to do
+  if (!(sigma > 0.0)) throw InvalidArgumentException(HERE) << "sigma must be > 0";
 }
 
 
@@ -65,6 +66,7 @@ Scalar NormalRBF::getSigma() const
 
 void NormalRBF::setSigma(const Scalar sigma)
 {
+  if (!(sigma > 0.0)) throw InvalidArgumentException(HERE) << "sigma must be > 0";
   sigma_ = sigma;
 }
 
@@ -79,6 +81,7 @@ void NormalRBF::setParameter(const Point & parameter)
 {
   if (parameter.getDimension() != 1)
     throw InvalidArgumentException(HERE) << "NormalRBF expected a parameter of dimension 1";
+  if (!(parameter[0] > 0.0)) throw InvalidArgumentException(HERE) << "sigma must be > 0";
   sigma_ = parameter[0];
 }
 
