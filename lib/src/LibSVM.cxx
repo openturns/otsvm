@@ -457,10 +457,6 @@ void LibSVM::convertData(const Sample & inputSample, const Sample & outputSample
   normalize(inputSample, inputTransformation_, inputInverseTransformation);
 
   // write in/out into problem data
-  if (size > std::numeric_limits<int>::max())
-    throw InternalException(HERE) << "LibSVM: size too large (" << size << ")";
-  if (inputDimension > std::numeric_limits<UnsignedInteger>::max() / (size + 1))
-    throw InternalException(HERE) << "LibSVM: allocation too large";
   p_implementation_->problem_.l = static_cast<int>(size);
   p_implementation_->problem_.y = Allocation<double>(size);
   p_implementation_->problem_.x = Allocation<struct svm_node *>(size);
